@@ -59,7 +59,7 @@ const Events = () => {
   }, []);
 
   return (
-    <div className="relative grid place-items-center w-full my-30 pb-40 mx-auto">
+    <div className="relative grid place-items-center w-full my-30 pb-40 mx-auto ">
       <div className="relative h-20 w-full -mt-4 mb-30 ">
         <Image
           src={"/patterns/pattern0.png"}
@@ -72,7 +72,7 @@ const Events = () => {
         alt="background-events"
         src={"/covers/cover1.png"}
         fill
-        className="absolute object-cover -z-1 mask-t-from-1 mask-b-from-0"
+        className="absolute object-cover z-1 mask-t-from-1 bg-black mask-b-from-0"
       />
       <div className="absolute -z-2 w-full h-full bg-[#0d111f]"></div>
       <motion.div

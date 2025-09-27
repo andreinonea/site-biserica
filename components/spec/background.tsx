@@ -2,9 +2,11 @@
 
 import { useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import VerticalParallax from "../Parallax";
+
+const MOBILE_MEDIA_QUERY = "(max-width: 768px)";
 
 export default function Background({
   classname,
@@ -18,22 +20,43 @@ export default function Background({
     [0, 0.05, 0.1, 0.2, 0.4, 0.5, 1],
     [0, 0, 1, 0, 1, 0, 0]
   );
+  const [usePhoneImages, setUsePhoneImages] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia(MOBILE_MEDIA_QUERY);
+    const handleChange = (event: MediaQueryListEvent) => {
+      setUsePhoneImages(event.matches);
+    };
+
+    setUsePhoneImages(mediaQuery.matches);
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
+
+  const diffuseSrc = usePhoneImages
+    ? "/background/concrete_wall_003_diff_8k_phone.jpg"
+    : "/background/concrete_wall_003_diff_8k.jpg";
+
+  const displacementSrc = usePhoneImages
+    ? "/background/concrete_wall_003_disp_8k_phone.png"
+    : "/background/concrete_wall_003_disp_8k.png";
 
   return (
     <div className="relative w-full">
       {/* BACKGROUND: always behind */}
       <motion.div
-        className={
-          "absolute inset-0 -z-20 h-[500vh] w-full overflow-hidden " + classname
-        }
+        className={`absolute inset-0 h-[500vh] w-full overflow-hidden ${classname ?? ""}`}
         id="background-diffuse"
-        style={{ y }}
+        style={{ y, backgroundColor: "var(--background)" }}
       >
         <Image
           fill
-          className="object-cover absolute"
+          priority
+          quality={100}
+          sizes="100vw"
+          className="object-cover"
           alt="background"
-          src={"/background/concrete_wall_003_diff_8k.jpg"}
+          src={diffuseSrc}
         />
         <motion.div
           style={{ opacity: sparkle }}
@@ -41,9 +64,12 @@ export default function Background({
         >
           <Image
             fill
+            priority
+            quality={100}
+            sizes="100vw"
             className="object-cover"
             alt="background"
-            src={"/background/concrete_wall_003_disp_8k.png"}
+            src={displacementSrc}
           />
         </motion.div>
         <div className="h-full absolute" />

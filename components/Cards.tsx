@@ -13,7 +13,7 @@ type Card = {
   desc: string;
   btnTxt: string;
   btnHref: string;
-  imageSrc: string;
+  imageSrc: string|null;
   imageAlt: string;
   variant: CardVariant;
 
@@ -53,7 +53,7 @@ const Cards: Card[] = [
     btnHref:
       "/Contact",
     imageSrc:
-      "",
+      null,
     imageAlt: "Marisa",
     variant: "Card3",
   },
@@ -136,7 +136,7 @@ export default function CardSection() {
           >
             <figure className={`c-card__figure w-full relative ${variantClasses[card.variant]}`}>
               <Image
-                src={card.imageSrc}
+                src={(card.imageSrc || null) as any}
                 alt={card.imageAlt}
                 fill
                 sizes="100vw"
@@ -168,7 +168,7 @@ export default function CardSection() {
         ))}
       </div>
 
-      <div className="relative w-full h-15 -mb-3 absolute -bottom-15 transform translate-y-1/2 z-5">
+      <div className="relative w-full h-15 -mb-3  -bottom-15 transform translate-y-1/2 z-5">
         <Image
           src={"/patterns/top-bar.png"}
           alt="top-bar-pattern"

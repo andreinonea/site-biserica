@@ -6,8 +6,6 @@ import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { LINKS } from "@/app/constants";
 
-const NAVBAR_PT = 2;
-
 export default function Navbar() {
   const [open, setOpen] = useState(false);
 
@@ -27,10 +25,10 @@ export default function Navbar() {
   return (
     <>
       <div
-        className={`max-w-[100vw] w-full max-h-[20vh] top-0 left-0 h-21 z-15 ${
+        className={`max-w-[100vw] w-full max-h-[16vh] top-0 left-0 h-[4.2rem] z-15 ${
           !open
             ? "bg-[#02021fd5] shadow-xl backdrop-blur-xl "
-            : "bg-[#b1967d00] h-30"
+            : "bg-[#b1967d00] h-[6rem]"
         } transition-all duration-300 fixed`}
       >
         {/* Menu Button */}
@@ -123,3 +121,6 @@ export default function Navbar() {
     </>
   );
 }
+
+
+

@@ -1,21 +1,130 @@
-"use client";
-import React from "react";
+﻿"use client";
+import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import Background from "@/components/spec/background";
 import Image from "next/image";
+import Background from "@/components/spec/background";
 
-const page = () => {
+const aboutSections = [
+  {
+    title: "Lorem ipsum dolor",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec placerat eros nec odio volutpat, ac pretium metus lacinia.",
+    image: "/assets/imagine-biserica.png",
+    imageAlt: "Interiorul bisericii"
+  },
+  {
+    title: "Lorem ipsum dolor sit",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo massa vel nisl tincidunt, in vehicula dui elementum.",
+    image: "/assets/Sfinti.jpg",
+    imageAlt: "Detaliu cu sfinti pictati pe pereti"
+  },
+  {
+    title: "Lorem ipsum dolor amet",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non nibh turpis. Pellentesque posuere ante non justo molestie fermentum.",
+    image: "/principal.png",
+    imageAlt: "Credinciosi reuniti in biserica"
+  }
+];
+
+type ParallaxImageProps = {
+  src: string;
+  alt: string;
+  direction: "left" | "right";
+};
+
+const ParallaxImage = ({ src, alt, direction }: ParallaxImageProps) => {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"]
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], direction === "left" ? [-30, 30] : [30, -30]);
 
   return (
-    <div>
+    <div ref={ref} className="relative h-[260px] sm:h-[320px] md:h-[360px] lg:h-[420px]">
       <motion.div
-      
+        style={{ y }}
+        className="relative h-full w-full overflow-hidden rounded-xl shadow-xl"
+      >
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          className="object-cover"
+          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 45vw, 520px"
+        />
+      </motion.div>
+    </div>
+  );
+};
+
+const MOBILE_MEDIA_QUERY = "(max-width: 768px)";
+
+const AboutPage = () => {
+  const [usePhoneImages, setUsePhoneImages] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia(MOBILE_MEDIA_QUERY);
+    const handleChange = (event: MediaQueryListEvent) => {
+      setUsePhoneImages(event.matches);
+    };
+
+    setUsePhoneImages(mediaQuery.matches);
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
+
+  const diffuseSrc = usePhoneImages
+    ? "/background/concrete_wall_003_diff_8k_phone.jpg"
+    : "/background/concrete_wall_003_diff_8k.jpg";
+
+  const displacementSrc = usePhoneImages
+    ? "/background/concrete_wall_003_disp_8k_phone.png"
+    : "/background/concrete_wall_003_disp_8k.png";
+
+  return (
+    <div className="relative overflow-hidden bg-[#c59d30] pt-10">
+       <motion.div
+        className={`absolute inset-0 h-[300vh] w-full opacity-10 overflow-hidden`}
+        id="background-diffuse"
       >
         <Image
           fill
-          className="object-cover absolute -z-1 opacity-30"
+          priority
+          quality={100}
+          sizes="100vw"
+          className="object-cover"
           alt="background"
-          src={"/background/concrete_wall_003_diff_8k.jpg"}
+          src={diffuseSrc}
+        />
+        <motion.div
+          className="absolute inset-0 pointer-events-none mix-blend-color-burn"
+        >
+          <Image
+            fill
+            priority
+            quality={100}
+            sizes="100vw"
+            className="object-cover"
+            alt="background"
+            src={displacementSrc}
+          />
+        </motion.div>
+        <div className="h-full absolute" />
+      </motion.div>
+
+
+      <motion.div className="absolute inset-0 -z-10">
+        <Image
+          fill
+          className="absolute inset-0 object-cover opacity-30"
+          alt="Fundal texturat"
+          src="/background/concrete_wall_003_diff_8k.jpg"
+          sizes="100vw"
+          priority
         />
       </motion.div>
 
@@ -24,47 +133,63 @@ const page = () => {
         animate={{ scale: 1, borderRadius: "0px", opacity: 1 }}
         exit={{ scale: 0.95, borderRadius: "30px", opacity: 0 }}
         transition={{ duration: 0.6, ease: "easeInOut" }}
-        className="min-h-screen px-6 py-12 text-[#2b220a] z-5 container mx-auto"
+        className="relative z-2 min-h-screen px-6 py-20 text-[#2b220a]"
       >
-        <h1 className=" text-[#2b220a] text-4xl mt-[100px] mb-12">
-          Prezentare biserica
-        </h1>
-        <div className="text-[#2b220a]">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum
-          vitae lectus nec mi ornare vehicula. In vulputate elit ut maximus
-          tristique. Proin congue pretium accumsan. Proin vel dignissim ligula.
-          Donec luctus orci sed egestas rutrum. Integer vitae pellentesque
-          metus. Donec porta pulvinar nulla nec mattis.
-          <br />
-          <br />
-          Ut fringilla imperdiet erat et volutpat. Integer ut magna non sem
-          feugiat efficitur in posuere elit. Quisque venenatis posuere
-          tristique. Nulla facilisi. Vestibulum id leo fringilla, maximus sem
-          vitae, imperdiet risus. Proin aliquam nulla non odio molestie, nec
-          molestie dui pulvinar. Integer placerat viverra diam vel cursus.
-          Maecenas vel enim eleifend, pretium lacus eu, pharetra nunc. Phasellus
-          a ante ut diam egestas fermentum ut vitae diam. Lorem ipsum dolor sit
-          amet, consectetur adipiscing elit. <br />
-          <br />
-          Praesent at neque in orci pulvinar facilisis ac et eros. Donec dapibus
-          sed tellus quis faucibus. Morbi mattis ligula quam, et finibus justo
-          imperdiet quis. Donec consequat varius dapibus. In consequat purus vel
-          tincidunt pulvinar. Maecenas pulvinar lectus quis turpis fermentum, at
-          volutpat felis congue. Integer rhoncus dolor vitae urna aliquam, quis
-          consequat tellus iaculis. Orci varius natoque penatibus et magnis dis
-          parturient montes, nascetur ridiculus mus. Ut vel nisi ac quam
-          lobortis placerat. Integer imperdiet maximus magna ac bibendum. Nullam
-          elit nunc, tincidunt sit amet sem ut, vulputate interdum lectus.{" "}
-          <br />
-          <br />
-          Pellentesque eget tristique orci. Etiam et sem vel quam fringilla
-          pulvinar. Duis tristique elit at dui vehicula, et ornare purus
-          dignissim. Suspendisse malesuada est non augue dictum pharetra.
-          Maecenas pharetra quis lacus vel interdum.
+        <div className="mx-auto px-10 md:px-[15vw] space-y-36">
+          <header className="max-w-3xl">
+            <p className="text-sm uppercase tracking-[0.4em] text-[#d6c298]">Despre noi</p>
+            <h1 className="mt-4 text-4xl font-semibold uppercase md:text-5xl">
+              Lorem ipsum dolor
+            </h1>
+            <p className="mt-6 text-lg leading-relaxed text-[#473712]">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer eu massa sed dolor maximus volutpat non nec velit. Integer ac ligula id lacus tempor finibus.
+            </p>
+          </header>
+
+          <div className="space-y-20">
+            {aboutSections.map((section, index) => {
+              const imageFirst = index % 2 === 0;
+
+              return (
+                <div
+                  key={section.title}
+                  className="grid gap-10 grid-cols-2 md:items-center md:gap-16"
+                >
+                  <div className={imageFirst ? "order-1 md:order-1 self-center" : "order-2 md:order-2 self-center" }>
+                    <ParallaxImage
+                      src={section.image}
+                      alt={section.imageAlt}
+                      direction={imageFirst ? "left" : "right"}
+                    />
+                  </div>
+
+                  <div
+                    className={
+                      imageFirst
+                        ? "order-1 md:order-2 md:pl-12"
+                        : "order-1 md:order-1 md:pr-12"
+                    }
+                  >
+                    <h2 className="text-2xl font-semibold text-[#2b220a]">
+                      {section.title}
+                    </h2>
+                    <p className="mt-4 text-base leading-relaxed text-[#463712]">
+                      {section.description}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </motion.div>
     </div>
   );
 };
 
-export default page;
+export default AboutPage;
+
+
+
+
+

@@ -27,19 +27,19 @@ export default function LogoLoader({ children }: LogoLoaderProps) {
   }
 
   return (
-    <div className={`relative min-h-screen transition-colors duration-1000 `}>
+    <div className={`relative min-h-screen transition-colors duration-1000 bg-[var(--background)] `}>
       <AnimatePresence>
         {loading && (
           <motion.div
             key="loader"
-            className="fixed h-[210vh] bg-[#0d0d1e] inset-0 z-50 flex items-center justify-center"
+            className="fixed h-[210vh] inset-0 z-50 flex items-center justify-center"
             initial={{ y: -size.y, opacity: 1, scale : 2 }}
             animate={{
               y: -size.y , 
               opacity: 1,
               scale : 1
             }}
-            exit={{ opacity: 0, scale : .7 }}
+            exit={{ opacity: 0, scale : .5 }}
             transition={{ duration: 1.2, ease: easeOutCirc }}
           >
             <motion.img
@@ -65,3 +65,4 @@ export default function LogoLoader({ children }: LogoLoaderProps) {
     </div>
   );
 }
+

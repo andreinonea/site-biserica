@@ -13,8 +13,8 @@ import Background from "@/components/spec/background";
 export default function Home() {
 
   return (
-    <>
-      <Background classname="top-[50vh] opacity-30" />
+    <div className="relative bg-[#C59D30]">
+      <Background classname="top-[50vh] opacity-30 " />
       <HeroSection />
       <Program />
       <Events />
@@ -22,6 +22,7 @@ export default function Home() {
       <Sfzi  />
       <Donate />
       <Footer />
-    </>
+    </div>
   );
 }
+
