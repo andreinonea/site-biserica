@@ -10,5 +10,11 @@
     "title": "Cateheza II – Rugăciunea",
     "description": "Importanța rugăciunii personale.",
     "audioUrl": "/audio/cateheza-2.mp3"
+  },
+  {
+    "id": 3,
+    "title": "Test",
+    "description": "Test",
+    "audioUrl": "/audio/piano.mp3"
   }
 ]

@@ -42,9 +42,9 @@ const Sfzi = () => {
 
   return (
     <>
-      <div className="mt-16 md:mt-20 mb-20" >
+      <div className="mt-16 md:mt-20" >
         <div className="flex justify-center">
-          <div className="w-full flex flex-col justify-center min-w-min w-3/4">
+          <div className="w-full flex flex-col justify-center min-w-min">
 
             {/* Image background section */}
             <section className="relative overflow-hidden">

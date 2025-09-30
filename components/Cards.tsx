@@ -60,10 +60,6 @@ const Cards: Card[] = [
 
 ];
 
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
-
 const variantClasses = {
   Card1: "h-48 sm:h-64 md:h-80 lg:h-[400px] object-contain object-cover ",
   Card2: "h-24 sm:h-[10px] md:h-[300px] object-contain object-cover",
@@ -78,47 +74,71 @@ export default function CardSection() {
       return;
     }
 
-    let lastCardTrigger: ScrollTrigger | null = null;
+    gsap.registerPlugin(ScrollTrigger);
+    ScrollTrigger.config({ ignoreMobileResize: true });
+
+    const mm = gsap.matchMedia();
 
     const ctx = gsap.context(() => {
-      const cards = gsap.utils.toArray<HTMLElement>(".c-card");
-      if (cards.length === 0) {
-        return;
-      }
+      const initCardAnimation = (isTouchLayout: boolean) => {
+        const cards = gsap.utils.toArray<HTMLElement>(".c-card");
+        if (!cards.length) {
+          return () => {};
+        }
 
-      const lastCardIndex = cards.length - 1;
+        const lastCardIndex = cards.length - 1;
 
-      lastCardTrigger = ScrollTrigger.create({
-        trigger: cards[lastCardIndex],
-        start: "center center",
-      });
-
-      cards.forEach((card, index) => {
-        const scaleTarget = index === lastCardIndex ? 1 : 0.5;
-
-        gsap.set(card, { transformOrigin: "center center" });
-
-        gsap.to(card, {
-          scale: scaleTarget,
-          ease: "none",
-          scrollTrigger: {
-            trigger: card,
-            start: "top top+=80",
-            end: () => lastCardTrigger?.start ?? "bottom top",
-            pin: true,
-            pinSpacing: false,
-            scrub: 0.5,
-            toggleActions: "restart none none reverse",
-          },
+        gsap.set(cards, { clearProps: "transform" });
+        cards.forEach((card) => {
+          gsap.set(card, { transformOrigin: "center center" });
         });
-      });
 
-      ScrollTrigger.refresh();
+        const releasePoint = ScrollTrigger.create({
+          trigger: cards[lastCardIndex],
+          start: isTouchLayout ? "top top" : "center center",
+        });
+
+        const animations = cards.map((card, index) =>
+          gsap.to(card, {
+            scale: index === lastCardIndex ? 1 : isTouchLayout ? 0.85 : 0.5,
+            ease: "none",
+            scrollTrigger: {
+              trigger: card,
+              start: isTouchLayout ? "top top+=56" : "top top+=80",
+              end: () => releasePoint.start,
+              pin: true,
+              pinSpacing: false,
+              scrub: isTouchLayout ? 0.75 : 0.5,
+              pinType: ScrollTrigger.isTouch ? "transform" : "fixed",
+              toggleActions: "play none none reverse",
+              anticipatePin: isTouchLayout ? 2 : 1,
+              invalidateOnRefresh: true,
+            },
+          })
+        );
+
+        ScrollTrigger.refresh();
+
+        return () => {
+          releasePoint.kill();
+          animations.forEach((animation) => {
+            animation.scrollTrigger?.kill();
+            animation.kill();
+          });
+        };
+      };
+
+      mm.add("(max-width: 1023px)", () => initCardAnimation(true));
+      mm.add("(min-width: 1024px)", () => initCardAnimation(false));
     }, rootRef);
 
+    if (typeof ScrollTrigger.normalizeScroll === "function") {
+      ScrollTrigger.normalizeScroll(true);
+    }
+
     return () => {
+      mm.revert();
       ctx.revert();
-      lastCardTrigger?.kill();
     };
   }, []);
 

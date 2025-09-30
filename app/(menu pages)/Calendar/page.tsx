@@ -73,6 +73,37 @@ export default function Programliturgic() {
     'iulie', 'august', 'septembrie', 'octombrie', 'noiembrie', 'decembrie'
   ];
 
+const fastLevelTranslations: Record<string, string> = {
+    'Fast': 'Post',
+    'No Fast': 'Fără post',
+    'Nativity Fast': 'Postul Nașterii Domnului',
+    'Lenten Fast': 'Postul Mare',
+    'Dormition Fast': 'Postul Adormirii Maicii Domnului',
+    'Apostles Fast': 'Postul Sfinților Apostoli'
+  };
+
+const fastExceptionTranslations: Record<string, string> = {
+    'Fast Free': 'Dezlegare la toate',
+    'Fish, Wine and Oil are Allowed': 'Dezlegare la pește, vin și untdelemn',
+    'Meat Fast': 'Post fără carne',
+    'No overrides': 'Fără dezlegări',
+    'Strict Fast': 'Post aspru',
+    'Strict Fast (Wine and Oil)': 'Post aspru (dezlegare la vin și untdelemn)',
+    'Wine and Oil are Allowed': 'Dezlegare la vin și untdelemn',
+    'Wine is Allowed': 'Dezlegare la vin',
+    'Wine, Oil and Caviar are Allowed': 'Dezlegare la vin, untdelemn și icre'
+  };
+
+const translateFastLevel = (text?: string) => {
+  if (!text) return '';
+  return fastLevelTranslations[text] ?? text;
+};
+
+const translateFastException = (text?: string) => {
+  if (!text) return '';
+  return fastExceptionTranslations[text] ?? text;
+};
+
   const getMonthName = (monthNumber: number) => monthNames[monthNumber - 1] || '';
 
   const formatDate = (dateStr: string, data: LocalDay) => {
@@ -154,6 +185,10 @@ export default function Programliturgic() {
         const [y, m] = date.split('-').map(Number);
         if (y !== year || m !== month) return null;
 
+        const fastInfo = fastData[date];
+        const translatedFastLevel = translateFastLevel(fastInfo?.fast_level_desc);
+        const translatedFastException = translateFastException(fastInfo?.fast_exception_desc);
+
         return (
           <div key={date} className="mb-6 border-b border-[#c95d43] pb-4">
             <p className="text-lg font-semibold mb-1">{formatDate(date, data)}</p>
@@ -167,11 +202,11 @@ export default function Programliturgic() {
               </>
             )}
 
-            {fastData[date]?.fast_level_desc && (
-              <p className="mt-2"><strong>Post:</strong> {fastData[date].fast_level_desc}</p>
+            {translatedFastLevel && (
+              <p className="mt-2"><strong>Post:</strong> {translatedFastLevel}</p>
             )}
-            {fastData[date]?.fast_exception_desc && (
-              <p><strong>Dezlegări:</strong> {fastData[date].fast_exception_desc}</p>
+            {translatedFastException && (
+              <p><strong>Dezlegări:</strong> {translatedFastException}</p>
             )}
           </div>
         );

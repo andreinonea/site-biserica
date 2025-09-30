@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
@@ -172,6 +172,7 @@ const CatehezaCard: React.FC<CatehezaCardProps> = ({
   const [isWaveformLoading, setIsWaveformLoading] = useState(false);
   const [rawWaveform, setRawWaveform] = useState<Float32Array | null>(null);
   const [waveformValues, setWaveformValues] = useState<number[]>([]);
+  const [waveformError, setWaveformError] = useState<string | null>(null);
 
   useEffect(() => {
     const element = waveformContainerRef.current;
@@ -264,6 +265,7 @@ const CatehezaCard: React.FC<CatehezaCardProps> = ({
 
       try {
         setIsWaveformLoading(true);
+        setWaveformError(null);
 
         let cached = waveformCache.get(item.audioUrl);
 
@@ -293,6 +295,7 @@ const CatehezaCard: React.FC<CatehezaCardProps> = ({
         if (!didCancel) {
           console.error("Nu pot genera forma de unda:", error);
           setRawWaveform(null);
+          setWaveformError("Forma de unda indisponibila");
         }
       } finally {
         if (!didCancel) {
@@ -443,13 +446,13 @@ const CatehezaCard: React.FC<CatehezaCardProps> = ({
 
   return (
     <div
-      className="mb-6 rounded-2xl border border-white/10 bg-gradient-to-br from-[#1d1116] via-[#12070f] to-[#050209]/90 p-6 shadow-[0_25px_60px_rgba(0,0,0,0.35)] backdrop-blur-sm transition hover:border-white/20"
+      className="z-13 mb-6 rounded-2xl border border-white/10 bg-gradient-to-br from-[#1d1116] via-[#12070f] to-[#050209]/90 p-6 shadow-[0_25px_60px_rgba(0,0,0,0.35)] backdrop-blur-sm transition hover:border-white/20"
       style={{
         backgroundImage:
           "radial-gradient(circle at top left, rgba(255, 121, 198, 0.25), transparent 55%), radial-gradient(circle at bottom right, rgba(255, 196, 112, 0.18), transparent 45%)",
       }}
     >
-      <div className="flex items-start justify-between gap-4">
+      <div className="flex items-start justify-between gap-4 z-5">
         <div className="flex flex-1 items-start gap-4">
           <button
             type="button"
@@ -548,6 +551,11 @@ const CatehezaCard: React.FC<CatehezaCardProps> = ({
             className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/65 via-transparent to-black/70"
             style={{ mixBlendMode: "soft-light" }}
           />
+          {waveformError && (
+            <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+              <span className="rounded-lg bg-black/60 px-3 py-1 text-xs font-medium text-white/70">{waveformError}</span>
+            </div>
+          )}
           {isWaveformLoading && (
             <div className="pointer-events-none absolute inset-0 animate-pulse bg-gradient-to-r from-white/5 via-white/10 to-white/5" />
           )}
@@ -599,7 +607,7 @@ const CatehezePage = () => {
         transition={{ duration: 0.6, ease: "easeInOut" }}
         className="min-h-screen w-screen px-6 py-12 text-white relative "
       >
-        <div className="absolute h-full mask-b-from-0 inset-0 isolate w-full opacity-20 z-6">
+        <div className="absolute z-0 pointer-none: h-full mask-b-from-0 inset-0 isolate w-full opacity-20 ">
           <div className="relative h-full">
             <Image
               fill
@@ -636,3 +644,4 @@ const CatehezePage = () => {
 };
 
 export default CatehezePage;
+

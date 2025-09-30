@@ -38,7 +38,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${merriweather.variable} ${geistSans.variable} ${geistMono.variable} antialiased max-w-screen overflow-x-hidden`}
+        className={`${merriweather.variable} ${geistSans.variable} ${geistMono.variable} antialiased max-w-screen overflow-x-hidden scroll-smooth`}
       >
         <ScrollProvider>
           <LogoLoader>

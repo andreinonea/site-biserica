@@ -25,7 +25,7 @@ export default function Navbar() {
   return (
     <>
       <div
-        className={`max-w-[100vw] w-full max-h-[16vh] top-0 left-0 h-[4.2rem] z-15 ${
+        className={`max-w-[100vw] w-full  top-0 left-0 h-[4.2rem] z-15 ${
           !open
             ? "bg-[#02021fd5] shadow-xl backdrop-blur-xl "
             : "bg-[#b1967d00] h-[6rem]"
@@ -35,7 +35,7 @@ export default function Navbar() {
         <button
           onClick={() => setOpen(!open)}
           className={`absolute right-4 h-full aspect-square max-w-8 z-50 flex items-center justify-center transition-all duration-300 ${
-            open ? "pb-10" : ""
+            open ? "pt-5" : ""
           }`}
           aria-label="Toggle menu"
         >

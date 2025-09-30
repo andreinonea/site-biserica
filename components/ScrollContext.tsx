@@ -1,25 +1,43 @@
 "use client";
 
-import { createContext, useContext, useRef } from "react";
-import { useScroll } from "framer-motion";
-import Image from "next/image";
-
+import { createContext, useContext, useEffect } from "react";
+import Lenis from "lenis";
+import { MotionValue, useScroll } from "framer-motion";
 
 interface ScrollContextValue {
-  scrollYProgress: any;
+  scrollYProgress: MotionValue<number>;
 }
 
 const ScrollContext = createContext<ScrollContextValue | null>(null);
 
 export const ScrollProvider = ({ children }: { children: React.ReactNode }) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    container: ref,
-  });
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.1,
+      easing: (t) => Math.min(1, 1 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      smoothTouch: false,
+    });
+
+    let frameId = 0;
+    const raf = (time: number) => {
+      lenis.raf(time);
+      frameId = requestAnimationFrame(raf);
+    };
+
+    frameId = requestAnimationFrame(raf);
+
+    return () => {
+      cancelAnimationFrame(frameId);
+      lenis.destroy();
+    };
+  }, []);
+
+  const { scrollYProgress } = useScroll();
 
   return (
     <ScrollContext.Provider value={{ scrollYProgress }}>
-      <div className="bg-c59d30" ref={ref}>
+      <div className="bg-c59d30">
         {children}
       </div>
     </ScrollContext.Provider>
