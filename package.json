@@ -21,8 +21,12 @@
     "next": "15.3.3",
     "react": "^19.1.1",
     "react-dom": "^19.0.0",
+    "react-multi-carousel": "^2.8.6",
     "site-biserica": "github:NitaCristianu/site-biserica",
-    "three": "^0.179.1"
+    "swiper": "^12.0.2",
+    "three": "^0.179.1",
+    "waveform-data": "^4.5.2",
+    "wavesurfer.js": "^7.10.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.10",

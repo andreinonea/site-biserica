@@ -2,7 +2,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
-import Background from "@/components/spec/background";
 
 const aboutSections = [
   {
@@ -133,10 +132,10 @@ const AboutPage = () => {
         animate={{ scale: 1, borderRadius: "0px", opacity: 1 }}
         exit={{ scale: 0.95, borderRadius: "30px", opacity: 0 }}
         transition={{ duration: 0.6, ease: "easeInOut" }}
-        className="relative z-2 min-h-screen px-6 py-20 text-[#2b220a]"
+        className="relative z-2 min-h-screen  text-[#2b220a]"
       >
-        <div className="mx-auto px-10 md:px-[15vw] space-y-36">
-          <header className="max-w-3xl">
+        <div className="mx-auto  md:px-[15vw] px-2 space-y-24">
+          <header className="max-w-3xl px-10 py-20">
             <p className="text-sm uppercase tracking-[0.4em] text-[#d6c298]">Despre noi</p>
             <h1 className="mt-4 text-4xl font-semibold uppercase md:text-5xl">
               Lorem ipsum dolor

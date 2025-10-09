@@ -22,7 +22,7 @@ export default function Programliturgic() {
   const [month, setMonth] = useState(today.getMonth() + 1); // 1-based
   const [year, setYear] = useState(today.getFullYear());
 
-  const [calendar, setCalendar] = useState<Record<string, LocalDay> | null>(null);
+  const [calendar, setCalendar] = useState<Record<string, Record<string, LocalDay>> | null>(null);
   const [fastData, setFastData] = useState<Record<string, FastInfo>>({});
   const [loading, setLoading] = useState(true);
 
@@ -73,7 +73,7 @@ export default function Programliturgic() {
     'iulie', 'august', 'septembrie', 'octombrie', 'noiembrie', 'decembrie'
   ];
 
-const fastLevelTranslations: Record<string, string> = {
+  const fastLevelTranslations: Record<string, string> = {
     'Fast': 'Post',
     'No Fast': 'Fără post',
     'Nativity Fast': 'Postul Nașterii Domnului',
@@ -82,7 +82,7 @@ const fastLevelTranslations: Record<string, string> = {
     'Apostles Fast': 'Postul Sfinților Apostoli'
   };
 
-const fastExceptionTranslations: Record<string, string> = {
+  const fastExceptionTranslations: Record<string, string> = {
     'Fast Free': 'Dezlegare la toate',
     'Fish, Wine and Oil are Allowed': 'Dezlegare la pește, vin și untdelemn',
     'Meat Fast': 'Post fără carne',
@@ -94,15 +94,11 @@ const fastExceptionTranslations: Record<string, string> = {
     'Wine, Oil and Caviar are Allowed': 'Dezlegare la vin, untdelemn și icre'
   };
 
-const translateFastLevel = (text?: string) => {
-  if (!text) return '';
-  return fastLevelTranslations[text] ?? text;
-};
+  const translateFastLevel = (text?: string) =>
+    text ? (fastLevelTranslations[text] ?? text) : '';
 
-const translateFastException = (text?: string) => {
-  if (!text) return '';
-  return fastExceptionTranslations[text] ?? text;
-};
+  const translateFastException = (text?: string) =>
+    text ? (fastExceptionTranslations[text] ?? text) : '';
 
   const getMonthName = (monthNumber: number) => monthNames[monthNumber - 1] || '';
 
@@ -130,89 +126,98 @@ const translateFastException = (text?: string) => {
   };
 
   return (
-    <>
     <motion.div
       initial={{ scale: 0.98, borderRadius: '16px', opacity: 0 }}
       animate={{ scale: 1, borderRadius: '0px', opacity: 1 }}
       exit={{ scale: 0.98, borderRadius: '16px', opacity: 0 }}
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       className="min-h-screen bg-[#0A0004] px-6 py-12 pt-[100px] text-white"
-
     >
-      <div className="absolute h-full mask-b-from-0 inset-0 isolate w-full opacity-20 z-6">
-                <div className="relative h-full">
-                  <Image
-                    fill
-                    className="z-4 object-cover absolute mix-blend-overlay"
-                    alt="background"
-                    src={"/background/concrete_wall_003_rough_8k.jpg"}
-                  />
-                  <Image
-                    className="z-2 blur-md  bg-black-800 object-cover"
-                    src={"/assets/fundal-program.png"}
-                    alt="program-background"
-                    fill
-                  />
-                </div>
-              </div>
-      <div className="max-w-4xl mx-auto">
-      <div className="flex justify-between items-center mb-6">
-        <button
-          onClick={() => changeMonth(-1)}
-          className="text-gray-300 hover:underline"
-        >
-          luna anterioară ←
-        </button>
-
-        <h1 className="text-[30px] font-bold text-center">
-          Calendarul {getMonthName(month)} {year}
-        </h1>
-
-        <button
-          onClick={() => changeMonth(1)}
-          className="text-gray-300 hover:underline"
-        >
-          luna următoare →
-        </button>
+      <div className="absolute h-full mask-b-from-0 inset-0 isolate w-full opacity-20 z-1 select-none" >
+        <div className="relative h-full ">
+          <Image
+            fill
+            className="z-4 object-cover absolute mix-blend-multiply"
+            alt="background"
+            src={"/background/concrete_wall_003_rough_8k.jpg"}
+          />
+          <Image
+            className="z-2 blur-md bg-black-800 object-cover"
+            src={"/assets/fundal-program.png"}
+            alt="program-background"
+            fill
+          />
+        </div>
       </div>
 
-      {loading && <p className="text-gray-400">Se încarcă...</p>}
-      {!loading && calendar && Object.keys(calendar).length === 0 && (
-        <p className="text-red-400">Eroare la încărcarea datelor.</p>
-      )}
+      <div className="relative max-w-4xl mx-auto z-1 cursor-pointer">
+        <div className="flex justify-between items-center mt-3 mb-20 ">
+          <button onClick={() => changeMonth(-1)} className="mr-1 text-[#C59D30]/60 hover:underline">
+            luna anterioară ←
+          </button>
 
-      {!loading && calendar && Object.entries(calendar).map(([date, data]) => {
-        const [y, m] = date.split('-').map(Number);
-        if (y !== year || m !== month) return null;
+          <h1 className="text-[30px] text-center">
+            Calendar {getMonthName(month)} {year}
+          </h1>
 
-        const fastInfo = fastData[date];
-        const translatedFastLevel = translateFastLevel(fastInfo?.fast_level_desc);
-        const translatedFastException = translateFastException(fastInfo?.fast_exception_desc);
+          <button onClick={() => changeMonth(1)} className="ml-2 text-[#C59D30]/60 hover:underline">
+            luna următoare →
+          </button>
+        </div>
 
-        return (
-          <div key={date} className="mb-6 border-b border-[#c95d43] pb-4">
-            <p className="text-lg font-semibold mb-1">{formatDate(date, data)}</p>
+        {loading && <p className="text-gray-400">Se încarcă...</p>}
+        {!loading && calendar && Object.keys(calendar).length === 0 && (
+          <p className="text-red-400">Eroare la încărcarea datelor.</p>
+        )}
 
-            {data.sfinți?.length > 0 && (
-              <>
-                <p><strong>Sfinți și sărbători:</strong></p>
-                <ul className="list-disc list-inside ml-4 marker:text-[#c95d43]">
-                  {data.sfinți.map((s, i) => <li key={i}>{s}</li>)}
-                </ul>
-              </>
-            )}
+        {!loading && calendar && (() => {
+          const monthKey = `${year}-${String(month).padStart(2, '0')}`;
+          const days = calendar[monthKey];
 
-            {translatedFastLevel && (
-              <p className="mt-2"><strong>Post:</strong> {translatedFastLevel}</p>
-            )}
-            {translatedFastException && (
-              <p><strong>Dezlegări:</strong> {translatedFastException}</p>
-            )}
-          </div>
-        );
-      })}
+          if (!days) return <p className="text-gray-400">Nu există date pentru această lună.</p>;
+
+          return Object.entries(days).map(([date, data]) => {
+            const fastInfo = fastData[date];
+            const translatedFastLevel = translateFastLevel(fastInfo?.fast_level_desc);
+            const translatedFastException = translateFastException(fastInfo?.fast_exception_desc);
+
+            return (
+              <div key={date} className="mb-6 border-b border-[#C59D30]/30 pb-4">
+                <p className="text-lg font-semibold mb-2 text-[#C59D30] ">{formatDate(date, data)}</p>
+
+                {data.sfinți?.length > 0 && (
+                  <>
+                    <p><strong className='text-[#C59D30]/80 italic'>Sfinți și sărbători:</strong></p>
+                    <ul className="list-none ml-4 text-white/90">
+                      {data.sfinți.map((s, i) => (
+                        <li key={i} className="flex items-start gap-2">
+                          <Image
+                            src="/icons/trandafir (3).svg"
+                            alt="trandafir"
+                            width={16}
+                            height={16}
+                            className="mt-1"
+                          />
+                          <span>{s}</span>
+                        </li>
+                      ))}
+                    </ul>
+
+
+                  </>
+                )}
+
+                {translatedFastLevel && (
+                  <p className="mt-2 "><strong className='text-[#C59D30]/80 italic'>Post:</strong> <p className=" inline-block text-white/90">{translatedFastLevel}</p></p>
+                )}
+                {translatedFastException && (
+                  <p><strong className='text-[#C59D30]/80 italic'>Dezlegări:</strong> <p className=" inline text-white/90">{translatedFastException}</p></p>
+                )}
+              </div>
+            );
+          });
+        })()}
       </div>
     </motion.div>
-    </>
   );
 }

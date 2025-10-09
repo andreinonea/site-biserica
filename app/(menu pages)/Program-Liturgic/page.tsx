@@ -46,16 +46,16 @@ export default function Page() {
         transition={{ duration: 0.6, ease: "easeInOut" }}
         className="relative min-h-screen w-full px-6 py-12 text-white overflow-hidden"
       >
-        <div className="absolute  mask-b-from-0 inset-0 isolate w-full opacity-20 z-6">
+        <div className="absolute  mask-b-from-0 inset-0 isolate w-full  opacity-30 z-6">
           <div className="relative w-full h-full">
             <Image
               fill
-              className="z-4 object-cover absolute mix-blend-overlay"
+              className="z-4 object-cover absolute mix-blend-multiply"
               alt="background"
               src={"/background/concrete_wall_003_rough_8k.jpg"}
             />
             <Image
-              className="z-2 blur-md scale-110 bg-black-800 object-cover"
+              className="z-2 blur-md scale-110 bg-[#011239] object-cover"
               src={"/assets/fundal-program.png"}
               alt="program-background"
               fill
@@ -63,23 +63,24 @@ export default function Page() {
           </div>
         </div>
 
-        <h1 className="relative z-2 flex justify-center text-center text-4xl md:text-7xl mt-[100px] mb-15 underline decoration-2 underline-offset-8">
+
+        <h1 className="relative z-2 flex justify-center text-center text-white/90 text-4xl md:text-7xl mt-[100px] mb-15 underline decoration-2 underline-offset-8">
           Program liturgic
         </h1>
 
         <div className="relative z-1 max-w-4xl mx-auto space-y-10 mb-20">
           {program.map((zi, i) => (
-            <div key={i} className="border-b border-white/20 pb-4">
-              <span className="text-2xl font-semibold">
+            <div key={i} className="border-b border-[#C59D30]/30 pb-4">
+              <span className="text-2xl font-semibold text-[#C59D30]">
                 {zi.zi_saptamana.charAt(0).toUpperCase() +
                   zi.zi_saptamana.slice(1)}
               </span>
-              <span>, {zi.data}</span>
+              <span className="text-[#C59D30]/90">, {zi.data}</span>
               <ul className="space-y-1 ml-4 mb-6 mt-6 ">
                 {zi.activitati.map((act, idx) => (
                   <li key={idx} className="flex items-start gap-3">
-                    <span className=" w-[60px]">{act.ora}</span>
-                    <span className="">{act.nume}</span>
+                    <span className=" w-[60px] text-[#C59D30]/80">{act.ora}</span>
+                    <span className="text-white/90 flex align-baseline">{act.nume}</span>
                   </li>
                 ))}
               </ul>

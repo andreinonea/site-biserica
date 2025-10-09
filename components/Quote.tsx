@@ -1,20 +1,63 @@
 ﻿"use client";
 
-import React from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import useResize from "./hooks/useResize";
 
+type QuoteType = {
+  text: string;
+  author?: string;
+};
+
 const Quote = () => {
-  const ref = React.useRef<HTMLDivElement | null>(null);
+  const ref = useRef<HTMLDivElement | null>(null);
   const { scrollYProgress } = useScroll({ target: ref });
 
   const size = useResize();
   const aspect = size.x / size.y;
+
   const columnScale = useTransform(scrollYProgress, [0, 1], [1, 1.6]);
-  const titleScale = useTransform(scrollYProgress, [0.3, 1], [1, 0.6]);
-  const titleOpacity = useTransform(scrollYProgress, [0.6, 1], [1, 0]);
+  const titleScale = useTransform(scrollYProgress, [0.3, 0.8], [1, 0.6]);
+  const titleOpacity = useTransform(scrollYProgress, [0.4, 0.7], [1, 0]);
   const hintOpacity = useTransform(scrollYProgress, [0, 0.2], [0.7, 0]);
+
+  const [quote, setQuote] = useState<QuoteType>({
+    text: "Începe ziua cu rugăciune și vei avea pace.",
+    author: "Proverb ortodox"
+  });
+
+  useEffect(() => {
+    const today = new Date().toISOString().slice(0, 10);
+    const saved = localStorage.getItem("daily-quote");
+    const savedDate = localStorage.getItem("daily-quote-date");
+
+    if (saved && savedDate === today) {
+      setQuote(JSON.parse(saved));
+      return;
+    }
+
+    const fetchQuote = async () => {
+      try {
+        const res = await fetch("/data/quote.json");
+        const data: QuoteType[] = await res.json();
+
+        const dayOfYear = Math.floor(
+          (new Date().getTime() - new Date(new Date().getFullYear(), 0, 0).getTime()) /
+          (1000 * 60 * 60 * 24)
+        );
+
+        const selected = data[dayOfYear % data.length];
+        setQuote(selected);
+        localStorage.setItem("daily-quote", JSON.stringify(selected));
+        localStorage.setItem("daily-quote-date", today);
+      } catch (err) {
+        console.warn("Eroare la încărcarea citatului:", err);
+      }
+    };
+
+    fetchQuote();
+  }, []);
 
   return (
     <div
@@ -40,19 +83,25 @@ const Quote = () => {
             />
           </motion.div>
         </div>
-        <div className="mx-auto px-4 text-center text-white/80 select-text cursor-text">
+
+        <div className="mx-auto px-10 md:px-20 text-center text-white/80 select-text cursor-text">
           <motion.h1
             style={{ scale: titleScale, opacity: titleOpacity }}
-            className="translate-y-1/2 text-4xl text-shadow-lg text-shadow-black/20 lg:text-6xl"
+            className="translate-y-1/2 text-2xl text-shadow-lg  lg:text-6xl"
           >
             <span className="text-[#c95d43]">"</span>
-            Quote of the day
+            {quote.text}
             <span className="text-[#c95d43]">"</span>
+
+            {quote.author && (
+              <p className="mt-2 lg:ml-[50%] md:ml-[40%] ml-[20%] text-base text-white/60">– {quote.author}</p>
+            )}
+
             <motion.div
               style={{ opacity: hintOpacity }}
-              className="m-3 flex justify-center gap-2 text-base"
+              className="m-3 flex justify-center gap-1 mt-10 text-base"
             >
-              <p>Gliseaza in jos</p>
+              <p className="">Glisează în jos</p>
               <Image
                 src="/icons/ScrollDownArrows.gif"
                 alt="Scroll down"

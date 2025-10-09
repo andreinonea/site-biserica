@@ -59,7 +59,7 @@ const Events = () => {
   }, []);
 
   return (
-    <div className="relative grid place-items-center w-full my-30 pb-40 mx-auto">
+    <div className="relative grid place-items-center w-full my-30 pb-40 mx-auto select-none" >
       <div className="relative h-20 w-full z-2 -mt-4 mb-30 ">
         <Image
           src={"/patterns/pattern0.png"}
