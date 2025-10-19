@@ -38,8 +38,8 @@ export default function Background({
     : "/background/concrete_wall_003_diff_8k.jpg";
 
   const displacementSrc = usePhoneImages
-    ? "/background/concrete_wall_003_disp_8k_phone.png"
-    : "/background/concrete_wall_003_disp_8k.png";
+    ? "/background/concrete_wall_003_disp_8k_phone.webp"
+    : "/background/concrete_wall_003_disp_8k.webp";
 
   return (
     <div className="relative w-full">

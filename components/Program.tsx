@@ -65,10 +65,7 @@ const Program = () => {
 
   const handleNavigation = async () => {
     setLoading(true);
-
-    //  artificial delay for demo purposes
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    console.log('loadingbar!!');
+   
     router.push("/Program-Liturgic");
   };
 
@@ -103,9 +100,7 @@ const Program = () => {
                           {act.ora}
                         </span>
                       ) : (
-                        <span className="text-nowrap absolute max-w-10">
-                          ----
-                        </span>
+                        <span className="text-nowrap absolute max-w-10" />
                       )}
                     </p>
                     <span className="text-lg text-[#302508] pl-14 w-full text-left">

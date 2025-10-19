@@ -1,8 +1,4 @@
 "use client";
-
-import Loader from "@/components/Loader";
-import Navbar from "@/components/Navbar";
-import Background from "@/components/spec/background";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
@@ -50,16 +46,27 @@ export default function Page() {
           <div className="relative w-full h-full">
             <Image
               fill
-              className="z-4 object-cover absolute mix-blend-multiply"
-              alt="background"
-              src={"/background/concrete_wall_003_rough_8k.jpg"}
+              priority
+              alt="background-desktop"
+              src={"/background/concrete_wall_003_rough_8k.webp"}
+              className="hidden sm:block z-4 absolute object-cover object-center mix-blend-multiply"
+            />
+
+            <Image
+              fill
+              priority
+              alt="background-mobile"
+              src={"/background/concrete_wall_003_rough_8k phone.webp"}
+              className="block sm:hidden z-4 absolute object-cover object-left mix-blend-multiply"
             />
             <Image
-              className="z-2 blur-md scale-110 bg-[#011239] object-cover"
-              src={"/assets/fundal-program.png"}
+              className="z-2 blur-md bg-black-500 object-cover"
+              src={"/assets/fundal-program_phone.webp"}
               alt="program-background"
               fill
             />
+            <div className="absolute inset-0 z-5 bg-gradient-to-b from-[#5a2c00]/40 via-[#8a4b00]/30 to-[#2e1200]/50 mix-blend-overlay" />
+
           </div>
         </div>
 
@@ -79,13 +86,22 @@ export default function Page() {
               <ul className="space-y-1 ml-4 mb-6 mt-6 ">
                 {zi.activitati.map((act, idx) => (
                   <li key={idx} className="flex items-start gap-3">
-                    <span className=" w-[60px] text-[#C59D30]/80">{act.ora}</span>
+                    <span className=" w-[60px] text-[#C59D30]/90">{act.ora}</span>
                     <span className="text-white/90 flex align-baseline">{act.nume}</span>
                   </li>
                 ))}
               </ul>
             </div>
           ))}
+        </div>
+        <div className="flex place-content-center mt-[30px]">
+          <Image
+            src="/footer black.png"
+            className="contain mix-blend-difference"
+            alt="logo"
+            width={250}
+            height={180}
+          />
         </div>
       </motion.div>
     </div>

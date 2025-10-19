@@ -18,27 +18,28 @@ const Sfzi = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [sfinti, setSfinti] = useState<string[]>([]);
 
-  useEffect(() => {
-    const today = new Date();
-    const yyyy = today.getFullYear();
-    const mm = String(today.getMonth() + 1).padStart(2, "0");
-    const dd = String(today.getDate()).padStart(2, "0");
-    const dateKey = `${yyyy}-${mm}-${dd}`;
+useEffect(() => {
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  const mm = String(today.getMonth() + 1).padStart(2, "0");
+  const dd = String(today.getDate()).padStart(2, "0");
+  const dateKey = `${yyyy}-${mm}-${dd}`;
+  const monthKey = `${yyyy}-${mm}`;
 
-    fetch("/data/calendar.json")
-      .then((res) => res.json())
-      .then((data: Record<string, LocalDay>) => {
-        const entry = data[dateKey];
-        if (entry && entry.sfinți?.length > 0) {
-          setSfinti(entry.sfinți);
-        } else {
-          setSfinti(["Niciun sfânt înregistrat azi."]);
-        }
-      })
-      .catch(() => {
-        setSfinti(["Eroare la încărcarea calendarului."]);
-      });
-  }, []);
+  fetch("/data/calendar.json")
+    .then((res) => res.json())
+    .then((data: Record<string, Record<string, LocalDay>>) => {
+      const entry = data[monthKey]?.[dateKey];
+      if (entry && entry.sfinți?.length > 0) {
+        setSfinti(entry.sfinți);
+      } else {
+        setSfinti(["Niciun sfânt înregistrat azi."]);
+      }
+    })
+    .catch(() => {
+      setSfinti(["Eroare la încărcarea calendarului."]);
+    });
+}, []);
 
   return (
     <>

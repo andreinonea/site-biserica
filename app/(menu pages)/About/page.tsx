@@ -181,6 +181,15 @@ const AboutPage = () => {
             })}
           </div>
         </div>
+          <div className="flex place-content-center mt-[30px]">
+                <Image
+                  src="/footer.webp"
+                  className="contain mix-blend-difference"
+                  alt="logo"
+                  width={250}
+                  height={180}
+                />
+              </div>
       </motion.div>
     </div>
   );

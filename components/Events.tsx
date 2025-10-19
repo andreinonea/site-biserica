@@ -14,10 +14,11 @@ import { easeInOutCirc } from "@/app/constants";
 import IconFrame from "./gen/IconFrame";
 
 type Eveniment = {
-  nume_eveniment: string;
-  ora: string;
-  adresa: string;
-  data?: string;
+  title: string;
+  date: string;
+  hour?: string;
+  location?: string;
+  adresa?: string;
 };
 
 const Events = () => {
@@ -35,20 +36,16 @@ const Events = () => {
         const azi = new Date();
         azi.setHours(0, 0, 0, 0);
 
-        const dateKeys = Object.keys(data)
-          .filter((key) => {
-            const date = new Date(key);
-            date.setHours(0, 0, 0, 0);
-            return !isNaN(date.getTime()) && date >= azi;
-          })
-          .sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
+        // Dacă fișierul este un array:
+        const viitoare = data
+          .filter((ev: any) => new Date(ev.date) >= azi)
+          .sort(
+            (a: any, b: any) =>
+              new Date(a.date).getTime() - new Date(b.date).getTime()
+          );
 
-        if (dateKeys.length > 0) {
-          const nextKey = dateKeys[0];
-          setEveniment({
-            ...data[nextKey],
-            data: nextKey,
-          });
+        if (viitoare.length > 0) {
+          setEveniment(viitoare[0]);
         }
       } catch (err) {
         console.error("Eroare la citirea evenimentelor:", err);
@@ -101,21 +98,21 @@ const Events = () => {
 
           <div className="text-white/70 mb-15">
             <div className="text-xl lg:text-2xl">
-              {eveniment.nume_eveniment}
+              {eveniment.title}
             </div>
             <div className="flex items-center gap-2 text-base">
-              {eveniment.data &&
+              {eveniment.date &&
                 new Intl.DateTimeFormat("ro-RO", {
                   day: "numeric",
                   month: "long",
-                }).format(new Date(eveniment.data))}
+                }).format(new Date(eveniment.date))}
               <Image
                 src="/icons/dot.svg"
                 alt="dot icon"
                 width={24}
                 height={24}
               />
-              ora {eveniment.ora}
+              ora {eveniment.hour}
             </div>
           </div>
         </div>
@@ -129,14 +126,14 @@ const Events = () => {
           {"Vezi toate evenimentele"}
         </Link>
       </IconFrame>
-       <div className="relative w-full h-15 -mb-3 absolute -bottom-40 transform translate-y-1/2 z-5">
-          <Image
-            src={"/patterns/top-bar.png"}
-            alt="top-bar-pattern"
-            className="object-cover "
-            fill
-          />
-        </div>
+      <div className="relative w-full h-15 -mb-3 absolute -bottom-40 transform translate-y-1/2 z-5">
+        <Image
+          src={"/patterns/top-bar.png"}
+          alt="top-bar-pattern"
+          className="object-cover "
+          fill
+        />
+      </div>
     </div>
   );
 };

@@ -131,7 +131,7 @@ export default function Programliturgic() {
       animate={{ scale: 1, borderRadius: '0px', opacity: 1 }}
       exit={{ scale: 0.98, borderRadius: '16px', opacity: 0 }}
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-      className="min-h-screen bg-[#0A0004] px-6 py-12 pt-[100px] text-white"
+      className="min-h-screen bg-[#0A0004] px-6 py-12 pt-[100px] text-white selection:bg-[#C59D30]"
     >
       <div className="absolute h-full mask-b-from-0 inset-0 isolate w-full opacity-20 z-1 select-none" >
         <div className="relative h-full ">
@@ -157,7 +157,8 @@ export default function Programliturgic() {
           </button>
 
           <h1 className="text-[30px] text-center">
-            Calendar {getMonthName(month)} {year}
+            Calendar {getMonthName(month)}{" "}
+            <span className="font-[Dutch Mediaeval] ">{year}</span>
           </h1>
 
           <button onClick={() => changeMonth(1)} className="ml-2 text-[#C59D30]/60 hover:underline">
@@ -198,7 +199,7 @@ export default function Programliturgic() {
                             height={16}
                             className="mt-1"
                           />
-                          <span>{s}</span>
+                          <span className='text-white/80 '>{s}</span>
                         </li>
                       ))}
                     </ul>
@@ -208,15 +209,24 @@ export default function Programliturgic() {
                 )}
 
                 {translatedFastLevel && (
-                  <p className="mt-2 "><strong className='text-[#C59D30]/80 italic'>Post:</strong> <p className=" inline-block text-white/90">{translatedFastLevel}</p></p>
+                  <p className="mt-2 "><strong className='text-[#C59D30]/80 italic'>Post:</strong> <p className=" inline-block text-white/80">{translatedFastLevel}</p></p>
                 )}
                 {translatedFastException && (
-                  <p><strong className='text-[#C59D30]/80 italic'>Dezlegări:</strong> <p className=" inline text-white/90">{translatedFastException}</p></p>
+                  <p><strong className='text-[#C59D30]/80 italic'>Dezlegări:</strong> <p className=" inline text-white/80">{translatedFastException}</p></p>
                 )}
               </div>
             );
           });
         })()}
+      </div>
+      <div className="flex place-content-center mt-[30px]">
+        <Image
+          src="/footer black.png"
+          className="contain mix-blend-difference"
+          alt="logo"
+          width={250}
+          height={180}
+        />
       </div>
     </motion.div>
   );

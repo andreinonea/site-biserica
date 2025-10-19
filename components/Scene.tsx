@@ -35,7 +35,7 @@ export default function Scene() {
 
   const SaintZoom = useTransform(scrollYProgress, [0.2, 0.8], ['80%', '120%'])
   const SaintOffset = useTransform(scrollYProgress, [0.2, 0.8], ['80rem', '-25rem'])
-  const SaintOpacity = useTransform(scrollYProgress, [0.2, 0.8], ['40%', '100%'])
+  const SaintOpacity = useTransform(scrollYProgress, [0.2, 0.8], ['60%', '100%'])
   const falcon1X = useTransform(scrollYProgress, [0.2, 0.35], ["-20vw", "120vw"]);
   const falcon1Opacity = useTransform(scrollYProgress, [0.2, 0.22, 0.33, 0.35], [0, 1, 1, 0]);
 
@@ -60,7 +60,7 @@ export default function Scene() {
       {/* Background */}
       <div className="absolute h-[200vh] w-full">
         <div className="relative h-full">
-          <Image src="/assets/Sky.png" alt="Sky" fill className="object-cover" priority />
+          <Image src="/assets/Sky.webp" alt="Sky" fill className="object-cover" priority />
         </div>
       </div>
 
@@ -74,7 +74,7 @@ export default function Scene() {
           style={{ opacity: S2.o, y: S2.y, scale: SCALE }}
         >
           <div className="relative w-[120vw] md:w-[90vw] max-w-[1800px] aspect-[3/2]">
-            <Image src="/assets/cloudR.png" alt="Cloud R" fill className="object-contain" />
+            <Image src="/assets/cloudR.webp" alt="Cloud R" fill className="object-contain" />
           </div>
         </M.div>
 
@@ -84,32 +84,32 @@ export default function Scene() {
           style={{ opacity: SaintOpacity, y: S3.y, scale: SaintZoom, paddingTop : SaintOffset }}
         >
           <div className="relative w-[70vw] sm:w-[50vw] md:w-[30vw] max-w-[320px] aspect-[3/4]">
-            <Image src="/assets/SfTrifon.png" alt="Sfântul Trifon" fill className="object-contain" />
+            <Image src="/assets/SfTrifon.webp" alt="Sfântul Trifon" fill className="object-contain" />
           </div>
         </M.div>
 
         {/* Falcons */}
         <M.div className="absolute top-[16%]" style={{ x: falcon1X, opacity: falcon1Opacity, scale: SCALE }}>
           <div className="relative w-[40vw] md:w-[22vw] max-w-[520px] aspect-[16/10]">
-            <Image src="/assets/Falcon1.png" alt="Falcon 1" fill className="object-contain" />
+            <Image src="/assets/Falcon1.webp" alt="Falcon 1" fill className="object-contain" />
           </div>
         </M.div>
 
         <M.div className="absolute top-[16%]" style={{ x: falcon2X, opacity: falcon2Opacity, scale: SCALE }}>
           <div className="relative w-[40vw] md:w-[22vw] max-w-[520px] aspect-[16/10]">
-            <Image src="/assets/Falcon2.png" alt="Falcon 2" fill className="object-contain" />
+            <Image src="/assets/Falcon2.webp" alt="Falcon 2" fill className="object-contain" />
           </div>
         </M.div>
 
         <M.div className="absolute bottom-[10%]" style={{ x: falcon3X, opacity: falcon3Opacity, scale: SCALE }}>
           <div className="relative w-[42vw] md:w-[24vw] max-w-[560px] aspect-[16/10]">
-            <Image src="/assets/Falcon3.png" alt="Falcon 3" fill className="object-contain" />
+            <Image src="/assets/Falcon3.webp" alt="Falcon 3" fill className="object-contain" />
           </div>
         </M.div>
 
         <M.div className="absolute bottom-[12%]" style={{ x: falcon4X, opacity: falcon4Opacity, scale: SCALE }}>
           <div className="relative w-[42vw] md:w-[24vw] max-w-[560px] aspect-[16/10]">
-            <Image src="/assets/Falcon4.png" alt="Falcon 4" fill className="object-contain" />
+            <Image src="/assets/Falcon4.webp" alt="Falcon 4" fill className="object-contain" />
           </div>
         </M.div>
       </div>

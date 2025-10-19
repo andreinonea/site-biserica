@@ -88,6 +88,15 @@ const page = () => {
             ></iframe>
           </div>
         </div>
+        <div className="flex place-content-center mt-[30px]">
+          <Image
+            src="/footer black.png"
+            className="contain mix-blend-difference"
+            alt="logo"
+            width={250}
+            height={180}
+          />
+        </div>
       </motion.div>
     </>
   )

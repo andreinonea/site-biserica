@@ -11,7 +11,6 @@ type Eveniment = {
   title: string;
   date: string;
   hour?: string;
-  ora?: string;
   location?: string;
   adresa?: string;
   slides?: Slide[];
@@ -63,20 +62,31 @@ const EvenimentePage = () => {
         transition={{ duration: 0.6, ease: "easeInOut" }}
         className="min-h-screen w-full px-6 py-12 overflow-hidden"
       >
-        <div className="absolute mask-b-from-0 inset-0 isolate w-full opacity-20 z-6">
-          <div className="relative h-full overflow-x-hidden">
+        <div className="absolute  mask-b-from-0 inset-0 isolate w-full  opacity-30 z-6">
+          <div className="relative w-full h-full">
             <Image
               fill
-              className="z-4 object-cover absolute mix-blend-multiply"
-              alt="background"
-              src={"/background/concrete_wall_003_rough_8k.jpg"}
+              priority
+              alt="background-desktop"
+              src={"/background/concrete_wall_003_rough_8k.webp"}
+              className="hidden sm:block z-4 absolute object-cover object-center mix-blend-multiply"
+            />
+
+            <Image
+              fill
+              priority
+              alt="background-mobile"
+              src={"/background/concrete_wall_003_rough_8k phone.webp"}
+              className="block sm:hidden z-4 absolute object-cover object-left mix-blend-multiply"
             />
             <Image
-              className="z-2 blur-md bg-black-800 object-cover"
-              src={"/assets/fundal-program.png"}
+              className="z-2 blur-md bg-black-500 object-cover"
+              src={"/assets/fundal-program_phone.webp"}
               alt="program-background"
               fill
             />
+            <div className="absolute inset-0 z-5 bg-gradient-to-b from-[#5a2c00]/40 via-[#8a4b00]/30 to-[#2e1200]/50 mix-blend-overlay" />
+
           </div>
         </div>
 
@@ -104,7 +114,7 @@ const EvenimentePage = () => {
                     <div className="flex flex-col">
                       <div className="text-lg font-semibold">{ev.title}</div>
                       <div className="text-sm text-white/70">
-                        {formatDate(ev.date)} • ora {ev.ora || ev.hour || "–"}
+                        {formatDate(ev.date)} • ora {ev.hour || "–"}
                       </div>
                       <div className="text-sm text-white/50">
                         {ev.adresa || ev.location || "–"}
@@ -120,41 +130,63 @@ const EvenimentePage = () => {
           <section>
             <div className="border-b border-[#C59D30]/30 pb-4 mb-20" />
 
-            <h1 className="text-3xl md:text-4xl font-semibold text-[#C59D30] mb-20 text-center ">
+            <h1 className="text-3xl md:text-4xl font-semibold text-[#C59D30] mb-20 text-center">
               Evenimente trecute
             </h1>
+
             {past.length === 0 ? (
               <div className="text-gray-400 text-center text-xl">
                 Nu există evenimente trecute.
               </div>
             ) : (
-              <ul className="space-y-6">
+              <ul className="space-y-10">
                 {past.map((ev, i) => (
-                  <li key={i} className="flex items-start gap-4">
-                    <Image
-                      src="/icons/sculptura.png"
-                      alt="icon"
-                      width={40}
-                      height={30}
-                      className="mt-1"
-                    />
-                    <div className="flex flex-col  w-full ">
-                      <div className="text-lg font-semibold">{ev.title}</div>
-                      <div className="text-sm text-white/70">{formatDate(ev.date)}</div>
-                      <div className="text-sm text-white/50">{ev.adresa || ev.location || "–"}</div>
-
-                      {ev.slides && ev.slides.length > 0 && (
-                        <div className="mt-6 -ml-11">
-                          <SimpleCarousel slides={ev.slides} />
+                  <li
+                    key={i}
+                    className="
+            flex flex-col md:flex-row md:items-center 
+            gap-6 md:gap-10
+          "
+                  >
+                    <div className="flex flex-col w-full md:w-1/2">
+                      <div className="flex items-start gap-4 mb-2">
+                        <Image
+                          src="/icons/sculptura.png"
+                          alt="icon"
+                          width={40}
+                          height={30}
+                          className="mt-1 shrink-0"
+                        />
+                        <div>
+                          <div className="text-lg font-semibold">{ev.title}</div>
+                          <div className="text-sm text-white/70">{formatDate(ev.date)}</div>
+                          <div className="text-sm text-white/50">
+                            {ev.adresa || ev.location || "–"}
+                          </div>
                         </div>
-                      )}
+                      </div>
                     </div>
-                  </li>
 
+                    {ev.slides && ev.slides.length > 0 && (
+                      <div className="w-full md:w-1/2 mt-4 md:mt-0">
+                        <SimpleCarousel slides={ev.slides} />
+                      </div>
+                    )}
+                  </li>
                 ))}
               </ul>
             )}
           </section>
+
+        </div>
+        <div className="flex place-content-center mt-[30px]">
+          <Image
+            src="/footer black.png"
+            className="contain mix-blend-difference"
+            alt="logo"
+            width={250}
+            height={180}
+          />
         </div>
       </motion.div>
     </div>

@@ -75,7 +75,7 @@ const Quote = () => {
             }}
           >
             <Image
-              src="/principal.png"
+              src="/assets/principal.webp"
               alt="stalpi"
               layout="fill"
               priority
