@@ -100,7 +100,7 @@ export default function Scene() {
       if (height <= viewport) {
         return viewport;
       }
-      return height - viewport;
+      return (height - viewport);
     };
 
     const ctx = gsap.context(() => {
@@ -113,7 +113,6 @@ export default function Scene() {
       const falcon1 = select("[data-scene='falcon-1']")[0];
       const falcon2 = select("[data-scene='falcon-2']")[0];
       const falcon3 = select("[data-scene='falcon-3']")[0];
-      const falcon4 = select("[data-scene='falcon-4']")[0];
 
       const setSkyY = createSetter(sky, "y", "px");
       const setCloudY = createSetter(cloud, "y", "px");
@@ -122,7 +121,8 @@ export default function Scene() {
       const setSaintY = createSetter(saint, "y", "px");
       const setSaintOpacity = createSetter(saint, "opacity");
       const setSaintScale = createSetter(saint, "scale");
-
+      
+      const setPrincipalScale = createSetter(principal, "scale");
       const setPrincipalOpacity = createSetter(principal, "opacity");
       const setPrincipalY = createSetter(principal, "y", "px");
 
@@ -135,14 +135,12 @@ export default function Scene() {
       const setFalcon3X = createSetter(falcon3, "x", "px");
       const setFalcon3Opacity = createSetter(falcon3, "opacity");
 
-      const setFalcon4X = createSetter(falcon4, "x", "px");
-      const setFalcon4Opacity = createSetter(falcon4, "opacity");
 
       if (cloud) {
         gsap.set(cloud, { scale: SCALE });
       }
 
-      [falcon1, falcon2, falcon3, falcon4].forEach((element) => {
+      [falcon1, falcon2, falcon3].forEach((element) => {
         if (element) {
           gsap.set(element, { scale: SCALE });
         }
@@ -161,13 +159,14 @@ export default function Scene() {
         const cloudLift = isDesktop ? 28 : 14;
         setCloudY(cloudBaseOffset - cloudLift);
 
-        setSaintScale(mapRangeClamped(progress, 0.2, 0.8, 0.8, isDesktop ? 1.4 : 1.2));
+        setSaintScale(mapRangeClamped(progress, 0.2, 0.8, 0.8, isDesktop ? 1.7 : 1.2));
         setSaintOpacity(mapRangeClamped(progress, 0.2, 0.8, 0.6, 1));
         const saintYOffset = mapRangeClamped(progress, 0.2, 0.8, 90, -25) * 16; // rem -> px
         setSaintY(saintYOffset);
 
-        const principalLift = isDesktop ? 26 : 18;
-        setPrincipalY(mapRangeClamped(progress, 0.05, 0.32, 0, -principalLift * vhUnit));
+        const principalLift = isDesktop ? 0 : 0;
+        setPrincipalScale(mapRangeClamped(progress, 0, 0.4, 1, 1.2))
+        setPrincipalY(mapRangeClamped(progress, 0.05, 0.5, 0, -principalLift * vhUnit));
 
         const falconOneX = mapRangeClamped(progress, 0.2, 0.35, -20 * vwUnit, 120 * vwUnit);
         setFalcon1X(falconOneX);
@@ -181,15 +180,12 @@ export default function Scene() {
         setFalcon3X(falconThreeX);
         setFalcon3Opacity(segmentedOpacity(progress, 0.3, 0.32, 0.43, 0.45));
 
-        const falconFourX = mapRangeClamped(progress, 0.3, 0.5, 120 * vwUnit, -20 * vwUnit);
-        setFalcon4X(falconFourX);
-        setFalcon4Opacity(segmentedOpacity(progress, 0.35, 0.37, 0.48, 0.5));
       };
 
       const scrollTrigger = ScrollTrigger.create({
         trigger: container,
         start: "top top",
-        end: () => "+=" + computeScrollDistance(),
+        end: () => "=" + computeScrollDistance(),
         scrub: true,
         pin: true,
         pinSpacing: true,
@@ -233,10 +229,10 @@ export default function Scene() {
 
             <div
               data-scene="principal"
-              className="absolute inset-y-0 left-1/2 z-30 flex w-full -translate-x-1/2 items-center justify-center px-6 md:px-0"
+              className="absolute inset-y-0 left-1/2 z-30 flex w-full -translate-x-1/2 items-center justify-center md:hidden"
               style={{ willChange: "transform, opacity" }}
             >
-              <div className="relative h-full w-full max-w-[320px] sm:max-w-[380px] md:max-w-[460px] lg:max-w-[520px] xl:max-w-[600px]">
+              <div className="relative h-full w-full ">
                 <Image
                   src="/assets/principal.webp"
                   alt="Stalpi"
@@ -281,7 +277,7 @@ export default function Scene() {
 
             <div
               data-scene="falcon-1"
-              className="absolute top-[16%]"
+              className="absolute top-[26%]"
               style={{ willChange: "transform, opacity" }}
             >
               <div className="relative aspect-[16/10] w-[40vw] max-w-[520px] md:w-[22vw]">
@@ -297,7 +293,7 @@ export default function Scene() {
 
             <div
               data-scene="falcon-2"
-              className="absolute top-[16%]"
+              className="absolute top-[30%]"
               style={{ willChange: "transform, opacity" }}
             >
               <div className="relative aspect-[16/10] w-[40vw] max-w-[520px] md:w-[22vw]">
@@ -313,7 +309,7 @@ export default function Scene() {
 
             <div
               data-scene="falcon-3"
-              className="absolute top-[25%]"
+              className="absolute top-[35%]"
               style={{ willChange: "transform, opacity" }}
             >
               <div className="relative aspect-[16/10] w-[42vw] max-w-[560px] md:w-[24vw]">
@@ -327,21 +323,7 @@ export default function Scene() {
               </div>
             </div>
 
-            <div
-              data-scene="falcon-4"
-              className="absolute top-[30%]"
-              style={{ willChange: "transform, opacity" }}
-            >
-              <div className="relative aspect-[16/10] w-[42vw] max-w-[560px] md:w-[24vw]">
-                <Image
-                  src="/assets/Falcon4.webp"
-                  alt="Falcon 4"
-                  fill
-                  className="object-contain"
-                  priority
-                />
-              </div>
-            </div>
+           
           </div>
         </div>
       </div>
