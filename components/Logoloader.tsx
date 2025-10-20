@@ -1,8 +1,7 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
-import { useEffect, useState, ReactNode } from "react";
-import useResize from "./hooks/useResize";
+import { useLayoutEffect, useRef, useState, ReactNode } from "react";
+import { gsap } from "gsap";
 
 interface LogoLoaderProps {
   children: ReactNode;
@@ -10,58 +9,96 @@ interface LogoLoaderProps {
 
 export default function LogoLoader({ children }: LogoLoaderProps) {
   const [loading, setLoading] = useState(true);
-  const [hideBackground, setHideBackground] = useState(false);
+  const overlayRef = useRef<HTMLDivElement>(null);
+  const logoRef = useRef<HTMLImageElement>(null);
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setLoading(false);
-    }, 2000);
+  useLayoutEffect(() => {
+    if (!overlayRef.current || !logoRef.current) {
+      return;
+    }
 
-    return () => clearTimeout(timeout);
+    let cancelled = false;
+    const ctx = gsap.context(() => {
+      const getOverlayHeight = () =>
+        overlayRef.current?.offsetHeight ?? window.innerHeight;
+      const getLogoHeight = () =>
+        logoRef.current?.offsetHeight ?? 0;
+      const topMarginPx = 12;
+
+      const startY = () => {
+        const halfOverlay = getOverlayHeight() / 2;
+        const halfLogo = getLogoHeight() / 2;
+        return halfOverlay + halfLogo + topMarginPx;
+      };
+
+      const endY = () => {
+        const halfOverlay = getOverlayHeight() / 2;
+        const halfLogo = getLogoHeight() / 2;
+        return -(halfOverlay - halfLogo - topMarginPx);
+      };
+
+      const timeline = gsap.timeline({
+        defaults: { ease: "power2.out" },
+        onComplete: () => {
+          if (!cancelled) {
+            setLoading(false);
+          }
+        },
+      });
+
+      timeline
+        .fromTo(
+          logoRef.current,
+          { y: startY(), autoAlpha: 0, scale: 0.92 },
+          { y: endY(), autoAlpha: 1, scale: 1, duration: 1.05 }
+        )
+        .to(
+          logoRef.current,
+          {
+            y: endY() - 16,
+            autoAlpha: 0,
+            duration: 0.55,
+            ease: "power1.inOut",
+          },
+          "+=0.15"
+        )
+        .to(
+          overlayRef.current,
+          {
+            autoAlpha: 0,
+            duration: 1.1,
+            ease: "power2.out",
+          },
+          "-=0.1"
+        )
+        .set(overlayRef.current, { pointerEvents: "none" });
+    }, overlayRef);
+
+    return () => {
+      cancelled = true;
+      ctx.revert();
+    };
   }, []);
 
-  const size = useResize();
-
-  function easeOutCirc(x: number): number {
-    return Math.sqrt(1 - Math.pow(x - 1, 2));
-  }
-
   return (
-    <div className={`relative min-h-screen transition-colors duration-1000 bg-[var(--background)] `}>
-      <AnimatePresence>
-        {loading && (
-          <motion.div
-            key="loader"
-            className="fixed h-screen inset-0 z-50 flex items-center justify-center"
-            initial={{ y: -size.y/2, opacity: 1}}
-            animate={{
-              y: -size.y/2  + 2.2 * 16, 
-              opacity: 1,
-            }}
-            exit={{ opacity: 0}}
-            transition={{ duration: 1.2, ease: easeOutCirc }}
-          >
-            <motion.img
-              src="/logo_negru_1.webp"
-              alt="Logo"
-              className="w-[4.2rem] h-[4.2rem] invert-100"
-              initial={{ opacity: 0, scale: 1.7 }}
-              animate={{ opacity: 1, scale: .8 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ duration: 1.2, ease: easeOutCirc }}
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
+    <div className="relative min-h-screen bg-[var(--background)] transition-colors duration-1000">
+      <div>{children}</div>
 
-      {!loading && (
+      {loading && (
         <div
-         
+          ref={overlayRef}
+          className="fixed inset-0 z-50 flex h-screen items-center justify-center bg-[var(--background)]"
+          style={{ willChange: "transform, opacity" }}
         >
-          {children}
+          <img
+            ref={logoRef}
+            src="/logo_negru_1.webp"
+            alt="Logo"
+            className="h-[3.57rem] w-[3.57rem] invert-100"
+            style={{ willChange: "transform, opacity" }}
+          />
         </div>
       )}
     </div>
   );
 }
-
