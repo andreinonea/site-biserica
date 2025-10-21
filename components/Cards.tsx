@@ -164,7 +164,7 @@ export default function CardSection() {
         ))}
       </div>
 
-      <div className="relative w-full h-15 -mb-3 -bottom-15 transform translate-y-1/2 z-5">
+      <div className="relative w-full h-15 mb-10 -bottom-15 transform translate-y-1/2 z-5">
         <Image
           src={"/patterns/top-bar.png"}
           alt="top-bar-pattern"

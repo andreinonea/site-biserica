@@ -1,12 +1,25 @@
 "use client";
 
 import Image from "next/image";
-import { useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import useDebug from "../hooks/useDebug";
 
 gsap.registerPlugin(ScrollTrigger);
+
+type DailyQuote = {
+  text: string;
+  author?: string;
+};
+
+const QUOTE_STORAGE_KEY = "daily-quote";
+const QUOTE_DATE_STORAGE_KEY = "daily-quote-date";
+
+const fallbackQuote: DailyQuote = {
+  text: "Incepe ziua cu rugaciune si vei avea pace.",
+  author: "Proverb ortodox",
+};
 
 type Setter = (value: number | string) => void;
 
@@ -97,7 +110,79 @@ const scaleRange = (start: number, end: number): [number, number] => [
 
 export default function Scene() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [quote, setQuote] = useState<DailyQuote>(fallbackQuote);
   const debug = useDebug();
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    let cancelled = false;
+    const today = new Date().toISOString().slice(0, 10);
+
+    const applyQuote = (value: DailyQuote, persist: boolean) => {
+      if (cancelled) {
+        return;
+      }
+      setQuote(value);
+      if (!persist) {
+        return;
+      }
+      try {
+        window.localStorage.setItem(QUOTE_STORAGE_KEY, JSON.stringify(value));
+        window.localStorage.setItem(QUOTE_DATE_STORAGE_KEY, today);
+      } catch (error) {
+        console.warn("Failed to persist daily quote", error);
+      }
+    };
+
+    const hydrateFromStorage = () => {
+      try {
+        const storedDate = window.localStorage.getItem(QUOTE_DATE_STORAGE_KEY);
+        const storedValue = window.localStorage.getItem(QUOTE_STORAGE_KEY);
+        if (storedValue && storedDate === today) {
+          const parsed = JSON.parse(storedValue) as DailyQuote;
+          applyQuote(parsed, false);
+          return true;
+        }
+      } catch (error) {
+        console.warn("Failed to read stored daily quote", error);
+      }
+      return false;
+    };
+
+    if (!hydrateFromStorage()) {
+      const fetchQuote = async () => {
+        try {
+          const response = await fetch("/data/quote.json", { cache: "no-store" });
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+          }
+          const quotes = (await response.json()) as DailyQuote[];
+          if (!Array.isArray(quotes) || quotes.length === 0) {
+            applyQuote(fallbackQuote, false);
+            return;
+          }
+          const startOfYear = new Date(new Date().getFullYear(), 0, 0);
+          const dayOfYear = Math.floor(
+            (Date.now() - startOfYear.getTime()) / (1000 * 60 * 60 * 24)
+          );
+          const nextQuote = quotes[dayOfYear % quotes.length] ?? fallbackQuote;
+          applyQuote(nextQuote, true);
+        } catch (error) {
+          console.warn("Failed to load quote of the day", error);
+          applyQuote(fallbackQuote, false);
+        }
+      };
+
+      fetchQuote();
+    }
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   useLayoutEffect(() => {
     const container = containerRef.current;
@@ -124,6 +209,8 @@ export default function Scene() {
       const falcon1 = select("[data-scene='falcon-1']")[0];
       const falcon2 = select("[data-scene='falcon-2']")[0];
       const falcon3 = select("[data-scene='falcon-3']")[0];
+      const quoteWrapper = select("[data-scene='quote-wrapper']")[0];
+      const quoteHint = select("[data-scene='quote-hint']")[0];
 
       const setSkyY = createSetter(sky, "y", "px");
       const setCloudY = createSetter(cloud, "y", "px");
@@ -145,6 +232,10 @@ export default function Scene() {
 
       const setFalcon3X = createSetter(falcon3, "x", "px");
       const setFalcon3Opacity = createSetter(falcon3, "opacity");
+      const setQuoteOpacity = createSetter(quoteWrapper, "opacity");
+      const setQuoteScale = createSetter(quoteWrapper, "scale");
+      const setQuoteY = createSetter(quoteWrapper, "y", "px");
+      const setQuoteHintOpacity = createSetter(quoteHint, "opacity");
 
       const cloudOpacityStart = scaleProgress(0.05);
       const cloudOpacityEndMobile = scaleProgress(0.05 + CLOUD_FADE_MOBILE);
@@ -203,6 +294,12 @@ export default function Scene() {
         scaleProgress(0.65),
         scaleProgress(0.7),
       ];
+      const [quoteFadeInStart, quoteFadeInEnd] = scaleRange(-0.2, 0.16);
+      const [quoteFadeOutStart, quoteFadeOutEnd] = scaleRange(0.55, 0.75);
+      const [quoteScaleStart, quoteScaleEnd] = scaleRange(-0.2, 0.6);
+      const [quoteShiftStart, quoteShiftEnd] = scaleRange(-0.2, 0.7);
+      const [quoteHintFadeInStart, quoteHintFadeInEnd] = scaleRange(-.05,0);
+      const [quoteHintFadeOutStart, quoteHintFadeOutEnd] = scaleRange(0.32, 0.4);
 
 
       if (cloud) {
@@ -214,6 +311,12 @@ export default function Scene() {
           gsap.set(element, { scale: SCALE });
         }
       });
+      if (quoteWrapper) {
+        gsap.set(quoteWrapper, { opacity: 0, scale: 1, transformOrigin: "50% 50%" });
+      }
+      if (quoteHint) {
+        gsap.set(quoteHint, { opacity: 0 });
+      }
 
       const updateScene = (progress: number) => {
         const vhUnit = window.innerHeight * 0.01;
@@ -325,6 +428,41 @@ export default function Scene() {
             falconThreeOpacityPoints[1],
             falconThreeOpacityPoints[2],
             falconThreeOpacityPoints[3]
+          )
+        );
+        setQuoteOpacity(
+          segmentedOpacity(
+            progress,
+            quoteFadeInStart,
+            quoteFadeInEnd,
+            quoteFadeOutStart,
+            quoteFadeOutEnd
+          )
+        );
+        setQuoteScale(
+          mapRangeClamped(
+            progress,
+            quoteScaleStart,
+            quoteScaleEnd,
+            isDesktop ? 1.05 : 1,
+            isDesktop ? 0.9 : 0.92
+          )
+        );
+        const quoteYOffset = mapRangeClamped(
+          progress,
+          quoteShiftStart,
+          quoteShiftEnd,
+          15 * vhUnit,
+          -12 * vhUnit
+        );
+        setQuoteY(quoteYOffset);
+        setQuoteHintOpacity(
+          segmentedOpacity(
+            progress,
+            quoteHintFadeInStart,
+            quoteHintFadeInEnd,
+            quoteHintFadeOutStart,
+            quoteHintFadeOutEnd
           )
         );
 
@@ -470,8 +608,38 @@ export default function Scene() {
                 />
               </div>
             </div>
+            <div
+              data-scene="quote-wrapper"
+              className="pointer-events-none absolute inset-x-4 top-[42%] z-10 flex justify-center px-2 md:top-[40%]"
+              style={{ willChange: "transform, opacity" }}
+            >
+              <div className="pointer-events-auto mx-auto max-w-3xl select-text px-4 text-center text-white/90 sm:max-w-2xl md:max-w-4xl md:px-6">
+                <p className="text-xl font-medium leading-snug sm:text-2xl md:text-3xl lg:text-4xl">
+                  <span className="pr-2 text-[#c95d43]">"</span>
+                  {quote.text}
+                  <span className="pl-2 text-[#c95d43]">"</span>
+                </p>
+                {quote.author ? (
+                  <p className="mt-4 text-sm uppercase tracking-wide text-white/60 md:text-base">
+                    - {quote.author}
+                  </p>
+                ) : null}
+                <div
+                  data-scene="quote-hint"
+                  className="mt-8 flex items-center justify-center gap-2 text-xs text-white/60 md:text-sm"
+                >
+                  <span>Gliseaza in jos</span>
+                  <Image
+                    src="/icons/ScrollDownArrows.gif"
+                    alt="Scroll down"
+                    width={30}
+                    height={20}
+                    unoptimized
+                  />
+                </div>
+              </div>
+            </div>
 
-           
           </div>
         </div>
       </div>
