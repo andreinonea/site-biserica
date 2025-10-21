@@ -14,7 +14,7 @@ const HeroSection = () => {
   });
 
   return (
-    <motion.div ref={containerRef} className="transition-colors duration-1000">
+    <motion.div ref={containerRef} className="transition-colors duration-1000 w-[100vw]">
       <div
         style={{
           WebkitMaskImage:

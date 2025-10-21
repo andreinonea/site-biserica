@@ -51,8 +51,8 @@ export default function Scene() {
   return (
     <div className="max-w-screen w-[100vw] h-[200vh]" ref={ref}
     style={{
-        WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black calc(100% - 250px), transparent 100%)',
-        maskImage: 'linear-gradient(to bottom, black 0%, black calc(100% - 250px), transparent 100%)',
+        WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black calc(100% - 150px), transparent 100%)',
+        maskImage: 'linear-gradient(to bottom, black 0%, black calc(100% - 150px), transparent 100%)',
         WebkitMaskSize: '100% 100%',
         maskSize: '100% 100%',
       }}

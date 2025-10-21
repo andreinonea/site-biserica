@@ -82,7 +82,18 @@ const stayYOffset = (value: number, start: number, end: number, initialVh: numbe
 
 const BG_SCROLL = -2500;
 const SCALE = 1.25;
-const FADE = 0.05;
+const CLOUD_FADE_MOBILE = 0.08;
+const CLOUD_FADE_DESKTOP = 0.14;
+const CLOUD_OFFSET_END_MOBILE = 0.12;
+const CLOUD_OFFSET_END_DESKTOP = 0.2;
+const PROGRESS_SCALE = 1.4;
+
+const scaleProgress = (value: number) => value * PROGRESS_SCALE;
+
+const scaleRange = (start: number, end: number): [number, number] => [
+  scaleProgress(start),
+  scaleProgress(end),
+];
 
 export default function Scene() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -135,6 +146,64 @@ export default function Scene() {
       const setFalcon3X = createSetter(falcon3, "x", "px");
       const setFalcon3Opacity = createSetter(falcon3, "opacity");
 
+      const cloudOpacityStart = scaleProgress(0.05);
+      const cloudOpacityEndMobile = scaleProgress(0.05 + CLOUD_FADE_MOBILE);
+      const cloudOpacityEndDesktop = scaleProgress(0.05 + CLOUD_FADE_DESKTOP);
+      const cloudOpacityFadeMobile = Math.max(cloudOpacityEndMobile - cloudOpacityStart, 0.0001);
+      const cloudOpacityFadeDesktop = Math.max(cloudOpacityEndDesktop - cloudOpacityStart, 0.0001);
+      const cloudOffsetRangeMobile = scaleRange(0.05, CLOUD_OFFSET_END_MOBILE);
+      const cloudOffsetRangeDesktop = scaleRange(0.05, CLOUD_OFFSET_END_DESKTOP);
+
+      const [saintRangeStart, saintRangeEnd] = scaleRange(0, 1.1);
+
+      const [principalScaleStart, principalScaleEnd] = scaleRange(0, 0.4);
+      const [principalYStart, principalYEnd] = scaleRange(0.2, 1);
+
+      const falconOneRangeMobile = scaleRange(0.2, 0.35);
+      const falconOneRangeDesktop = scaleRange(0.2, 0.6);
+      const falconOneOpacityPointsMobile = [
+        scaleProgress(0.2),
+        scaleProgress(0.22),
+        scaleProgress(0.33),
+        scaleProgress(0.35),
+      ];
+      const falconOneOpacityPointsDesktop = [
+        scaleProgress(0.2),
+        scaleProgress(0.28),
+        scaleProgress(0.55),
+        scaleProgress(0.6),
+      ];
+
+      const falconTwoRangeMobile = scaleRange(0.2, 0.4);
+      const falconTwoRangeDesktop = scaleRange(0.2, 0.65);
+      const falconTwoOpacityPointsMobile = [
+        scaleProgress(0.2),
+        scaleProgress(0.27),
+        scaleProgress(0.38),
+        scaleProgress(0.4),
+      ];
+      const falconTwoOpacityPointsDesktop = [
+        scaleProgress(0.2),
+        scaleProgress(0.3),
+        scaleProgress(0.6),
+        scaleProgress(0.65),
+      ];
+
+      const falconThreeRangeMobile = scaleRange(0.25, 0.45);
+      const falconThreeRangeDesktop = scaleRange(0.25, 0.7);
+      const falconThreeOpacityPointsMobile = [
+        scaleProgress(0.3),
+        scaleProgress(0.32),
+        scaleProgress(0.43),
+        scaleProgress(0.45),
+      ];
+      const falconThreeOpacityPointsDesktop = [
+        scaleProgress(0.3),
+        scaleProgress(0.35),
+        scaleProgress(0.65),
+        scaleProgress(0.7),
+      ];
+
 
       if (cloud) {
         gsap.set(cloud, { scale: SCALE });
@@ -152,33 +221,112 @@ export default function Scene() {
 
         const isDesktop = window.innerWidth >= 1024;
 
-        setSkyY(BG_SCROLL * progress);
+        const cloudOpacityFade = isDesktop ? cloudOpacityFadeDesktop : cloudOpacityFadeMobile;
+        const [cloudOffsetStart, cloudOffsetEnd] = isDesktop
+          ? cloudOffsetRangeDesktop
+          : cloudOffsetRangeMobile;
 
-        setCloudOpacity(stayOpacity(progress, 0.05, FADE));
-        const cloudBaseOffset = stayYOffset(progress, 0.05, 0.1, 10 * vhUnit);
+        const [falconOneRangeStart, falconOneRangeEnd] = isDesktop
+          ? falconOneRangeDesktop
+          : falconOneRangeMobile;
+        const falconOneOpacityPoints = isDesktop
+          ? falconOneOpacityPointsDesktop
+          : falconOneOpacityPointsMobile;
+
+        const [falconTwoRangeStart, falconTwoRangeEnd] = isDesktop
+          ? falconTwoRangeDesktop
+          : falconTwoRangeMobile;
+        const falconTwoOpacityPoints = isDesktop
+          ? falconTwoOpacityPointsDesktop
+          : falconTwoOpacityPointsMobile;
+
+        const [falconThreeRangeStart, falconThreeRangeEnd] = isDesktop
+          ? falconThreeRangeDesktop
+          : falconThreeRangeMobile;
+        const falconThreeOpacityPoints = isDesktop
+          ? falconThreeOpacityPointsDesktop
+          : falconThreeOpacityPointsMobile;
+
+
+        setSkyY(0);
+
+        setCloudOpacity(stayOpacity(progress, cloudOpacityStart, cloudOpacityFade));
+        const cloudBaseOffset = stayYOffset(
+          progress,
+          cloudOffsetStart,
+          cloudOffsetEnd,
+          10 * vhUnit
+        );
         const cloudLift = isDesktop ? 28 : 14;
         setCloudY(cloudBaseOffset - cloudLift);
 
-        setSaintScale(mapRangeClamped(progress, 0.2, 0.8, 0.8, isDesktop ? 1.7 : 1.2));
-        setSaintOpacity(mapRangeClamped(progress, 0.2, 0.8, 0.6, 1));
-        const saintYOffset = mapRangeClamped(progress, 0.2, 0.8, 90, -25) * 16; // rem -> px
+        setSaintScale(
+          mapRangeClamped(progress, saintRangeStart, saintRangeEnd, 0.8, isDesktop ? 1.7 : 1.2)
+        );
+        setSaintOpacity(mapRangeClamped(progress, saintRangeStart, saintRangeEnd-.4, 0.8, 1));
+        const saintYOffset =
+          mapRangeClamped(progress, saintRangeStart, saintRangeEnd, 90, -21) * 16; // rem -> px
         setSaintY(saintYOffset);
 
-        const principalLift = isDesktop ? 0 : 0;
-        setPrincipalScale(mapRangeClamped(progress, 0, 0.4, 1, 1.2))
-        setPrincipalY(mapRangeClamped(progress, 0.05, 0.5, 0, -principalLift * vhUnit));
+        const principalLift = isDesktop ? 25 : 30;
+        setPrincipalScale(mapRangeClamped(progress, principalScaleStart, principalScaleEnd, 1, 1.2));
+        setPrincipalY(
+          mapRangeClamped(progress, principalYStart, principalYEnd, 0, -principalLift * vhUnit)
+        );
 
-        const falconOneX = mapRangeClamped(progress, 0.2, 0.35, -20 * vwUnit, 120 * vwUnit);
+        const falconOneX = mapRangeClamped(
+          progress,
+          falconOneRangeStart,
+          falconOneRangeEnd,
+          -20 * vwUnit,
+          120 * vwUnit
+        );
         setFalcon1X(falconOneX);
-        setFalcon1Opacity(segmentedOpacity(progress, 0.2, 0.22, 0.33, 0.35));
+        setFalcon1Opacity(
+          segmentedOpacity(
+            progress,
+            falconOneOpacityPoints[0],
+            falconOneOpacityPoints[1],
+            falconOneOpacityPoints[2],
+            falconOneOpacityPoints[3]
+          )
+        );
 
-        const falconTwoX = mapRangeClamped(progress, 0.2, 0.4, 120 * vwUnit, -20 * vwUnit);
+        const falconTwoX = mapRangeClamped(
+          progress,
+          falconTwoRangeStart,
+          falconTwoRangeEnd,
+          120 * vwUnit,
+          -20 * vwUnit
+        );
         setFalcon2X(falconTwoX);
-        setFalcon2Opacity(segmentedOpacity(progress, 0.2, 0.27, 0.38, 0.4));
+        setFalcon2Opacity(
+          segmentedOpacity(
+            progress,
+            falconTwoOpacityPoints[0],
+            falconTwoOpacityPoints[1],
+            falconTwoOpacityPoints[2],
+            falconTwoOpacityPoints[3]
+          )
+        );
 
-        const falconThreeX = mapRangeClamped(progress, 0.25, 0.45, -20 * vwUnit, 120 * vwUnit);
+        const falconThreeX = mapRangeClamped(
+          progress,
+          falconThreeRangeStart,
+          falconThreeRangeEnd,
+          -20 * vwUnit,
+          120 * vwUnit
+        );
         setFalcon3X(falconThreeX);
-        setFalcon3Opacity(segmentedOpacity(progress, 0.3, 0.32, 0.43, 0.45));
+        setFalcon3Opacity(
+          segmentedOpacity(
+            progress,
+            falconThreeOpacityPoints[0],
+            falconThreeOpacityPoints[1],
+            falconThreeOpacityPoints[2],
+            falconThreeOpacityPoints[3]
+          )
+        );
 
       };
 
@@ -245,7 +393,7 @@ export default function Scene() {
 
             <div
               data-scene="cloud"
-              className="absolute left-1/2 top-[17%] -translate-x-1/2 -translate-y-1/2"
+              className="absolute left-1/2 top-[18%] md:top-[17%] -translate-x-1/2 -translate-y-1/2"
               style={{ willChange: "transform, opacity" }}
             >
               <div className="relative aspect-[3/2] w-[120vw] max-w-[1800px] md:w-[90vw]">
@@ -261,7 +409,7 @@ export default function Scene() {
 
             <div
               data-scene="saint"
-              className="absolute left-1/2 -top-1/2 -translate-x-1/2 translate-y-1/2 z-20"
+              className="absolute left-1/2 -top-1/4 -translate-x-1/2 translate-y-1/2 z-20"
               style={{ willChange: "transform, opacity" }}
             >
               <div className="relative aspect-[3/4] w-[70vw] max-w-[320px] sm:w-[50vw] md:w-[30vw]">
