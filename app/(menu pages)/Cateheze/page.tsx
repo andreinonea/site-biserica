@@ -44,50 +44,63 @@ const CatehezaCard: React.FC<CatehezaCardProps> = ({
 }) => {
   const waveformRef = useRef<HTMLDivElement | null>(null);
   const wavesurferRef = useRef<WaveSurfer | null>(null);
+  const pendingPlayRef = useRef(false);
   const [isReady, setIsReady] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
+  const [hasRequestedLoading, setHasRequestedLoading] = useState(false);
 
-  // Initialize Wavesurfer when component mounts or item.audioUrl changes
   useEffect(() => {
-    if (!waveformRef.current) return;
+    return () => {
+      if (wavesurferRef.current) {
+        wavesurferRef.current.destroy();
+        wavesurferRef.current = null;
+      }
+    };
+  }, []);
 
-    // Destroy existing instance if any
-    if (wavesurferRef.current) {
-      wavesurferRef.current.destroy();
-      wavesurferRef.current = null;
+  const initializeWaveSurfer = useCallback(() => {
+    if (wavesurferRef.current || !waveformRef.current) {
+      return wavesurferRef.current;
     }
+
+    setIsReady(false);
+    setDuration(0);
+    setCurrentTime(0);
 
     const ws = WaveSurfer.create({
       container: waveformRef.current,
       ...defaultWsOptions,
-      url: item.audioUrl,
     });
 
     wavesurferRef.current = ws;
 
     ws.on("ready", () => {
       setIsReady(true);
-      const dur = ws.getDuration();
-      setDuration(dur);
+      setDuration(ws.getDuration());
+      setHasRequestedLoading(false);
+
+      if (pendingPlayRef.current) {
+        ws.play();
+        pendingPlayRef.current = false;
+      }
     });
 
     ws.on("audioprocess", () => {
-      const t = ws.getCurrentTime();
-      setCurrentTime(t);
+      setCurrentTime(ws.getCurrentTime());
     });
 
     ws.on("seek", () => {
-      const t = ws.getCurrentTime();
-      setCurrentTime(t);
+      setCurrentTime(ws.getCurrentTime());
     });
 
     ws.on("finish", () => {
       setIsPlaying(false);
       onRequestPause(item.id);
-      // Reset position (optional)
+      pendingPlayRef.current = false;
       ws.seekTo(0);
+      setCurrentTime(0);
     });
 
     ws.on("play", () => {
@@ -96,11 +109,12 @@ const CatehezaCard: React.FC<CatehezaCardProps> = ({
 
     ws.on("pause", () => {
       setIsPlaying(false);
+      pendingPlayRef.current = false;
     });
 
-    return () => {
-      ws.destroy();
-    };
+    ws.load(item.audioUrl);
+
+    return ws;
   }, [item.audioUrl, item.id, onRequestPause]);
 
   // Pause if this card is no longer active
@@ -110,11 +124,38 @@ const CatehezaCard: React.FC<CatehezaCardProps> = ({
     if (!isActive && ws.isPlaying()) {
       ws.pause();
     }
+    if (!isActive) {
+      pendingPlayRef.current = false;
+      setHasRequestedLoading(false);
+    }
   }, [isActive]);
 
   const togglePlayback = useCallback(() => {
-    const ws = wavesurferRef.current;
-    if (!ws || !isReady) return;
+    const requestAutoplay = () => {
+      pendingPlayRef.current = true;
+      setHasRequestedLoading(true);
+      onRequestPlay(item.id);
+    };
+
+    let ws = wavesurferRef.current;
+
+    if (!ws) {
+      requestAutoplay();
+      const instance = initializeWaveSurfer();
+      if (!instance) {
+        pendingPlayRef.current = false;
+        setHasRequestedLoading(false);
+        onRequestPause(item.id);
+        return;
+      }
+      ws = instance;
+      if (!isReady) {
+        return;
+      }
+    } else if (!isReady) {
+      requestAutoplay();
+      return;
+    }
 
     if (ws.isPlaying()) {
       ws.pause();
@@ -123,7 +164,7 @@ const CatehezaCard: React.FC<CatehezaCardProps> = ({
       onRequestPlay(item.id);
       ws.play();
     }
-  }, [isReady, item.id, onRequestPause, onRequestPlay]);
+  }, [initializeWaveSurfer, isReady, item.id, onRequestPause, onRequestPlay]);
 
   const formatTime = (value: number) => {
     if (!Number.isFinite(value) || value <= 0) {
@@ -200,6 +241,11 @@ const CatehezaCard: React.FC<CatehezaCardProps> = ({
           className="h-full w-full"
         ></div>
       </div>
+      {hasRequestedLoading && !isReady && (
+        <p className="mt-3 text-xs text-white/70">
+          Se incarca cateheza...
+        </p>
+      )}
     </div>
   );
 };
