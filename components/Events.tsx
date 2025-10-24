@@ -130,7 +130,7 @@ const Events = () => {
         <Image
           src={"/patterns/top-bar.png"}
           alt="top-bar-pattern"
-          className="object-cover "
+          className="object-cover"
           fill
         />
       </div>

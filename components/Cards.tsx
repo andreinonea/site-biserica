@@ -50,7 +50,7 @@ const Cards: Card[] = [
 
 const variantClasses = {
   Card1: "h-48 sm:h-64 md:h-80 lg:h-[400px] object-contain object-cover",
-  Card2: "h-24 sm:h-[10px] md:h-[300px] object-contain object-cover",
+  Card2: "h-24 sm:h-64 md:h-[300px] object-contain object-cover",
   Card3: "h-48 sm:h-64 md:h-80 lg:h-[400px]",
 };
 
@@ -119,7 +119,7 @@ export default function CardSection() {
 
 
   return (
-    <section ref={rootRef} className="text-white mt-40">
+    <section ref={rootRef} className="text-white mt-40 h-[171vh]">
       <div className="l-cards mx-auto flex max-w-[1200px] flex-col gap-6 px-6 pb-24">
         {Cards.map((card) => (
           <article
