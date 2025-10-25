@@ -5,6 +5,7 @@ import Link from "next/link";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useLayoutEffect, useRef } from "react";
+import useDebug from "../components/hooks/useDebug";
 
 type CardVariant = "Card1" | "Card2" | "Card3";
 
@@ -50,12 +51,13 @@ const Cards: Card[] = [
 
 const variantClasses = {
   Card1: "h-48 sm:h-64 md:h-80 lg:h-[400px] object-contain object-cover",
-  Card2: "h-24 sm:h-64 md:h-[300px] object-contain object-cover",
+  Card2: "h-48 sm:h-64 md:h-[300px] object-contain object-cover",
   Card3: "h-48 sm:h-64 md:h-80 lg:h-[400px]",
 };
 
 export default function CardSection() {
   const rootRef = useRef<HTMLDivElement | null>(null);
+  const debug = useDebug();
 
   useLayoutEffect(() => {
   if (!rootRef.current) return;
@@ -68,22 +70,24 @@ export default function CardSection() {
 
     const lastCardIndex = cards.length - 1;
 
-    // Reference ScrollTrigger for the last card
-    const lastCardST = ScrollTrigger.create({
-      trigger: cards[lastCardIndex],
-      start: "center center",
-    });
+   
 
     // 🔹 Pin, scale and fade logic
     cards.forEach((card, index) => {
       const isLast = index === lastCardIndex;
+
+      // Reference ScrollTrigger for the last card
+      const lastCardST = ScrollTrigger.create({
+        trigger: cards[isLast ? index : index+1],
+        start: "center center",
+      });
 
       gsap.set(card, { opacity: 1, scale: 1 }); // Start fully visible
 
       // When card leaves, fade out + scale down
       const anim = gsap.to(card, {
         opacity: isLast ? 1 : 0, // Last one stays visible
-        scale: isLast ? 1 : 0.5,
+        scale: isLast ? 1 : .7,
         ease: "power2.inOut",
       });
 
@@ -95,6 +99,8 @@ export default function CardSection() {
         pinSpacing: false,
         scrub: 0.6,
         animation: anim,
+        markers : debug
+        
       });
 
       // Optional subtle parallax on image
@@ -119,7 +125,7 @@ export default function CardSection() {
 
 
   return (
-    <section ref={rootRef} className="text-white mt-40 h-[171vh]">
+    <section ref={rootRef} className="text-white mt-40 h-440">
       <div className="l-cards mx-auto flex max-w-[1200px] flex-col gap-6 px-6 pb-24">
         {Cards.map((card) => (
           <article

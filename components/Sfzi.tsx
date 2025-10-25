@@ -1,4 +1,4 @@
-"use client";
+ "use client";
 import { useRef, useEffect, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import Image from "next/image";
@@ -18,28 +18,38 @@ const Sfzi = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [sfinti, setSfinti] = useState<string[]>([]);
 
+  // components/Sfzi.tsx
 useEffect(() => {
   const today = new Date();
   const yyyy = today.getFullYear();
   const mm = String(today.getMonth() + 1).padStart(2, "0");
   const dd = String(today.getDate()).padStart(2, "0");
   const dateKey = `${yyyy}-${mm}-${dd}`;
-  const monthKey = `${yyyy}-${mm}`;
 
   fetch("/data/calendar.json")
     .then((res) => res.json())
     .then((data: Record<string, Record<string, LocalDay>>) => {
-      const entry = data[monthKey]?.[dateKey];
-      if (entry && entry.sfinți?.length > 0) {
-        setSfinti(entry.sfinți);
-      } else {
-        setSfinti(["Niciun sfânt înregistrat azi."]);
-      }
-    })
-    .catch(() => {
-      setSfinti(["Eroare la încărcarea calendarului."]);
-    });
+  const monthKey = `${yyyy}-${mm}`;
+  const dateKey = `${yyyy}-${mm}-${dd}`;
+
+  let entry: LocalDay | undefined = data[monthKey]?.[dateKey];
+
+  if (!entry) {
+    const availableDays = Object.entries(data)
+      .flatMap(([, days]) =>
+        Object.entries(days).map(([fullDate, value]) => ({ fullDate, value }))
+      )
+      .sort((a, b) => a.fullDate.localeCompare(b.fullDate));
+
+    entry = availableDays.at(-1)?.value;
+  }
+
+  setSfinti(
+    entry?.sfinți?.length ? entry.sfinți : ["Nu există date pentru ziua de azi."]
+  );})
+    .catch(() => setSfinti(["Eroare la încărcarea calendarului."]));
 }, []);
+
 
   return (
     <>
@@ -47,7 +57,6 @@ useEffect(() => {
         <div className="flex justify-center">
           <div className="w-full flex flex-col justify-center min-w-min">
 
-            {/* Image background section */}
             <section className="relative overflow-hidden">
 
               <img

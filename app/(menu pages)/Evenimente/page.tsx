@@ -85,8 +85,9 @@ const EvenimentePage = () => {
               alt="program-background"
               fill
             />
-            <div className="absolute inset-0 z-5 bg-gradient-to-b from-[#5a2c00]/40 via-[#8a4b00]/30 to-[#2e1200]/50 mix-blend-overlay" />
-
+            <div className="absolute inset-0 z-5 bg-gradient-to-b 
+                from-[#FFDB99]/80 via-[#D49649]/50 to-[#5E2308]/90 
+                mix-blend-overlay" />
           </div>
         </div>
 

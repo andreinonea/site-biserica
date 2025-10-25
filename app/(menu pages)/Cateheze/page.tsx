@@ -177,19 +177,19 @@ const CatehezaCard: React.FC<CatehezaCardProps> = ({
 
   return (
     <div
-      className="z-13 mb-6 rounded-2xl border border-white/10 bg-gradient-to-br from-[#1d1116] via-[#12070f] to-[#050209]/90 p-6 shadow-[0_25px_60px_rgba(0,0,0,0.35)] backdrop-blur-sm transition hover:border-white/20"
-      style={{
-        backgroundImage:
-          "radial-gradient(circle at top left, rgba(255, 121, 198, 0.25), transparent 55%), radial-gradient(circle at bottom right, rgba(255, 196, 112, 0.18), transparent 45%)",
-      }}
+      className="relative  mb-6 rounded-xl  p-6 transition-all duration-500 hover:border-white/20 overflow-hidden"
+      // style={{
+      //   backgroundImage:
+      //     "radial-gradient(circle at top left, rgba(112, 47, 121, 0.14), transparent 35%), radial-gradient(circle at bottom right, rgba(82, 66, 44, 0.18), transparent 15%)",
+      // }}
     >
-      <div className="flex items-start justify-between gap-4 z-5">
+      <div className="flex items-start justify-between gap-4">
         <div className="flex flex-1 items-start gap-4">
           <button
             type="button"
             onClick={togglePlayback}
             aria-label={`${isPlaying ? "Pauza" : "Play"} ${item.title}`}
-            className={`flex h-16 w-16 items-center justify-center rounded-full border border-white/30 bg-black/30 transition hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${isPlaying ? "border-amber-400 bg-amber-400/20" : ""
+            className={`flex h-15 w-15 items-center justify-center rounded-full border border-white/13 bg-black/30 transition hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${isPlaying ? "border-amber-400 bg-amber-400/20" : ""
               }`}
           >
             {isPlaying ? (
@@ -215,37 +215,37 @@ const CatehezaCard: React.FC<CatehezaCardProps> = ({
           </button>
 
           <div>
-            <h2 className="text-xl font-semibold text-white">
-              {item.title}
-            </h2>
+            <h2 className="text-xl font-semibold text-white">{item.title}</h2>
             <p className="mt-1 max-w-xl text-sm text-white/70">
               {item.description}
             </p>
           </div>
         </div>
 
-        <div className="text-right text-sm text-white/60">
-          <span className="text-white">
-            {formatTime(currentTime)}
-          </span>
-          <span className="text-white/40">
-            {" "}
-            / {formatTime(duration)}
-          </span>
-        </div>
+        {isActive && isReady && (
+          <div className="text-right text-sm text-white/60 transition-opacity duration-300">
+            <span className="text-white">{formatTime(currentTime)}</span>
+            <span className="text-white/40"> / {formatTime(duration)}</span>
+          </div>
+        )}
       </div>
 
-      <div className="mt-6 h-20 w-full ">
-        <div
-          ref={waveformRef}
-          className="h-full w-full"
-        ></div>
-      </div>
-      {hasRequestedLoading && !isReady && (
-        <p className="mt-3 text-xs text-white/70">
-          Se incarca cateheza...
-        </p>
-      )}
+      <motion.div
+        initial={{ height: 0, opacity: 0 }}
+        animate={{
+          height: isActive ? "auto" : 0,
+          opacity: isActive ? 1 : 0,
+        }}
+        transition={{ duration: 0.7, ease: "easeInOut" }}
+        className="overflow-hidden"
+      >
+        <div className="mt-6 h-20 w-full">
+          <div ref={waveformRef} className="h-full w-full"></div>
+        </div>
+        {hasRequestedLoading && !isReady && (
+          <p className="mt-3 text-xs text-white/70">Se încarcă cateheza...</p>
+        )}
+      </motion.div>
     </div>
   );
 };
@@ -284,20 +284,33 @@ const CatehezePage: React.FC = () => {
         transition={{ duration: 0.6, ease: "easeInOut" }}
         className="min-h-screen w-screen px-6 py-12 text-white relative"
       >
-        <div className="absolute z-0 pointer-none h-full inset-0 isolate opacity-20">
-          <div className="relative h-full">
+        <div className="absolute  mask-b-from-0 inset-0 isolate w-full  opacity-30 ">
+          <div className="relative w-full h-full">
             <Image
               fill
-              className="z-4 object-cover absolute mix-blend-overlay"
-              alt="background"
-              src={"/background/concrete_wall_003_rough_8k.jpg"}
+              priority
+              alt="background-desktop"
+              src={"/background/concrete_wall_003_rough_8k.webp"}
+              className="hidden sm:block z-4 absolute object-cover object-center mix-blend-multiply"
+            />
+
+            <Image
+              fill
+              priority
+              alt="background-mobile"
+              src={"/background/concrete_wall_003_rough_8k phone.webp"}
+              className="block sm:hidden z-4 absolute object-cover object-left mix-blend-multiply"
             />
             <Image
-              className="z-2 blur-sm bg-black-800 object-cover"
-              src={"/assets/fundal-program.png"}
+              className="z-2 blur-md bg-black-500 object-cover"
+              src={"/assets/fundal-program_phone.webp"}
               alt="program-background"
               fill
             />
+            <div className="absolute inset-0 z-5 bg-gradient-to-b 
+                       from-[#FFDB99]/80 via-[#D49649]/50 to-[#5E2308]/90 
+                       mix-blend-overlay" />
+
           </div>
         </div>
 
@@ -309,7 +322,7 @@ const CatehezePage: React.FC = () => {
 
         <div className="flex flex-col items-center ">
           {cateheze.map((item) => (
-            <div className="w-full sm:w-3/4 lg:w-2/3" key={item.id}>
+            <div className="w-full sm:w-3/4 lg:w-2/3 border-b border-[#C59D30]/30 pb-4 mb-9" key={item.id}>
               <CatehezaCard
                 item={item}
                 isActive={activeId === item.id}

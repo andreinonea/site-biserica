@@ -147,6 +147,9 @@ export default function Programliturgic() {
             alt="program-background"
             fill
           />
+          <div className="absolute inset-0 z-5 bg-gradient-to-b 
+                from-[#FFDB99]/80 via-[#D49649]/50 to-[#5E2308]/90 
+                mix-blend-overlay" />
         </div>
       </div>
 

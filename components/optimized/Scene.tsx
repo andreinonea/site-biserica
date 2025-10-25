@@ -190,13 +190,35 @@ export default function Scene() {
       return;
     }
 
-    const computeScrollDistance = () => {
-      const height = container.scrollHeight || 0;
-      const viewport = window.innerHeight || 1;
-      if (height <= viewport) {
-        return viewport;
+    const mediaElements = Array.from(
+      container.querySelectorAll("img")
+    ) as HTMLImageElement[];
+
+    const handleMediaLoad = () => {
+      ScrollTrigger.refresh();
+    };
+
+    const handleResize = () => {
+      ScrollTrigger.refresh();
+    };
+
+    mediaElements.forEach((img) => {
+      if (img.complete) {
+        return;
       }
-      return (height - viewport);
+      img.addEventListener("load", handleMediaLoad);
+      img.addEventListener("error", handleMediaLoad);
+    });
+
+    window.addEventListener("resize", handleResize);
+
+    let refreshRaf: number | null = null;
+
+    const computeScrollDistance = () => {
+      const height = container.scrollHeight || container.clientHeight || 0;
+      const viewport = window.innerHeight || 1;
+      const distance = height <= viewport ? viewport : height - viewport;
+      return Math.max(1, Math.round(distance));
     };
 
     const ctx = gsap.context(() => {
@@ -471,7 +493,7 @@ export default function Scene() {
       const scrollTrigger = ScrollTrigger.create({
         trigger: container,
         start: "top top",
-        end: () => "=" + computeScrollDistance(),
+        end: () => "+=" + computeScrollDistance(),
         scrub: true,
         pin: true,
         pinSpacing: true,
@@ -481,6 +503,7 @@ export default function Scene() {
         onRefresh: ({ progress }) => updateScene(progress ?? 0),
       });
 
+      refreshRaf = window.requestAnimationFrame(() => ScrollTrigger.refresh());
       updateScene(scrollTrigger.progress ?? 0);
 
       return () => {
@@ -488,7 +511,17 @@ export default function Scene() {
       };
     }, container);
 
-    return () => ctx.revert();
+    return () => {
+      if (refreshRaf !== null) {
+        cancelAnimationFrame(refreshRaf);
+      }
+      window.removeEventListener("resize", handleResize);
+      mediaElements.forEach((img) => {
+        img.removeEventListener("load", handleMediaLoad);
+        img.removeEventListener("error", handleMediaLoad);
+      });
+      ctx.revert();
+    };
   }, [debug]);
 
   return (

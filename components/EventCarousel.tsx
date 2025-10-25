@@ -66,7 +66,11 @@ export default function SimpleCarousel({ slides }: { slides: Slide[] }) {
   const maxLightboxDrag = Math.max(0, (slides.length - 1) * lightboxWidth);
 
   const handleDragEnd = () => {
-    const xEnd = x.get();
+
+    let xEnd = x.get();
+    const offset =  Math.abs(xEnd / (width + slideGap)) > current ? -width/5 : width/5 ;
+    xEnd += offset;
+
     if (width === 0) return;
     const rawIndex = Math.round(Math.abs(xEnd) / (width + slideGap));
     const newIndex = Math.min(Math.max(rawIndex, 0), slides.length - 1);
@@ -75,7 +79,9 @@ export default function SimpleCarousel({ slides }: { slides: Slide[] }) {
   };
 
   const handleLightboxDragEnd = (_: any, info: any) => {
-    const xEnd = lightboxX.get();
+    let xEnd = lightboxX.get();
+    const offset =  Math.abs(xEnd / lightboxWidth) > lightboxIndex ? -lightboxWidth/3 : lightboxWidth/3 ;
+    xEnd += offset;
     if (lightboxWidth === 0) return;
     const rawIndex = Math.round(Math.abs(xEnd) / lightboxWidth);
     const newIndex = Math.min(Math.max(rawIndex, 0), slides.length - 1);

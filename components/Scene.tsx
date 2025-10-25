@@ -95,23 +95,23 @@ export default function Scene() {
           </div>
         </M.div>
 
-        <M.div className="absolute top-[16%]" style={{ x: falcon2X, opacity: falcon2Opacity, scale: SCALE }}>
+        {/* <M.div className="absolute top-[16%]" style={{ x: falcon2X, opacity: falcon2Opacity, scale: SCALE }}>
           <div className="relative w-[40vw] md:w-[22vw] max-w-[520px] aspect-[16/10]">
             <Image src="/assets/Falcon2.webp" alt="Falcon 2" fill className="object-contain" />
           </div>
-        </M.div>
-
+        </M.div> */}
+{/* 
         <M.div className="absolute bottom-[10%]" style={{ x: falcon3X, opacity: falcon3Opacity, scale: SCALE }}>
           <div className="relative w-[42vw] md:w-[24vw] max-w-[560px] aspect-[16/10]">
             <Image src="/assets/Falcon3.webp" alt="Falcon 3" fill className="object-contain" />
           </div>
-        </M.div>
+        </M.div> */}
 
-        <M.div className="absolute bottom-[12%]" style={{ x: falcon4X, opacity: falcon4Opacity, scale: SCALE }}>
+        {/* <M.div className="absolute bottom-[12%]" style={{ x: falcon4X, opacity: falcon4Opacity, scale: SCALE }}>
           <div className="relative w-[42vw] md:w-[24vw] max-w-[560px] aspect-[16/10]">
             <Image src="/assets/Falcon4.webp" alt="Falcon 4" fill className="object-contain" />
           </div>
-        </M.div>
+        </M.div> */}
       </div>
     </div>
   );
