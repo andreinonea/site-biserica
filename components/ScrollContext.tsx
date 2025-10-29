@@ -10,13 +10,14 @@ interface ScrollContextValue {
 
 const ScrollContext = createContext<ScrollContextValue | null>(null);
 
+const isTouch = 'ontouchstart' in window;
+
 export const ScrollProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.1,
       easing: (t) => Math.min(1, 1 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-      smoothTouch: false,
+      smoothWheel: !isTouch,
     });
 
     let frameId = 0;

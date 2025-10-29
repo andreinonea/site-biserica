@@ -169,7 +169,7 @@ const EvenimentePage = () => {
                     </div>
 
                     {ev.slides && ev.slides.length > 0 && (
-                      <div className="w-full md:w-1/2 mt-4 md:mt-0">
+                      <div className="px-0 md:px-4 w-full md:w-1/2 mt-4 md:mt-0">
                         <SimpleCarousel slides={ev.slides} />
                       </div>
                     )}

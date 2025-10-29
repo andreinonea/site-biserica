@@ -94,6 +94,18 @@ export default function Programliturgic() {
     'Wine, Oil and Caviar are Allowed': 'Dezlegare la vin, untdelemn și icre'
   };
 
+  const fastExceptionIcons: Record<string, string[]> = {
+    'Fast Free': ['/icons/fast-free.svg'],
+    'Fish, Wine and Oil are Allowed': ['/icons/fish.svg', '/icons/wine.svg', '/icons/oil.svg'],
+    'Meat Fast': ['/icons/meat.svg'],
+    'No overrides': ['/icons/no-overrides.svg'],
+    'Wine and Oil are Allowed': ['/icons/wine.svg', '/icons/oil.svg'],
+    'Wine is Allowed': ['/icons/wine.svg'],
+    'Wine, Oil and Caviar are Allowed': ['/icons/wine.svg', '/icons/oil.svg', '/icons/caviar.svg']
+  };
+
+
+
   const translateFastLevel = (text?: string) =>
     text ? (fastLevelTranslations[text] ?? text) : '';
 
@@ -155,18 +167,34 @@ export default function Programliturgic() {
 
       <div className="relative max-w-4xl mx-auto z-1 cursor-pointer">
         <div className="flex justify-between items-center mt-3 mb-20 ">
-          <button onClick={() => changeMonth(-1)} className="mr-1 text-[#C59D30]/60 hover:underline">
+
+          <button
+            onClick={() => changeMonth(-1)}
+            className="mr-1 text-[#C59D30]/60 hover:underline  md:hidden"
+          >
             luna anterioară ←
           </button>
+
+          {/* Large screens: arrow at the front */}
+          <button
+            onClick={() => changeMonth(-1)}
+            className="mr-1 text-[#C59D30]/60 hover:underline hidden md:inline"
+          >
+            ← luna anterioară
+          </button>
+
+
+
 
           <h1 className="text-[30px] text-center">
             Calendar {getMonthName(month)}{" "}
             <span className="font-[Dutch Mediaeval] ">{year}</span>
           </h1>
 
-          <button onClick={() => changeMonth(1)} className="ml-2 text-[#C59D30]/60 hover:underline">
+          <button onClick={() => changeMonth(1)} className="ml-2 text-[#C59D30]/60 hover:underline ">
             luna următoare →
           </button>
+
         </div>
 
         {loading && <p className="text-gray-400">Se încarcă...</p>}
@@ -214,9 +242,33 @@ export default function Programliturgic() {
                 {translatedFastLevel && (
                   <p className="mt-2 "><strong className='text-[#C59D30]/80 italic'>Post:</strong> <p className=" inline-block text-white/80">{translatedFastLevel}</p></p>
                 )}
-                {translatedFastException && (
-                  <p><strong className='text-[#C59D30]/80 italic'>Dezlegări:</strong> <p className=" inline text-white/80">{translatedFastException}</p></p>
-                )}
+
+                {translatedFastException &&
+                  fastInfo?.fast_level_desc &&
+                  fastInfo.fast_level_desc !== 'No Fast' && (
+
+
+                    <div className="flex items-center gap-2 mt-2">
+                      <strong className="text-[#C59D30]/80 italic">Dezlegări:</strong>
+                      <p className="inline text-white/80">{translatedFastException}</p>
+
+                      {fastInfo?.fast_exception_desc &&
+                        fastExceptionIcons[fastInfo.fast_exception_desc] && (
+                          <div className="flex items-center gap-2 mt-2">
+                            {fastExceptionIcons[fastInfo.fast_exception_desc].map((icon, idx) => (
+                              <Image
+                                key={idx}
+                                src={icon}
+                                alt={fastInfo.fast_exception_desc ? fastInfo.fast_exception_desc : ""}
+                                width={20}
+                                height={20}
+                              />
+                            ))}
+                          </div>
+                        )}
+                    </div>
+                  )}
+
               </div>
             );
           });

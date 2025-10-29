@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { MapPin, Mail } from 'lucide-react'
 import Image from 'next/image'
+import GoogleMap from '@/components/GoogleMap'
 
 const page = () => {
   return (
@@ -15,9 +16,9 @@ const page = () => {
         transition={{ duration: 0.6, ease: 'easeInOut' }}
         className="min-h-screen bg-[#0A0004] px-6 py-12 text-white"
       >
-        <div className="absolute mask-b-from-0 inset-0 isolate w-full opacity-20 z-6">
+        <div className="absolute mask-b-from-0 inset-0 isolate w-full opacity-20 z-6 pointer-events-none">
           <div className="relative h-full overflow-x-hidden">
-            <Image
+           <Image
               fill
               className="z-4 object-cover absolute mix-blend-multiply"
               alt="background"
@@ -28,7 +29,7 @@ const page = () => {
               src={"/assets/fundal-program.png"}
               alt="program-background"
               fill
-            />
+            /> *
           </div>
         </div>
         <div className="flex justify-center text-4xl mt-[100px] mb-12 font-semibold text-white/90">
@@ -76,16 +77,7 @@ const page = () => {
           </div>
 
           <div className="border-t border-white/20 pt-6 mt-6">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2849.422993934138!2d26.134679315750228!3d44.43631617910293!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40b1ffb5e7e11ebd%3A0x6b7baf545d64b6ff!2sStrada%20Foi%C8%99orului%20119%2C%20Bucure%C8%99ti!5e0!3m2!1sro!2sro!4v1691062345678!5m2!1sro!2sro"
-              width="100%"
-              height="350"
-              style={{ border: 0, borderRadius: '10px' }}
-              allowFullScreen={false}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              title="Hartă Strada Foișorului 119 București"
-            ></iframe>
+            <GoogleMap />
           </div>
         </div>
         <div className="flex place-content-center mt-[30px]">

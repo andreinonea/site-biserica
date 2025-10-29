@@ -8,7 +8,7 @@ import React, {
 } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import WaveSurfer from "wavesurfer.js";
+import WaveSurfer, {WaveSurferOptions} from "wavesurfer.js";
 
 type Cateheza = {
   id: number;
@@ -24,7 +24,7 @@ type CatehezaCardProps = {
   onRequestPause: (id: number) => void;
 };
 
-const defaultWsOptions: Partial<WaveSurfer.Params> = {
+const defaultWsOptions: Partial<WaveSurferOptions> = {
   waveColor: "#ffffff33",
   progressColor: "#ffcc77",
   cursorColor: "#ffffff55",
@@ -32,8 +32,6 @@ const defaultWsOptions: Partial<WaveSurfer.Params> = {
   barGap: 2,
   height: 80,
   normalize: true,
-  responsive: true,
-  // You can add more options here (e.g. backend, interact, etc.)
 };
 
 const CatehezaCard: React.FC<CatehezaCardProps> = ({
@@ -91,7 +89,7 @@ const CatehezaCard: React.FC<CatehezaCardProps> = ({
       setCurrentTime(ws.getCurrentTime());
     });
 
-    ws.on("seek", () => {
+    ws.on("timeupdate", () => {
       setCurrentTime(ws.getCurrentTime());
     });
 
