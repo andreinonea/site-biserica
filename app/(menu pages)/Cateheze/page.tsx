@@ -1,14 +1,9 @@
-﻿"use client";
+﻿'use client';
 
-import React, {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import WaveSurfer, {WaveSurferOptions} from "wavesurfer.js";
+import type { WaveSurferOptions } from "wavesurfer.js";
 
 type Cateheza = {
   id: number;
@@ -41,7 +36,7 @@ const CatehezaCard: React.FC<CatehezaCardProps> = ({
   onRequestPause,
 }) => {
   const waveformRef = useRef<HTMLDivElement | null>(null);
-  const wavesurferRef = useRef<WaveSurfer | null>(null);
+  const wavesurferRef = useRef<any>(null); // WaveSurfer instance
   const pendingPlayRef = useRef(false);
   const [isReady, setIsReady] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -58,10 +53,12 @@ const CatehezaCard: React.FC<CatehezaCardProps> = ({
     };
   }, []);
 
-  const initializeWaveSurfer = useCallback(() => {
-    if (wavesurferRef.current || !waveformRef.current) {
+  const initializeWaveSurfer = useCallback(async () => {
+    if (wavesurferRef.current || !waveformRef.current || typeof window === "undefined") {
       return wavesurferRef.current;
     }
+
+    const WaveSurfer = (await import("wavesurfer.js")).default;
 
     setIsReady(false);
     setDuration(0);
@@ -101,34 +98,28 @@ const CatehezaCard: React.FC<CatehezaCardProps> = ({
       setCurrentTime(0);
     });
 
-    ws.on("play", () => {
-      setIsPlaying(true);
-    });
-
+    ws.on("play", () => setIsPlaying(true));
     ws.on("pause", () => {
       setIsPlaying(false);
       pendingPlayRef.current = false;
     });
 
     ws.load(item.audioUrl);
-
     return ws;
   }, [item.audioUrl, item.id, onRequestPause]);
 
-  // Pause if this card is no longer active
+  // Pause if card not active
   useEffect(() => {
     const ws = wavesurferRef.current;
     if (!ws) return;
-    if (!isActive && ws.isPlaying()) {
-      ws.pause();
-    }
+    if (!isActive && ws.isPlaying()) ws.pause();
     if (!isActive) {
       pendingPlayRef.current = false;
       setHasRequestedLoading(false);
     }
   }, [isActive]);
 
-  const togglePlayback = useCallback(() => {
+  const togglePlayback = useCallback(async () => {
     const requestAutoplay = () => {
       pendingPlayRef.current = true;
       setHasRequestedLoading(true);
@@ -139,7 +130,7 @@ const CatehezaCard: React.FC<CatehezaCardProps> = ({
 
     if (!ws) {
       requestAutoplay();
-      const instance = initializeWaveSurfer();
+      const instance = await initializeWaveSurfer();
       if (!instance) {
         pendingPlayRef.current = false;
         setHasRequestedLoading(false);
@@ -147,9 +138,7 @@ const CatehezaCard: React.FC<CatehezaCardProps> = ({
         return;
       }
       ws = instance;
-      if (!isReady) {
-        return;
-      }
+      if (!isReady) return;
     } else if (!isReady) {
       requestAutoplay();
       return;
@@ -165,58 +154,38 @@ const CatehezaCard: React.FC<CatehezaCardProps> = ({
   }, [initializeWaveSurfer, isReady, item.id, onRequestPause, onRequestPlay]);
 
   const formatTime = (value: number) => {
-    if (!Number.isFinite(value) || value <= 0) {
-      return "0:00";
-    }
+    if (!Number.isFinite(value) || value <= 0) return "0:00";
     const minutes = Math.floor(value / 60);
     const seconds = Math.floor(value % 60);
     return `${minutes}:${seconds.toString().padStart(2, "0")}`;
   };
 
   return (
-    <div
-      className="relative  mb-6 rounded-xl  p-6 transition-all duration-500 hover:border-white/20 overflow-hidden"
-      // style={{
-      //   backgroundImage:
-      //     "radial-gradient(circle at top left, rgba(112, 47, 121, 0.14), transparent 35%), radial-gradient(circle at bottom right, rgba(82, 66, 44, 0.18), transparent 15%)",
-      // }}
-    >
+    <div className="relative mb-6 rounded-xl p-6 transition-all duration-500 hover:border-white/20 overflow-hidden">
       <div className="flex items-start justify-between gap-4">
         <div className="flex flex-1 items-start gap-4">
           <button
             type="button"
             onClick={togglePlayback}
             aria-label={`${isPlaying ? "Pauza" : "Play"} ${item.title}`}
-            className={`flex h-15 w-15 items-center justify-center rounded-full border border-white/13 bg-black/30 transition hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${isPlaying ? "border-amber-400 bg-amber-400/20" : ""
-              }`}
+            className={`flex h-15 w-15 items-center justify-center rounded-full border border-white/13 bg-black/30 transition hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${
+              isPlaying ? "border-amber-400 bg-amber-400/20" : ""
+            }`}
           >
             {isPlaying ? (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 text-amber-300"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-              >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-amber-300" viewBox="0 0 24 24" fill="currentColor">
                 <rect x="6" y="5" width="4" height="14" rx="1" />
                 <rect x="14" y="5" width="4" height="14" rx="1" />
               </svg>
             ) : (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 text-amber-200"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-              >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-amber-200" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M8 5.5v13a1 1 0 0 0 1.52.85l9.36-6.5a1 1 0 0 0 0-1.7l-9.36-6.5A1 1 0 0 0 8 5.5Z" />
               </svg>
             )}
           </button>
-
           <div>
             <h2 className="text-xl font-semibold text-white">{item.title}</h2>
-            <p className="mt-1 max-w-xl text-sm text-white/70">
-              {item.description}
-            </p>
+            <p className="mt-1 max-w-xl text-sm text-white/70">{item.description}</p>
           </div>
         </div>
 
@@ -230,10 +199,7 @@ const CatehezaCard: React.FC<CatehezaCardProps> = ({
 
       <motion.div
         initial={{ height: 0, opacity: 0 }}
-        animate={{
-          height: isActive ? "auto" : 0,
-          opacity: isActive ? 1 : 0,
-        }}
+        animate={{ height: isActive ? "auto" : 0, opacity: isActive ? 1 : 0 }}
         transition={{ duration: 0.7, ease: "easeInOut" }}
         className="overflow-hidden"
       >
@@ -265,13 +231,8 @@ const CatehezePage: React.FC = () => {
     loadCateheze();
   }, []);
 
-  const handleRequestPlay = useCallback((id: number) => {
-    setActiveId(id);
-  }, []);
-
-  const handleRequestPause = useCallback((id: number) => {
-    setActiveId((prev) => (prev === id ? null : prev));
-  }, []);
+  const handleRequestPlay = useCallback((id: number) => setActiveId(id), []);
+  const handleRequestPause = useCallback((id: number) => setActiveId((prev) => (prev === id ? null : prev)), []);
 
   return (
     <div className="bg-[#0A0004]">
@@ -282,43 +243,13 @@ const CatehezePage: React.FC = () => {
         transition={{ duration: 0.6, ease: "easeInOut" }}
         className="min-h-screen w-screen px-6 py-12 text-white relative"
       >
-        <div className="absolute  mask-b-from-0 inset-0 isolate w-full  opacity-30 ">
-          <div className="relative w-full h-full">
-            <Image
-              fill
-              priority
-              alt="background-desktop"
-              src={"/background/concrete_wall_003_rough_8k.webp"}
-              className="hidden sm:block z-4 absolute object-cover object-center mix-blend-multiply"
-            />
-
-            <Image
-              fill
-              priority
-              alt="background-mobile"
-              src={"/background/concrete_wall_003_rough_8k phone.webp"}
-              className="block sm:hidden z-4 absolute object-cover object-left mix-blend-multiply"
-            />
-            <Image
-              className="z-2 blur-md bg-black-500 object-cover"
-              src={"/assets/fundal-program_phone.webp"}
-              alt="program-background"
-              fill
-            />
-            <div className="absolute inset-0 z-5 bg-gradient-to-b 
-                       from-[#FFDB99]/80 via-[#D49649]/50 to-[#5E2308]/90 
-                       mix-blend-overlay" />
-
-          </div>
-        </div>
-
         <h1 className="text-4xl font-bold flex justify-center text-white mt-[80px] mb-12">
           Cateheze
         </h1>
 
         {cateheze.length === 0 && <p>Nu exista date de afisat.</p>}
 
-        <div className="flex flex-col items-center ">
+        <div className="flex flex-col items-center">
           {cateheze.map((item) => (
             <div className="w-full sm:w-3/4 lg:w-2/3 border-b border-[#C59D30]/30 pb-4 mb-9" key={item.id}>
               <CatehezaCard
@@ -329,15 +260,6 @@ const CatehezePage: React.FC = () => {
               />
             </div>
           ))}
-        </div>
-        <div className="flex place-content-center mt-[30px]">
-          <Image
-            src="/footer black.png"
-            className="contain mix-blend-difference"
-            alt="logo"
-            width={250}
-            height={180}
-          />
         </div>
       </motion.div>
     </div>

@@ -186,7 +186,7 @@ export default function Scene() {
 
   useLayoutEffect(() => {
     const container = containerRef.current;
-    if (!container) {
+    if (!container || typeof window == 'undefined') {
       return;
     }
 
@@ -341,6 +341,7 @@ export default function Scene() {
       }
 
       const updateScene = (progress: number) => {
+        if (typeof window == 'undefined') return;
         const vhUnit = window.innerHeight * 0.01;
         const vwUnit = window.innerWidth * 0.01;
 

@@ -19,9 +19,8 @@ type FastInfo = {
 
 export default function Programliturgic() {
   const today = new Date();
-  const [month, setMonth] = useState(today.getMonth() + 1); // 1-based
+  const [month, setMonth] = useState(today.getMonth() + 1);
   const [year, setYear] = useState(today.getFullYear());
-
   const [calendar, setCalendar] = useState<Record<string, Record<string, LocalDay>> | null>(null);
   const [fastData, setFastData] = useState<Record<string, FastInfo>>({});
   const [loading, setLoading] = useState(true);
@@ -59,13 +58,7 @@ export default function Programliturgic() {
   }, [month, year]);
 
   const dayNames: Record<string, string> = {
-    'L': 'luni',
-    'Ma': 'marți',
-    'Mi': 'miercuri',
-    'J': 'joi',
-    'V': 'vineri',
-    'S': 'sâmbătă',
-    'D': 'duminică'
+    'L': 'luni', 'Ma': 'marți', 'Mi': 'miercuri', 'J': 'joi', 'V': 'vineri', 'S': 'sâmbătă', 'D': 'duminică'
   };
 
   const monthNames = [
@@ -104,14 +97,8 @@ export default function Programliturgic() {
     'Wine, Oil and Caviar are Allowed': ['/icons/wine.svg', '/icons/oil.svg', '/icons/caviar.svg']
   };
 
-
-
-  const translateFastLevel = (text?: string) =>
-    text ? (fastLevelTranslations[text] ?? text) : '';
-
-  const translateFastException = (text?: string) =>
-    text ? (fastExceptionTranslations[text] ?? text) : '';
-
+  const translateFastLevel = (text?: string) => text ? (fastLevelTranslations[text] ?? text) : '';
+  const translateFastException = (text?: string) => text ? (fastExceptionTranslations[text] ?? text) : '';
   const getMonthName = (monthNumber: number) => monthNames[monthNumber - 1] || '';
 
   const formatDate = (dateStr: string, data: LocalDay) => {
@@ -124,15 +111,8 @@ export default function Programliturgic() {
   const changeMonth = (offset: number) => {
     let newMonth = month + offset;
     let newYear = year;
-
-    if (newMonth < 1) {
-      newMonth = 12;
-      newYear -= 1;
-    } else if (newMonth > 12) {
-      newMonth = 1;
-      newYear += 1;
-    }
-
+    if (newMonth < 1) { newMonth = 12; newYear -= 1; }
+    else if (newMonth > 12) { newMonth = 1; newYear += 1; }
     setMonth(newMonth);
     setYear(newYear);
   };
@@ -145,67 +125,18 @@ export default function Programliturgic() {
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       className="min-h-screen bg-[#0A0004] px-6 py-12 pt-[100px] text-white selection:bg-[#C59D30]"
     >
-      <div className="absolute h-full mask-b-from-0 inset-0 isolate w-full opacity-20 z-1 select-none" >
-        <div className="relative h-full ">
-          <Image
-            fill
-            className="z-4 object-cover absolute mix-blend-multiply"
-            alt="background"
-            src={"/background/concrete_wall_003_rough_8k.jpg"}
-          />
-          <Image
-            className="z-2 blur-md bg-black-800 object-cover"
-            src={"/assets/fundal-program.png"}
-            alt="program-background"
-            fill
-          />
-          <div className="absolute inset-0 z-5 bg-gradient-to-b 
-                from-[#FFDB99]/80 via-[#D49649]/50 to-[#5E2308]/90 
-                mix-blend-overlay" />
-        </div>
-      </div>
-
-      <div className="relative max-w-4xl mx-auto z-1 cursor-pointer">
-        <div className="flex justify-between items-center mt-3 mb-20 ">
-
-          <button
-            onClick={() => changeMonth(-1)}
-            className="mr-1 text-[#C59D30]/60 hover:underline  md:hidden"
-          >
-            luna anterioară ←
-          </button>
-
-          {/* Large screens: arrow at the front */}
-          <button
-            onClick={() => changeMonth(-1)}
-            className="mr-1 text-[#C59D30]/60 hover:underline hidden md:inline"
-          >
-            ← luna anterioară
-          </button>
-
-
-
-
-          <h1 className="text-[30px] text-center">
-            Calendar {getMonthName(month)}{" "}
-            <span className="font-[Dutch Mediaeval] ">{year}</span>
-          </h1>
-
-          <button onClick={() => changeMonth(1)} className="ml-2 text-[#C59D30]/60 hover:underline ">
-            luna următoare →
-          </button>
-
+      <div className="relative max-w-4xl mx-auto z-1">
+        <div className="flex justify-between items-center mt-3 mb-20">
+          <button onClick={() => changeMonth(-1)} className="mr-1 text-[#C59D30]/60 hover:underline">← luna anterioară</button>
+          <h1 className="text-[30px] text-center">Calendar {getMonthName(month)} <span className="font-[Dutch Mediaeval]">{year}</span></h1>
+          <button onClick={() => changeMonth(1)} className="ml-2 text-[#C59D30]/60 hover:underline">luna următoare →</button>
         </div>
 
         {loading && <p className="text-gray-400">Se încarcă...</p>}
-        {!loading && calendar && Object.keys(calendar).length === 0 && (
-          <p className="text-red-400">Eroare la încărcarea datelor.</p>
-        )}
 
         {!loading && calendar && (() => {
           const monthKey = `${year}-${String(month).padStart(2, '0')}`;
           const days = calendar[monthKey];
-
           if (!days) return <p className="text-gray-400">Nu există date pentru această lună.</p>;
 
           return Object.entries(days).map(([date, data]) => {
@@ -215,73 +146,43 @@ export default function Programliturgic() {
 
             return (
               <div key={date} className="mb-6 border-b border-[#C59D30]/30 pb-4">
-                <p className="text-lg font-semibold mb-2 text-[#C59D30] ">{formatDate(date, data)}</p>
+                <p className="text-lg font-semibold mb-2 text-[#C59D30]">{formatDate(date, data)}</p>
 
                 {data.sfinți?.length > 0 && (
-                  <>
-                    <p><strong className='text-[#C59D30]/80 italic'>Sfinți și sărbători:</strong></p>
-                    <ul className="list-none ml-4 text-white/90">
-                      {data.sfinți.map((s, i) => (
-                        <li key={i} className="flex items-start gap-2">
-                          <Image
-                            src="/icons/trandafir (3).svg"
-                            alt="trandafir"
-                            width={16}
-                            height={16}
-                            className="mt-1"
-                          />
-                          <span className='text-white/80 '>{s}</span>
-                        </li>
-                      ))}
-                    </ul>
-
-
-                  </>
+                  <ul className="list-none ml-4 text-white/90">
+                    {data.sfinți.map((s, i) => (
+                      <li key={i} className="flex items-start gap-2">
+                        <Image src="/icons/trandafir (3).svg" alt="trandafir" width={16} height={16} className="mt-1" />
+                        <span>{s}</span>
+                      </li>
+                    ))}
+                  </ul>
                 )}
 
-                {translatedFastLevel && (
-                  <p className="mt-2 "><strong className='text-[#C59D30]/80 italic'>Post:</strong> <p className=" inline-block text-white/80">{translatedFastLevel}</p></p>
+                {translatedFastLevel && <p className="mt-2"><strong className="text-[#C59D30]/80 italic">Post:</strong> <span className="text-white/80">{translatedFastLevel}</span></p>}
+
+                {translatedFastException && fastInfo?.fast_level_desc !== 'No Fast' && (
+                  <div className="flex items-center gap-2 mt-2">
+                    <strong className="text-[#C59D30]/80 italic">Dezlegări:</strong>
+                    <span className="text-white/80">{translatedFastException}</span>
+                    {fastInfo?.fast_exception_desc && fastExceptionIcons[fastInfo.fast_exception_desc] && (
+                      <div className="flex items-center gap-2 mt-2">
+                        {fastExceptionIcons[fastInfo.fast_exception_desc].map((icon, idx) => (
+                          <Image key={idx} src={icon} alt={fastInfo.fast_exception_desc ?? ''} width={20} height={20} />
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 )}
-
-                {translatedFastException &&
-                  fastInfo?.fast_level_desc &&
-                  fastInfo.fast_level_desc !== 'No Fast' && (
-
-
-                    <div className="flex items-center gap-2 mt-2">
-                      <strong className="text-[#C59D30]/80 italic">Dezlegări:</strong>
-                      <p className="inline text-white/80">{translatedFastException}</p>
-
-                      {fastInfo?.fast_exception_desc &&
-                        fastExceptionIcons[fastInfo.fast_exception_desc] && (
-                          <div className="flex items-center gap-2 mt-2">
-                            {fastExceptionIcons[fastInfo.fast_exception_desc].map((icon, idx) => (
-                              <Image
-                                key={idx}
-                                src={icon}
-                                alt={fastInfo.fast_exception_desc ? fastInfo.fast_exception_desc : ""}
-                                width={20}
-                                height={20}
-                              />
-                            ))}
-                          </div>
-                        )}
-                    </div>
-                  )}
-
               </div>
             );
           });
         })()}
+
       </div>
-      <div className="flex place-content-center mt-[30px]">
-        <Image
-          src="/footer black.png"
-          className="contain mix-blend-difference"
-          alt="logo"
-          width={250}
-          height={180}
-        />
+
+      <div className="flex justify-center mt-[30px]">
+        <Image src="/footer black.png" className="contain mix-blend-difference" alt="logo" width={250} height={180} />
       </div>
     </motion.div>
   );

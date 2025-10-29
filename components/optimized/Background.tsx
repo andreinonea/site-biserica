@@ -131,7 +131,7 @@ export default function Background({
     const uniforms = {
       uScroll: { value: 0 },
       uResolution: {
-        value: new THREE.Vector2( document.documentElement.clientWidth,  document.documentElement.clientHeight),
+        value: new THREE.Vector2(document.documentElement.clientWidth, document.documentElement.clientHeight),
       },
       uTexture0: { value: placeholder as THREE.Texture },
       uTexture1: { value: placeholder as THREE.Texture },
@@ -177,12 +177,12 @@ export default function Background({
         uniforms.uAspect0.value =
           textures[0].image && "width" in textures[0].image
             ? (textures[0].image.width as number) /
-              (textures[0].image.height as number)
+            (textures[0].image.height as number)
             : 1;
         uniforms.uAspect1.value =
           textures[1].image && "width" in textures[1].image
             ? (textures[1].image.width as number) /
-              (textures[1].image.height as number)
+            (textures[1].image.height as number)
             : 1;
 
         loadedTextures.push(...textures);
@@ -194,14 +194,14 @@ export default function Background({
     loadTextures();
 
     let animationFrame: number | null = null;
-    let targetScroll =
-      window.scrollY ??
+    let targetScroll = typeof window != "undefined" ?
+     ( window.scrollY ??
       window.pageYOffset ??
       document.documentElement.scrollTop ??
-      0;
+      0) : 0;
 
     const animate = () => {
-      if (disposed) {
+      if (disposed || typeof window == "undefined") {
         return;
       }
 
@@ -214,14 +214,14 @@ export default function Background({
     };
 
     const handleScroll = () => {
-      targetScroll =
-        window.scrollY ??
+      targetScroll = typeof window != "undefined" ?
+       ( window.scrollY ??
         window.pageYOffset ??
         document.documentElement.scrollTop ??
-        0;
+        0) : 0;
     };
 
-   
+
 
     window.addEventListener("scroll", handleScroll, { passive: true });
 
@@ -229,6 +229,10 @@ export default function Background({
 
     return () => {
       disposed = true;
+
+      if (typeof window == 'undefined'){
+        return;
+      }
 
       if (animationFrame !== null) {
         window.cancelAnimationFrame(animationFrame);

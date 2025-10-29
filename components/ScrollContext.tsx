@@ -10,7 +10,7 @@ interface ScrollContextValue {
 
 const ScrollContext = createContext<ScrollContextValue | null>(null);
 
-const isTouch = 'ontouchstart' in window;
+const isTouch = typeof window == 'undefined' ? false :( 'ontouchstart' in window);
 
 export const ScrollProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {

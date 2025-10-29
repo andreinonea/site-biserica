@@ -23,14 +23,16 @@ export default function Background({
   const [usePhoneImages, setUsePhoneImages] = useState(false);
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia(MOBILE_MEDIA_QUERY);
-    const handleChange = (event: MediaQueryListEvent) => {
-      setUsePhoneImages(event.matches);
-    };
-
-    setUsePhoneImages(mediaQuery.matches);
-    mediaQuery.addEventListener("change", handleChange);
-    return () => mediaQuery.removeEventListener("change", handleChange);
+    if (typeof window != 'undefined'){
+      const mediaQuery = window.matchMedia(MOBILE_MEDIA_QUERY);
+      const handleChange = (event: MediaQueryListEvent) => {
+        setUsePhoneImages(event.matches);
+      };
+  
+      setUsePhoneImages(mediaQuery.matches);
+      mediaQuery.addEventListener("change", handleChange);
+      return () => mediaQuery.removeEventListener("change", handleChange);
+    }
   }, []);
 
   const diffuseSrc = usePhoneImages

@@ -10,7 +10,7 @@ const VerticalParallax = ({ children }: { children: React.ReactNode }) => {
     target: ref,
     offset: ["start end", "end start"],
   });
-  const vh = (v: number) => window.innerHeight * (v / 100);
+  const vh = (v: number) => typeof window == "undefined" ? 0 : window.innerHeight * (v / 100);
 
   const items = [
     {

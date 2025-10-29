@@ -22,7 +22,7 @@
     "lucide-react": "^0.536.0",
     "next": "15.3.3",
     "react": "^19.1.1",
-    "react-dom": "^19.0.0",
+    "react-dom": "^19.1.1",
     "react-leaflet": "^5.0.0",
     "react-multi-carousel": "^2.8.6",
     "site-biserica": "github:NitaCristianu/site-biserica",
