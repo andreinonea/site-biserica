@@ -1,100 +1,41 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import { MapPin, Mail } from 'lucide-react'
-import Image from 'next/image'
-import dynamic from 'next/dynamic'
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+import type { LatLngExpression } from 'leaflet'
+import 'leaflet/dist/leaflet.css'
+import L from 'leaflet'
 
-const GoogleMap = dynamic(() => import('@/components/GoogleMap'), {
-  ssr: false,
-})
+import iconRetinaUrl from 'leaflet/dist/images/marker-icon-2x.png'
+import iconUrl from 'leaflet/dist/images/marker-icon.png'
+import shadowUrl from 'leaflet/dist/images/marker-shadow.png'
 
-const page = () => {
+export default function GoogleMap() {
+  L.Icon.Default.mergeOptions({
+    iconRetinaUrl,
+    iconUrl,
+    shadowUrl,
+  })
+
+  const customIcon = new L.Icon({
+    iconUrl: '/logo_negru_2.webp',
+    iconSize: [60, 60],
+    iconAnchor: [16, 32],
+  })
+
+  const position: LatLngExpression = [44.4147996, 26.1229999]
+
   return (
-    <>
-      <motion.div
-        initial={{ scale: 0.95, borderRadius: '30px', opacity: 0 }}
-        animate={{ scale: 1, borderRadius: '0px', opacity: 1 }}
-        exit={{ scale: 0.95, borderRadius: '30px', opacity: 0 }}
-        transition={{ duration: 0.6, ease: 'easeInOut' }}
-        className="min-h-screen bg-[#0A0004] px-6 py-12 text-white"
-      >
-        <div className="absolute mask-b-from-0 inset-0 isolate w-full opacity-20 z-6 pointer-events-none">
-          <div className="relative h-full overflow-x-hidden">
-           <Image
-              fill
-              className="z-4 object-cover absolute mix-blend-multiply"
-              alt="background"
-              src={"/background/concrete_wall_003_rough_8k.jpg"}
-            />
-            <Image
-              className="z-2 blur-md bg-black-800 object-cover"
-              src={"/assets/fundal-program.png"}
-              alt="program-background"
-              fill
-            />
-          </div>
-        </div>
-        <div className="flex justify-center text-4xl mt-[100px] mb-12 font-semibold text-white/90">
-          Contact
-        </div>
-
-        <div className="max-w-3xl mx-auto space-y-10">
-
-          <div className="flex items-start gap-4">
-            <img src="./icons/phone.svg" alt="Phone" className="w-7 h-7 mt-1" />
-            <div>
-              <p className="text-lg font-medium text-white/90">Telefon</p>
-              <a href="tel:+40712345678" className="text-white/70 hover:underline">
-                +40 723 257 569
-              </a>
-            </div>
-          </div>
-
-          <div className="flex items-start gap-4">
-            <MapPin className="w-6 h-6 mt-1 text-[#c95d43]" />
-            <div>
-              <p className="text-lg font-medium text-white/90">Adresă</p>
-              <p className="text-white/70">
-                Strada Foișorului Nr. 119, București
-              </p>
-              <a
-                href="https://www.google.com/maps/place/Strada+Foișorului+119,+București"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm text-[#c95d43] hover:underline"
-              >
-                Vezi pe Google Maps
-              </a>
-            </div>
-          </div>
-
-          <div className="flex items-start gap-4">
-            <Mail className="w-6 h-6 mt-1 text-[#c95d43]" />
-            <div>
-              <p className="text-lg font-medium text-white/90">Email</p>
-              <a href="mailto:contact@biserica.ro" className="text-white/70 hover:underline">
-                bisericafoisor@gmail.ro
-              </a>
-            </div>
-          </div>
-
-          <div className="border-t border-white/20 pt-6 mt-6">
-            <GoogleMap />
-          </div>
-        </div>
-        <div className="flex place-content-center mt-[30px]">
-          <Image
-            src="/footer black.png"
-            className="contain mix-blend-difference"
-            alt="logo"
-            width={250}
-            height={180}
-          />
-        </div>
-      </motion.div>
-    </>
+    <MapContainer
+      center={position}
+      zoom={16}
+      style={{ height: '350px', borderRadius: '10px' }}
+      scrollWheelZoom={false}
+    >
+      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+      <Marker position={position} icon={customIcon}>
+        <Popup>Strada Foișorului 119, București</Popup>
+      </Marker>
+    </MapContainer>
   )
 }
 
-export default page

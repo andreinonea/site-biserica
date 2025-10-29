@@ -1,10 +1,13 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import Link from 'next/link'
 import { MapPin, Mail } from 'lucide-react'
 import Image from 'next/image'
-import GoogleMap from '@/components/GoogleMap'
+import dynamic from 'next/dynamic'
+
+const GoogleMap = dynamic(() => import('@/components/GoogleMap'), {
+  ssr: false,
+})
 
 const page = () => {
   return (
@@ -29,7 +32,7 @@ const page = () => {
               src={"/assets/fundal-program.png"}
               alt="program-background"
               fill
-            /> *
+            />
           </div>
         </div>
         <div className="flex justify-center text-4xl mt-[100px] mb-12 font-semibold text-white/90">
