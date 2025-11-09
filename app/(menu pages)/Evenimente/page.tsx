@@ -113,7 +113,7 @@ const EvenimentePage = () => {
                       className="mt-1"
                     />
                     <div className="flex flex-col">
-                      <div className="text-lg font-semibold">{ev.title}</div>
+                      <div className="text-lg font-[merriweather] font-semibold">{ev.title}</div>
                       <div className="text-sm text-white/70">
                         {formatDate(ev.date)} • ora {ev.hour || "–"}
                       </div>
@@ -159,7 +159,7 @@ const EvenimentePage = () => {
                           className="mt-1 shrink-0"
                         />
                         <div>
-                          <div className="text-lg font-semibold">{ev.title}</div>
+                          <div className="text-lg font-[merriweather] font-semibold">{ev.title}</div>
                           <div className="text-sm text-white/70">{formatDate(ev.date)}</div>
                           <div className="text-sm text-white/50">
                             {ev.adresa || ev.location || "–"}

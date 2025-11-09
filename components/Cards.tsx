@@ -60,73 +60,73 @@ export default function CardSection() {
   const debug = useDebug();
 
   useLayoutEffect(() => {
-  if (!rootRef.current) return;
+    if (!rootRef.current) return;
 
-  gsap.registerPlugin(ScrollTrigger);
+    gsap.registerPlugin(ScrollTrigger);
 
-  const ctx = gsap.context(() => {
-    const cards = gsap.utils.toArray<HTMLElement>(".c-card");
-    if (!cards.length) return;
+    const ctx = gsap.context(() => {
+      const cards = gsap.utils.toArray<HTMLElement>(".c-card");
+      if (!cards.length) return;
 
-    const lastCardIndex = cards.length - 1;
+      const lastCardIndex = cards.length - 1;
 
-   
 
-    // 🔹 Pin, scale and fade logic
-    cards.forEach((card, index) => {
-      const isLast = index === lastCardIndex;
 
-      // Reference ScrollTrigger for the last card
-      const lastCardST = ScrollTrigger.create({
-        trigger: cards[isLast ? index : index+1],
-        start: "center center",
-      });
+      // 🔹 Pin, scale and fade logic
+      cards.forEach((card, index) => {
+        const isLast = index === lastCardIndex;
 
-      gsap.set(card, { opacity: 1, scale: 1 }); // Start fully visible
-
-      // When card leaves, fade out + scale down
-      const anim = gsap.to(card, {
-        opacity: isLast ? 1 : 0, // Last one stays visible
-        scale: isLast ? 1 : .7,
-        ease: "power2.inOut",
-      });
-
-      ScrollTrigger.create({
-        trigger: card,
-        start: "top top+=100",
-        end: () => lastCardST.start,
-        pin: true,
-        pinSpacing: false,
-        scrub: 0.6,
-        animation: anim,
-        markers : debug
-        
-      });
-
-      // Optional subtle parallax on image
-      const image = card.querySelector("figure img");
-      if (image) {
-        gsap.to(image, {
-          yPercent: -15,
-          ease: "none",
-          scrollTrigger: {
-            trigger: card,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: true,
-          },
+        // Reference ScrollTrigger for the last card
+        const lastCardST = ScrollTrigger.create({
+          trigger: cards[isLast ? index : index + 1],
+          start: "center center",
         });
-      }
-    });
-  }, rootRef);
 
-  return () => ctx.revert();
-}, []);
+        gsap.set(card, { opacity: 1, scale: 1 }); // Start fully visible
+
+        // When card leaves, fade out + scale down
+        const anim = gsap.to(card, {
+          opacity: isLast ? 1 : 0, // Last one stays visible
+          scale: isLast ? 1 : .7,
+          ease: "power2.inOut",
+        });
+
+        ScrollTrigger.create({
+          trigger: card,
+          start: "top top+=100",
+          end: () => lastCardST.start,
+          pin: true,
+          pinSpacing: false,
+          scrub: 0.6,
+          animation: anim,
+          markers: debug
+
+        });
+
+        // Optional subtle parallax on image
+        const image = card.querySelector("figure img");
+        if (image) {
+          gsap.to(image, {
+            yPercent: -15,
+            ease: "none",
+            scrollTrigger: {
+              trigger: card,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: true,
+            },
+          });
+        }
+      });
+    }, rootRef);
+
+    return () => ctx.revert();
+  }, []);
 
 
   return (
-    <section ref={rootRef} className="text-white mt-40 h-440">
-      <div className="l-cards mx-auto flex max-w-[1200px] flex-col gap-6 px-6 pb-24">
+    <section ref={rootRef} className="relative text-white mt-40 overflow-hidden">
+      <div className="l-cards mx-auto flex max-w-[1200px] flex-col gap-6 px-6 pb-42">
         {Cards.map((card) => (
           <article
             key={card.title}
@@ -170,14 +170,17 @@ export default function CardSection() {
         ))}
       </div>
 
-      <div className="relative w-full h-15 mb-10 -bottom-15 transform translate-y-1/2 z-5">
+      <div className="absolute bottom-0  w-full h-15 overflow-hidden z-5">
         <Image
-          src={"/patterns/top-bar.png"}
+          src="/patterns/top-bar.png"
           alt="top-bar-pattern"
-          className="object-cover"
           fill
+          className="object-cover object-center"
         />
       </div>
+
+
+
     </section>
   );
 }

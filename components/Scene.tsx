@@ -29,6 +29,7 @@ export default function Scene() {
     );
     return { o, y };
   };
+            
 
   const S2 = seqStayFast(0.05, 0.15);
   const S3 = seqStayFast(0.15, 0.25);
@@ -63,7 +64,9 @@ export default function Scene() {
           <Image src="/assets/Sky.webp" alt="Sky" fill className="object-cover" priority />
         </div>
       </div>
-
+  {/* coloane z index = 1
+citat z index = 2
+Sf Trifon z index = 3 */}
       {/* Foreground elements */}
       <div className="sticky top-0 h-screen overflow-hidden">
         <M.div className="absolute inset-0 will-change-transform" style={{ y: bgY }} />
@@ -78,9 +81,9 @@ export default function Scene() {
           </div>
         </M.div>
 
-        {/* SfTrifon + text */}
+        {/* SfTrifon */}
         <M.div
-          className="absolute left-1/2 top-[65%] -translate-x-1/2 -translate-y-1/2"
+          className="absolute left-1/2 top-[65%] -translate-x-1/2 z-3 -translate-y-1/2"
           style={{ opacity: SaintOpacity, y: S3.y, scale: SaintZoom, paddingTop : SaintOffset }}
         >
           <div className="relative w-[70vw] sm:w-[50vw] md:w-[30vw] max-w-[320px] aspect-[3/4]">

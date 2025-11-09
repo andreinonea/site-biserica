@@ -17,7 +17,7 @@ import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <div className="relative bg-[#C59D30] overflow-hidden">
+    <div className="relative bg-[#dfb84c] overflow-hidden">
       <Background priority />
       <section className="relative">
         <HeroSection />

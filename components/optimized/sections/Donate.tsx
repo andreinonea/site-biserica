@@ -27,11 +27,9 @@ export default function DonatePage({ opacity = 1, x = 0, y = 0 }) {
   return (
     <section
       ref={sectionRef}
-      className="relative z-2  w-screen text-lg text-black"
+      className="relative z-2 w-screen text-lg text-black"
     >
-      {/* <div className="sticky top-0 h-screen w-screen overflow-hidden bg-black"> */}
       <div className="sticky top-0 h-screen w-screen overflow-hidden">
-        <Image src="/assets/Sky.png" alt="Sky" fill className="object-cover" priority />
         <motion.div
           className="relative h-full w-full object-top"
           style={{
@@ -48,7 +46,7 @@ export default function DonatePage({ opacity = 1, x = 0, y = 0 }) {
             src="/assets/iesire(1).png"
             priority
             quality={100}
-            className="object-cover object-bottom"
+            className="object-cover object-bottom md:hidden"
             alt="background"
           />
 

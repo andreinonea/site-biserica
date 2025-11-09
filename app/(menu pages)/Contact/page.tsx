@@ -5,7 +5,7 @@ import { MapPin, Mail } from 'lucide-react'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
 
-const GoogleMap = dynamic(() => import('@/components/GoogleMap'), {
+const GoogleMap = dynamic(() => import('@/components/Map'), {
   ssr: false,
 })
 
@@ -21,7 +21,7 @@ const page = () => {
       >
         <div className="absolute mask-b-from-0 inset-0 isolate w-full opacity-20 z-6 pointer-events-none">
           <div className="relative h-full overflow-x-hidden">
-           <Image
+            <Image
               fill
               className="z-4 object-cover absolute mix-blend-multiply"
               alt="background"
@@ -33,6 +33,9 @@ const page = () => {
               alt="program-background"
               fill
             />
+            <div className="absolute inset-0 z-5 bg-gradient-to-b 
+                        from-[#FFDB99]/80 via-[#D49649]/50 to-[#5E2308]/90 
+                        mix-blend-overlay" />
           </div>
         </div>
         <div className="flex justify-center text-4xl mt-[100px] mb-12 font-semibold text-white/90">

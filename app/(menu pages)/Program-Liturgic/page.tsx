@@ -43,34 +43,33 @@ export default function Page() {
         className="relative min-h-screen w-full px-6 py-12 text-white overflow-hidden"
       >
         <div className="absolute  mask-b-from-0 inset-0 isolate w-full  opacity-30 z-6">
-          <div className="relative w-full h-full">
-            <Image
-              fill
-              priority
-              alt="background-desktop"
-              src={"/background/concrete_wall_003_rough_8k.webp"}
-              className="hidden sm:block z-4 absolute object-cover object-center mix-blend-multiply"
-            />
-
-            <Image
-              fill
-              priority
-              alt="background-mobile"
-              src={"/background/concrete_wall_003_rough_8k phone.webp"}
-              className="block sm:hidden z-4 absolute object-cover object-left mix-blend-multiply"
-            />
-            <Image
-              className="z-2 blur-md bg-black-500 object-cover"
-              src={"/assets/fundal-program_phone.webp"}
-              alt="program-background"
-              fill
-            />
-              <div className="absolute inset-0 z-5 bg-gradient-to-b 
-                from-[#FFDB99]/80 via-[#D49649]/50 to-[#5E2308]/90 
-                mix-blend-overlay" />
-
-          </div>
-        </div>
+                 <div className="relative w-full h-full">
+                   <Image
+                     fill
+                     priority
+                     alt="background-desktop"
+                     src={"/background/concrete_wall_003_rough_8k.webp"}
+                     className="hidden sm:block z-4 absolute object-cover object-center mix-blend-multiply"
+                   />
+       
+                   <Image
+                     fill
+                     priority
+                     alt="background-mobile"
+                     src={"/background/concrete_wall_003_rough_8k phone.webp"}
+                     className="block sm:hidden z-4 absolute object-cover object-left mix-blend-multiply"
+                   />
+                   <Image
+                     className="z-2 blur-md bg-black-500 object-cover"
+                     src={"/assets/fundal-program_phone.webp"}
+                     alt="program-background"
+                     fill
+                   />
+                   <div className="absolute inset-0 z-5 bg-gradient-to-b 
+                       from-[#FFDB99]/80 via-[#D49649]/50 to-[#5E2308]/90 
+                       mix-blend-overlay" />
+                 </div>
+               </div>
 
 
         <h1 className="relative z-2 flex justify-center text-center text-white/90 text-4xl md:text-7xl mt-[100px] mb-15 underline decoration-2 underline-offset-8">
@@ -80,7 +79,7 @@ export default function Page() {
         <div className="relative z-1 max-w-4xl mx-auto space-y-10 mb-20">
           {program.map((zi, i) => (
             <div key={i} className="border-b border-[#C59D30]/30 pb-4">
-              <span className="text-2xl font-semibold text-[#C59D30]">
+              <span className="text-2xl font-[merriweather] font-semibold text-[#C59D30]">
                 {zi.zi_saptamana.charAt(0).toUpperCase() +
                   zi.zi_saptamana.slice(1)}
               </span>

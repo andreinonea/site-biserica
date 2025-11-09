@@ -6,6 +6,7 @@
   --foreground: #171717;
   --font-sans: 'Byzantin', sans-serif;
   --font-sentient: 'Sentient', serif;
+  --font-merriweather: 'Merriweather', serif;
 
 }
 
@@ -29,21 +30,21 @@
   font-weight: normal;
   font-style: normal;
 }
-/* @font-face {
+@font-face {
   font-family: 'Sentient';
   src: url('/fonts/Sentient-Bold.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
-} */
+}
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  --font-body: var(--font-merriweather)
-  /* --font-body: var(--font-sentient) */
+  --font-body: var(--font-sentient); 
+  --font-dutch: var(--font-merriweather);
 
 }
 

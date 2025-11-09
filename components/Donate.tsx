@@ -1,4 +1,4 @@
-﻿"use client";
+﻿﻿"use client";
 
 import React, { useRef } from "react";
 import Image from "next/image";
@@ -15,25 +15,22 @@ export default function DonatePage({ opacity = 1, x = 0, y = 0 }) {
     Math.min(Math.max(value, 0), 1)
   );
 
-  const scale = useTransform(clampedProgress, [0, 0.5, 1], [2, 1.12, 1]);
-  const baseY = useTransform(clampedProgress, [0, 0.5, 1], [220, 40, 0]);
+  const scale = useTransform(clampedProgress, [0, 0.65, 1], [3, 1.12, 1]);
+  const baseY = useTransform(clampedProgress, [0, 0.65, 1], [220, 40, 0]);
   const imageY = useTransform(baseY, (value) => value + y);
-
-  const titleOpacity = useTransform(clampedProgress, [0.45, 0.65], [0, 1]);
-  const titleY = useTransform(clampedProgress, [0.65, 0.85], [100, -50]);
-  const subtitleOpacity = useTransform(clampedProgress, [0.5, 0.7], [0, 1]);
-  const subtitleY = useTransform(clampedProgress, [0.6, 0.9], [120, -80]);
+  const titleOpacity = useTransform(clampedProgress, [0.55, 0.75], [0, 1]);
+  const titleY = useTransform(clampedProgress, [0.55, 0.75], [80, -150]);
+  const subtitleOpacity = useTransform(clampedProgress, [0.6, 0.75], [0, 1]);
+  const subtitleY = useTransform(clampedProgress, [0.6, 0.75], [80, -200]);
 
   return (
     <section
       ref={sectionRef}
-      className="relative z-[2] h-[180vh] w-screen text-lg text-black"
+      className="relative z-[2] h-[220vh] w-screen text-lg text-black"
     >
-      {/* <div className="sticky top-0 h-screen w-screen overflow-hidden bg-black"> */}
       <div className="sticky top-0 h-screen w-screen overflow-hidden">
-        <Image src="/assets/Sky.png" alt="Sky" fill className="object-cover" priority />
         <motion.div
-          className="relative h-full w-full object-top"
+          className="relative h-full w-full"
           style={{
             scale,
             opacity,
@@ -45,10 +42,10 @@ export default function DonatePage({ opacity = 1, x = 0, y = 0 }) {
           <Image
             fill
             sizes="100vw"
-            src="/assets/iesire(1).png"
+            src="/assets/demoimg.jpg"
             priority
             quality={100}
-            className="object-cover object-bottom"
+            className="object-cover object-bottom md:hidden"
             alt="background"
           />
 
@@ -68,7 +65,6 @@ export default function DonatePage({ opacity = 1, x = 0, y = 0 }) {
           </div>
         </motion.div>
       </div>
-
     </section>
   );
 }

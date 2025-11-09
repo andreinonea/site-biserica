@@ -79,24 +79,23 @@ const Quote = () => {
               alt="stalpi"
               layout="fill"
               priority
-              className="object-cover object-top"
+              className="object-cover object-top z-1"
             />
           </motion.div>
         </div>
 
-        <div className="mx-auto px-10 md:px-20 text-center text-white/80 select-text cursor-text">
+        <div className="mx-auto px-10 md:px-20 text-center select-text cursor-text">
           <motion.h1
             style={{ scale: titleScale, opacity: titleOpacity }}
-            className="translate-y-1/2 text-2xl text-shadow-lg  lg:text-6xl"
+            className="translate-y-1/2 text-2xl text-shadow-lg lg:text-6xl z-2"
           >
             <span className="text-[#c95d43]">"</span>
             {quote.text}
             <span className="text-[#c95d43]">"</span>
 
             {quote.author && (
-              <p className="mt-2 lg:ml-[50%] md:ml-[40%] ml-[20%] text-base text-white/60">– {quote.author}</p>
+              <p className="mt-2 lg:ml-[50%] md:ml-[40%] ml-[20%] text-base">– {quote.author}</p>
             )}
-
             <motion.div
               style={{ opacity: hintOpacity }}
               className="m-3 flex justify-center gap-1 mt-10 text-base"

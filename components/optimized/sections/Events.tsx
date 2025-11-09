@@ -77,26 +77,36 @@ const Events = () => {
         initial={{ opacity: 0, y: 50 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="relative font-bold text-white/70"
+        className="relative font-bold text-white/70 -mb-6" 
       >
-        <h1 className="text-2xl lg:text-5xl">
-          <span className="text-4xl lg:text-6xl font-[Byzantin] text-[#693c3a]">E</span>venimente{" "}
-          <span className="text-4xl lg:text-6xl font-[Byzantin] text-[#693c3a]">U</span>rmătoare
+        <h1 className="text-4xl lg:text-5xl leading-tight">
+          <div className="relative inline-block">
+            <span className="text-5xl lg:text-7xl font-[Byzantin] text-[#55302f]">E</span>
+            <span className="ml-1  font-[Byzantin] text-white/80">venimente</span>
+          </div>
+
+          <div className="block sm:block md:inline-block md:ml-3 lg:ml-4 mt-2 sm:mt-1 md:mt-0 ml-25 sm:ml-20 md:ml-0">
+            <span className="text-5xl lg:text-7xl  font-[Byzantin] text-[#55302f]">U</span>
+            <span className="ml-2  font-[Byzantin] text-white/80">rmătoare</span>
+          </div>
         </h1>
+
+
       </motion.div>
 
       {eveniment ? (
-        <div className="relative flex items-start gap-2 mt-6 select-none">
-          <div className="mt-4">
+        <div className="relative flex items-start gap-2 mt-10 right-3">
+          <div className="mt-10">
             <Image
-              src="/icons/diamond.svg"
-              alt="diamond icon"
-              width={24}
-              height={24}
+              src="/icons/sculptura.png"
+              alt="icon"
+              width={40}
+              height={30}
+              className="mt-1"
             />
           </div>
 
-          <div className="text-white/70 mb-15">
+          <div className="text-white/70 mb-16 mt-10">
             <div className="text-xl lg:text-2xl">
               {eveniment.title}
             </div>
@@ -117,19 +127,19 @@ const Events = () => {
           </div>
         </div>
       ) : (
-        <p className=" mt-6 text-white/50">Nu există evenimente disponibile.</p>
+        <p className="mt-6 text-white/50">Nu există evenimente anunțate în viitorul apropiat.</p>
       )}
 
 
       <div className="relative z-1">
-      <IconFrame bgColor="bg-[#55302f]" textColor="text-white/50" >
-            <Link href={"Evenimente"} className="text-base z-2 p-2 px-5">
+        <IconFrame bgColor="bg-[#55302f]" textColor="text-white/50" >
+          <Link href={"Evenimente"} className="text-base z-2 p-2 px-5">
             {"Vezi toate evenimentele"}
-            </Link>
-            </IconFrame>    
+          </Link>
+        </IconFrame>
       </div>
-      
-      
+
+
       <div className="relative w-full h-15 -mb-3 -bottom-40 transform translate-y-1/2 z-5">
         <Image
           src={"/patterns/top-bar.png"}

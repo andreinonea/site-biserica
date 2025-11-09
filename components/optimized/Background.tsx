@@ -7,7 +7,7 @@ type BackgroundProps = {
   primarySrc?: string;
   secondarySrc?: string;
   className?: string;
-  priority?: boolean; // kept for compatibility, no longer used directly
+  priority?: boolean;
 };
 
 const DEFAULT_PRIMARY = "/background/concrete_wall_003_diff_2k.webp";
@@ -22,6 +22,7 @@ const BACKGROUND_VERTEX = `
   }
 `;
 
+// 🎨 Combined shader: keeps scrolling motion from new version + texture mixing and richer tone from the old version
 const BACKGROUND_FRAGMENT = `
   precision mediump float;
 
@@ -34,32 +35,22 @@ const BACKGROUND_FRAGMENT = `
 
   varying vec2 vUv;
 
-  vec2 coverUv(vec2 uv, float textureAspect) {
-    float screenAspect = uResolution.x / uResolution.y;
-    vec2 centered = uv  ;
-
-
-    return centered;
-  }
-
-  vec4 sampleBackground(float index, vec2 uv) {
-   
-
-    vec2 covered = coverUv(uv, uAspect1);
-    return texture2D(uTexture1, covered * vec2(.5, 1.));
-  }
-
   void main() {
-    float segments = 2.0;
-    float aspect = uResolution.x / uResolution.y;
-    float scroll = uScroll / uResolution.y / 25.;
-    float y = vUv.y + scroll;
-    float wrapped = y - floor(y / segments) * segments;
-    float segmentIndex = floor(wrapped);
-    float tileY = wrapped - segmentIndex;
+    // normalized scroll and subtle layered motion
+    float scroll = uScroll / uResolution.y;
+    vec2 uv = vUv;
+    uv.y += scroll * 0.5;
 
-    vec2 sampleUv = vec2(vUv.x * aspect / 0.5, tileY);
-    vec4 color = sampleBackground(segmentIndex, sampleUv);
+    // sample both textures (adds the color richness back)
+    vec4 tex0 = texture2D(uTexture0, uv * vec2(1.0, 1.0));
+    vec4 tex1 = texture2D(uTexture1, uv * vec2(1.0, 1.0));
+
+    // blend them smoothly for depth + warm tone
+    vec4 color = mix(tex0, tex1, 0.5);
+
+    // apply soft lighting and color grading
+    color.rgb *= vec3(0.95, 0.9, 0.85); // warmer tone
+    color.rgb = pow(color.rgb, vec3(1.05)); // gentle contrast boost
 
     gl_FragColor = color;
   }
@@ -86,7 +77,6 @@ export default function Background({
     if (base.length === 0) {
       base.push(DEFAULT_PRIMARY);
     }
-
     if (base.length === 1) {
       base.push(base[0]);
     }
@@ -95,23 +85,14 @@ export default function Background({
   }, [primarySrc, secondarySrc]);
 
   useEffect(() => {
-    if (typeof window === "undefined") {
-      return;
-    }
+    if (typeof window === "undefined") return;
 
     const container = containerRef.current;
+    if (!container) return;
 
-    if (!container) {
-      return;
-    }
-
-    const renderer = new THREE.WebGLRenderer({
-      antialias: false,
-      alpha: true,
-    });
-
+    const renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
-    renderer.setSize(document.documentElement.clientWidth, document.documentElement.clientHeight, false);
+    renderer.setSize(window.innerWidth, window.innerHeight, false);
     renderer.domElement.style.width = "100%";
     renderer.domElement.style.height = "100%";
     renderer.domElement.style.display = "block";
@@ -131,7 +112,7 @@ export default function Background({
     const uniforms = {
       uScroll: { value: 0 },
       uResolution: {
-        value: new THREE.Vector2(document.documentElement.clientWidth, document.documentElement.clientHeight),
+        value: new THREE.Vector2(window.innerWidth, window.innerHeight),
       },
       uTexture0: { value: placeholder as THREE.Texture },
       uTexture1: { value: placeholder as THREE.Texture },
@@ -165,25 +146,14 @@ export default function Background({
 
         textures.forEach((texture) => {
           texture.colorSpace = THREE.SRGBColorSpace;
-          texture.wrapS = THREE.ClampToEdgeWrapping;
-          texture.wrapT = THREE.ClampToEdgeWrapping;
+          texture.wrapS = THREE.RepeatWrapping;
+          texture.wrapT = THREE.RepeatWrapping;
           texture.minFilter = THREE.LinearFilter;
           texture.magFilter = THREE.LinearFilter;
         });
 
         uniforms.uTexture0.value = textures[0];
         uniforms.uTexture1.value = textures[1];
-
-        uniforms.uAspect0.value =
-          textures[0].image && "width" in textures[0].image
-            ? (textures[0].image.width as number) /
-            (textures[0].image.height as number)
-            : 1;
-        uniforms.uAspect1.value =
-          textures[1].image && "width" in textures[1].image
-            ? (textures[1].image.width as number) /
-            (textures[1].image.height as number)
-            : 1;
 
         loadedTextures.push(...textures);
       } catch (error) {
@@ -194,59 +164,54 @@ export default function Background({
     loadTextures();
 
     let animationFrame: number | null = null;
-    let targetScroll = typeof window != "undefined" ?
-     ( window.scrollY ??
+    let targetScroll =
+      window.scrollY ??
       window.pageYOffset ??
       document.documentElement.scrollTop ??
-      0) : 0;
+      0;
 
     const animate = () => {
-      if (disposed || typeof window == "undefined") {
-        return;
-      }
+      if (disposed) return;
 
       const current = uniforms.uScroll.value;
-      const next = current + (targetScroll - current) * 0.2;
-      uniforms.uScroll.value = next;
+      const next = current + (targetScroll - current) * 0.7;
+      uniforms.uScroll.value = -next;
 
       renderer.render(scene, camera);
       animationFrame = window.requestAnimationFrame(animate);
     };
 
     const handleScroll = () => {
-      targetScroll = typeof window != "undefined" ?
-       ( window.scrollY ??
+      targetScroll =
+        window.scrollY ??
         window.pageYOffset ??
         document.documentElement.scrollTop ??
-        0) : 0;
+        0;
     };
 
-
+    const handleResize = () => {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      renderer.setSize(width, height, false);
+      uniforms.uResolution.value.set(width, height);
+    };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleResize);
 
     animate();
 
     return () => {
       disposed = true;
-
-      if (typeof window == 'undefined'){
-        return;
-      }
-
-      if (animationFrame !== null) {
-        window.cancelAnimationFrame(animationFrame);
-      }
-
+      if (animationFrame !== null) window.cancelAnimationFrame(animationFrame);
       window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
 
       scene.remove(mesh);
       geometry.dispose();
       material.dispose();
-
-      loadedTextures.forEach((texture) => texture.dispose());
+      loadedTextures.forEach((t) => t.dispose());
       placeholder.dispose();
-
       renderer.dispose();
 
       if (container.contains(renderer.domElement)) {
@@ -262,7 +227,7 @@ export default function Background({
       style={{
         backgroundColor: "var(--background)",
         mixBlendMode: "multiply",
-        opacity: 0.4,
+        opacity: 0.3, // softer blend for visible colors
       }}
     >
       <div ref={containerRef} className="absolute inset-0" />
