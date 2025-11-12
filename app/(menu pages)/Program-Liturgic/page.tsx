@@ -97,7 +97,7 @@ export default function Page() {
         </div>
         <div className="flex place-content-center mt-[30px]">
           <Image
-            src="/footer black.png"
+            src="/footer.webp"
             className="contain mix-blend-difference"
             alt="logo"
             width={250}

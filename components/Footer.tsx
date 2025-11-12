@@ -6,8 +6,8 @@ import { Mail, MapPin } from "lucide-react";
 
 
 const Footer = () => {
-  return (
-    <div className="bg-[#0b0a24] backdrop-blur-xl  bg-gradient-to-b z-5">
+  return (<div>
+    <div className="bg-[#0b0a24] backdrop-blur-xl  bg-gradient-to-b z-5 relative ">
       <div className="flex place-content-center py-5">
         <Image
           src="/logo_negru_1.webp"
@@ -65,7 +65,7 @@ const Footer = () => {
       </div>
       <div className="flex place-content-center mt-[30px]">
         <Image
-          src="/footer black.png"
+          src="/footer.webp"
           className="contain mix-blend-difference"
           alt="logo"
           width={250}
@@ -73,7 +73,8 @@ const Footer = () => {
         />
       </div>
     </div>
-  );
+
+  </div>);
 };
 
 export default Footer;

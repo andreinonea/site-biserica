@@ -16,9 +16,10 @@ import Footer from "@/components/Footer";
 // import Background from "@/components/spec/background";
 
 export default function Home() {
+  
   return (
-    <div className="relative bg-[#dfb84c] overflow-hidden">
-      <Background priority />
+    <div className="relative bg-[#dfb84c] overflow-hidden" >
+      <Background priority className="select-none" />
       <section className="relative">
         <HeroSection />
       </section>

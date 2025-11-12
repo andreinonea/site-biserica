@@ -22,7 +22,7 @@ export default function GoogleMap() {
     iconAnchor: [16, 32],
   })
 
-  const position: LatLngExpression = [44.4147996, 26.1229999]
+  const position: LatLngExpression = [44.4149996, 26.1229909]
 
   return (
     <MapContainer
@@ -30,8 +30,12 @@ export default function GoogleMap() {
       zoom={16}
       style={{ height: '350px', borderRadius: '10px' }}
       scrollWheelZoom={false}
+      className='z-0'
     >
-      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+      <TileLayer
+        url="https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=HtntP1Hrm9tKcf76AWEe"
+      />
+
       <Marker position={position} icon={customIcon}>
         <Popup>Strada Foișorului 119, București</Popup>
       </Marker>

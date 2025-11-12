@@ -316,7 +316,7 @@ export default function Scene() {
         scaleProgress(0.65),
         scaleProgress(0.7),
       ];
-      const [quoteFadeInStart, quoteFadeInEnd] = scaleRange(-0.2, 0.16);
+      const [quoteFadeInStart, quoteFadeInEnd] = scaleRange(-0.5, 0.16);
       const [quoteFadeOutStart, quoteFadeOutEnd] = scaleRange(0.55, 0.75);
       const [quoteScaleStart, quoteScaleEnd] = scaleRange(-0.2, 0.6);
       const [quoteShiftStart, quoteShiftEnd] = scaleRange(-0.2, 0.7);
@@ -649,26 +649,35 @@ export default function Scene() {
             >
               <div className="pointer-events-auto mx-auto max-w-3xl select-text px-4 text-center text-white/90 sm:max-w-2xl md:max-w-4xl md:px-6">
                 <p className="text-xl font-medium leading-snug sm:text-2xl md:text-3xl lg:text-4xl">
-                  <span className="pr-2 text-[#c95d43]">"</span>
+                  <span className="pr-2 text-[#c95d43]/90">„</span>
                   {quote.text}
-                  <span className="pl-2 text-[#c95d43]">"</span>
+                  <span className="pl-2 text-[#c95d43]/90">”</span>
                 </p>
                 {quote.author ? (
-                  <p className="mt-4 text-sm uppercase tracking-wide text-white/60 md:text-base">
+                  <p className="mt-4 text-sm uppercase tracking-wide text-[#c95d43]/80 md:text-base">
                     - {quote.author}
                   </p>
                 ) : null}
                 <div
                   data-scene="quote-hint"
-                  className="mt-8 flex items-center justify-center gap-2 text-xs text-white/60 md:text-sm"
+                  className="mt-20 flex items-center justify-center gap-2 text-xs text-white/60 md:text-sm"
                 >
-                  <span>Gliseaza in jos</span>
+                    <span className="text-[17px]">Glisează în jos</span>
                   <Image
-                    src="/icons/ScrollDownArrows.gif"
+                    src="/icons/curve-arrow-down.svg"
                     alt="Scroll down"
-                    width={30}
+                    width={20}
                     height={20}
                     unoptimized
+                    className="animate-bounce mt-3 block md:hidden"
+                  />
+                   <Image
+                    src="/icons/curve-arrow-down.svg"
+                    alt="Scroll down"
+                    width={30}
+                    height={30}
+                    unoptimized
+                    className="animate-bounce mt-3 hidden md:block"
                   />
                 </div>
               </div>

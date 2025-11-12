@@ -38,9 +38,9 @@ const page = () => {
                         mix-blend-overlay" />
           </div>
         </div>
-        <div className="flex justify-center text-4xl mt-[100px] mb-12 font-semibold text-white/90">
+        <h1 className="flex justify-center text-4xl mt-[100px] mb-12 text-white/90">
           Contact
-        </div>
+        </h1>
 
         <div className="max-w-3xl mx-auto space-y-10">
 

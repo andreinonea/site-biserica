@@ -6,6 +6,8 @@ import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { LINKS } from "@/app/constants";
 
+
+
 export default function Navbar() {
   const [open, setOpen] = useState(false);
 
@@ -16,7 +18,6 @@ export default function Navbar() {
       document.body.classList.remove("overflow-hidden");
     }
 
-    // Clean up just in case
     return () => {
       document.body.classList.remove("overflow-hidden");
     };
@@ -25,8 +26,8 @@ export default function Navbar() {
   return (
     <>
       <div
-        className={`max-w-[100vw] w-full  top-0 left-0 h-[4.2rem] z-15 ${!open
-          ? "bg-[#02021fd5] shadow-xl backdrop-blur-xl "
+        className={`max-w-[100vw] w-full top-0 left-0 h-[4.2rem] z-15 ${!open
+          ? "bg-[#02021fd5] shadow-xl backdrop-blur-xl"
           : "bg-[#b1967d00] h-[6rem]"
           } transition-all duration-300 fixed`}
       >
@@ -37,19 +38,16 @@ export default function Navbar() {
             }`}
           aria-label="Toggle menu"
         >
-
           <Image
-            src="/icons/val2.webp"
+            src="/icons/val2 (1).webp"
             alt="top"
             width={300}
             height={100}
             className={`absolute object-contain scale-600 w-full h-0.5 transition-all duration-300 ease-in-out ${open ? "rotate-45 translate-y-0" : "-translate-y-1.5"
-              } `}
+              }`}
           />
-
-          {/* Bottom image */}
           <Image
-            src="/icons/val1.webp"
+            src="/icons/val1 (1).webp"
             alt="bottom"
             width={300}
             height={100}
@@ -58,6 +56,7 @@ export default function Navbar() {
           />
         </button>
 
+        {/* Logo in header */}
         <div
           className={`inset-x-0 absolute top-0 left-1/2 transition-all duration-300 -translate-x-1/2 h-full ${open ? "" : "pt-2"
             }`}
@@ -65,9 +64,7 @@ export default function Navbar() {
           <div className="w-full flex justify-center h-4/5">
             <Link
               href="/"
-              className={`relative aspect-square h-full transition-all duration-300 ${open
-                ? "invert-100 translate-y-5"
-                : "invert-100"
+              className={`relative aspect-square h-full transition-all duration-300 ${open ? "invert-100 translate-y-5" : "invert-100"
                 }`}
             >
               <Image src="/logo_negru_1.webp" alt="logo" fill />
@@ -103,15 +100,20 @@ export default function Navbar() {
                   <Link
                     href={`/${path}`}
                     onClick={() => setOpen(false)}
-                    className="text-2xl md:text-3xl lg:text-4xl hover:underline font-[Byzantin]  text-shadow-white/5 text-shadow-lg"
+                    className="text-2xl md:text-3xl lg:text-4xl hover:underline font-[Byzantin] text-shadow-white/5 text-shadow-lg"
                   >
-                    {label}
+                    {label.split(" ").map((word, idx) => (
+                      <span key={idx} className="first-letter:text-[1.4em] font-[Byzantin] mr-1">
+                        {word}
+                      </span>
+                    ))}
                   </Link>
+
                 </motion.div>
               ))}
             </nav>
 
-            {/* Centered bottom logo */}
+            {/* Bottom logo */}
             <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2">
               <Image
                 src="/assets/centenar.webp"
@@ -127,6 +129,3 @@ export default function Navbar() {
     </>
   );
 }
-
-
-

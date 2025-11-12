@@ -87,7 +87,7 @@ const Events = () => {
 
           <div className="block sm:block md:inline-block md:ml-3 lg:ml-4 mt-2 sm:mt-1 md:mt-0 ml-25 sm:ml-20 md:ml-0">
             <span className="text-5xl lg:text-7xl  font-[Byzantin] text-[#55302f]">U</span>
-            <span className="ml-2  font-[Byzantin] text-white/80">rmătoare</span>
+            <span className="ml-2  font-[Byzantin] text-white/80">rmatoare</span>
           </div>
         </h1>
 

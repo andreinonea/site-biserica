@@ -254,7 +254,7 @@ export default function Programliturgic() {
 
       <div className="flex justify-center mt-[30px] relative z-5">
         <Image
-          src="/footer black.png"
+          src="/footer.webp"
           className="contain mix-blend-difference"
           alt="logo"
           width={250}
