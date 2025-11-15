@@ -103,11 +103,15 @@ body {
 
 
 @layer base {
+  .byzantin {
+  font-family: 'Byzantin', serif;
+}
+
   h3, h4, h5, h6, p, a, span, div {
     @apply font-body;
   }
   h1, h2 {
-    @apply font-[Byzantin]
+    font-family: 'Byzantin', serif;
   }
 
 }

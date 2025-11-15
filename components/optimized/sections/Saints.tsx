@@ -102,11 +102,11 @@ const Sfzi = () => {
                   ref={titleRef}
                   className="text-5xl sm:text-6xl md:text-8xl font-normal text-white drop-shadow-lg shadow-white"
                 >
-                  <span className="text-6xl sm:text-7xl md:text-9xl font-[Byzantin] text-[#c95d43]">
+                  <span className="text-6xl sm:text-7xl md:text-9xl byzantin text-[#c95d43]">
                     S
                   </span>
                   fintii{" "}
-                  <span className="text-6xl sm:text-7xl md:text-9xl font-[Byzantin] text-[#c95d43]">
+                  <span className="text-6xl sm:text-7xl md:text-9xl byzantin text-[#c95d43]">
                     Z
                   </span>
                   ilei

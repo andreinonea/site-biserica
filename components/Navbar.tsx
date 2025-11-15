@@ -100,10 +100,10 @@ export default function Navbar() {
                   <Link
                     href={`/${path}`}
                     onClick={() => setOpen(false)}
-                    className="text-2xl md:text-3xl lg:text-4xl hover:underline font-[Byzantin] text-shadow-white/5 text-shadow-lg"
+                    className="text-2xl md:text-3xl lg:text-4xl hover:underline byzantin text-shadow-white/5 text-shadow-lg"
                   >
                     {label.split(" ").map((word, idx) => (
-                      <span key={idx} className="first-letter:text-[1.4em] font-[Byzantin] mr-1">
+                      <span key={idx} className="first-letter:text-[1.4em] byzantin mr-1">
                         {word}
                       </span>
                     ))}
