@@ -4,6 +4,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import SimpleCarousel from "@/components/EventCarousel";
 import { motion } from "framer-motion";
+import Logo from "@/components/optimized/components/Logo";
 
 type Slide = { image: string; caption?: string };
 
@@ -54,7 +55,7 @@ const EvenimentePage = () => {
   };
 
   return (
-    <div className="text-white  min-h-screen bg-[#0A0004] ">
+    <div className="text-white  min-h-screen bg-[#0A0004] selection:bg-yellow-600 selection:text-white/90">
       <motion.div
         initial={{ scale: 0.95, borderRadius: "30px", opacity: 0 }}
         animate={{ scale: 1, borderRadius: "0px", opacity: 1 }}
@@ -180,15 +181,7 @@ const EvenimentePage = () => {
           </section>
 
         </div>
-        <div className="flex place-content-center mt-[30px]">
-          <Image
-            src="/footer.webp"
-            className="contain mix-blend-difference"
-            alt="logo"
-            width={250}
-            height={180}
-          />
-        </div>
+        <Logo theme='light' />
       </motion.div>
     </div>
 

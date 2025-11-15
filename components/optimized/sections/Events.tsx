@@ -56,8 +56,8 @@ const Events = () => {
   }, []);
 
   return (
-    <div className="relative grid place-items-center w-full pb-40 mx-auto select-none" >
-      <div className="relative h-20 w-full z-2 -mt-4 mb-30 select-none ">
+    <div className="relative grid place-items-center w-full pb-40 mx-auto z-0" >
+      <div className="relative h-20 w-full z-2 -mt-4 mb-30  ">
         <Image
           src={"/patterns/pattern0.png"}
           className="object-cover"
@@ -69,9 +69,9 @@ const Events = () => {
         alt="background-events"
         src={"/covers/cover1.png"}
         fill
-        className="absolute object-cover z-1 mask-t-from-1 mask-b-from-0 select-none"
+        className="absolute object-cover z-1 mask-t-from-1 mask-b-from-0"
       />
-      <div className="absolute  w-full h-full bg-[#0d111f] select-none"></div>
+      <div className="absolute  w-full h-full bg-[#0d111f] "></div>
       <motion.div
         ref={ref}
         initial={{ opacity: 0, y: 50 }}

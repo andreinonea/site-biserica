@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap');
 @import "tailwindcss";
 @import "leaflet/dist/leaflet.css";
+
 
 :root {
   --background: #02021f;
@@ -7,11 +9,19 @@
   --font-sans: 'Byzantin', sans-serif;
   --font-sentient: 'Sentient', serif;
   --font-merriweather: 'Merriweather', serif;
+  --font-felix-base: 'Felix Titling', serif;
 }
 
 @font-face {
   font-family: 'Byzantin';
   src: url('/fonts/BYZANTIN.TTF') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Felix Titling';
+  src: url('/fonts/Felix-Titling.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -45,6 +55,8 @@
   --font-mono: var(--font-geist-mono);
   --font-body: var(--font-sentient); 
   --font-dutch: var(--font-merriweather);
+  --font-felix: var(--font-felix-base);
+
 }
 
 
@@ -79,8 +91,6 @@
     animation-timeline: view();
     
   }
-html {
-}
 
 body {
   margin: 0;

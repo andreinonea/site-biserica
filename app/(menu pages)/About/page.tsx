@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
+import Logo from "@/components/optimized/components/Logo";
 
 const aboutSections = [
   {
@@ -88,7 +89,7 @@ const AboutPage = () => {
     : "/background/concrete_wall_003_disp_8k.png";
 
   return (
-    <div className="relative overflow-hidden bg-[#c59d30] pt-10">
+    <div className="relative overflow-hidden bg-[#c59d30] pt-10 selection:bg-yellow-600 selection:text-black/90">
        <motion.div
         className={`absolute inset-0 h-[300vh] w-full opacity-10 overflow-hidden`}
         id="background-diffuse"
@@ -184,15 +185,7 @@ const AboutPage = () => {
             })}
           </div>
         </div>
-          <div className="flex place-content-center mt-[30px]">
-                <Image
-                  src="/footer.webp"
-                  className="contain mix-blend-difference"
-                  alt="logo"
-                  width={250}
-                  height={180}
-                />
-              </div>
+          <Logo />
       </motion.div>
     </div>
   );

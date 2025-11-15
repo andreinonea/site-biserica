@@ -34,7 +34,7 @@ export default function Navbar() {
         {/* Menu Button */}
         <button
           onClick={() => setOpen(!open)}
-          className={`absolute right-4 h-full aspect-square max-w-8 z-50 flex items-center justify-center transition-all duration-300 ${open ? "pt-5" : ""
+          className={`absolute right-4 h-full aspect-square max-w-8 z-50 flex items-center justify-center transition-all duration-300 cursor-pointer select-none ${open ? "pt-5" : ""
             }`}
           aria-label="Toggle menu"
         >
@@ -58,14 +58,14 @@ export default function Navbar() {
 
         {/* Logo in header */}
         <div
-          className={`inset-x-0 absolute top-0 left-1/2 transition-all duration-300 -translate-x-1/2 h-full ${open ? "" : "pt-2"
+          className={`inset-x-0 absolute top-0 left-1/2 transition-all duration-300 -translate-x-1/2 h-full select-none ${open ? "" : "pt-2"
             }`}
         >
           <div className="w-full flex justify-center h-4/5">
             <Link
               href="/"
-              className={`relative aspect-square h-full transition-all duration-300 ${open ? "invert-100 translate-y-5" : "invert-100"
-                }`}
+              className={`relative aspect-square h-full transition-all duration-300 ${open ? "invert-100 translate-y-5" : "invert-100"}`}
+              onClick={() => setOpen(false)}
             >
               <Image src="/logo_negru_1.webp" alt="logo" fill />
             </Link>
@@ -81,7 +81,7 @@ export default function Navbar() {
             animate={{ opacity: 1, paddingTop: 0 }}
             exit={{ opacity: 0, paddingTop: -20 }}
             transition={{ duration: 0.2, ease: "easeInOut" }}
-            className="fixed inset-0 z-10 top-0 left-0 w-screen h-screen bg-black/40 backdrop-blur-xl flex flex-col justify-center"
+            className="fixed inset-0 z-10 top-0 left-0 w-screen h-screen bg-black/40 backdrop-blur-xl flex flex-col justify-center select-none"
           >
             {/* Navigation links */}
             <nav className="flex flex-col items-end justify-center h-full p-10 gap-10 text-right text-white/80">

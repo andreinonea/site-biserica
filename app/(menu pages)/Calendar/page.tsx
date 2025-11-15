@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import Logo from "@/components/optimized/components/Logo";
 
 type LocalDay = {
   zi: number;
@@ -145,7 +146,7 @@ export default function Programliturgic() {
       transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
       className="relative min-h-screen bg-[#0A0004] text-white overflow-hidden"
     >
-      <div className="absolute  mask-b-from-0 inset-0 isolate w-full  opacity-30 ">
+      <div className="absolute  mask-b-from-0 inset-0 isolate w-full  opacity-30">
         <div className="relative w-full h-full">
           <Image
             fill
@@ -174,7 +175,7 @@ export default function Programliturgic() {
         </div>
       </div>
 
-      <div className="relative z-5 max-w-4xl mx-auto px-6 py-12 pt-[100px]">
+      <div className="relative z-5 max-w-4xl mx-auto px-6 py-12 pt-[100px] selection:bg-yellow-600 selection:text-white/90">
         <div className="flex justify-between items-center mt-3 mb-20">
           {/* Small screens */}
           <button
@@ -252,15 +253,7 @@ export default function Programliturgic() {
         })()}
       </div>
 
-      <div className="flex justify-center mt-[30px] relative z-5">
-        <Image
-          src="/footer.webp"
-          className="contain mix-blend-difference"
-          alt="logo"
-          width={250}
-          height={180}
-        />
-      </div>
+      <Logo theme='light' />
     </motion.div>
   );
 }

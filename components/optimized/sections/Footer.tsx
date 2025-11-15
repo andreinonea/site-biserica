@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Mail, MapPin } from "lucide-react";
+import Logo from "../components/Logo";
 
 
 
@@ -11,7 +12,7 @@ const Footer = () => {
       <div className="flex place-content-center py-5">
         <Image
           src="/logo_negru_1.webp"
-          className="invert-100"
+          className="invert-100 select-none"
           alt="logo"
           width={150}
           height={80}
@@ -63,15 +64,9 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <div className="flex place-content-center mt-[30px]">
-        <Image
-          src="/footer.webp"
-          className="contain mix-blend-difference"
-          alt="logo"
-          width={250}
-          height={180}
-        />
-      </div>
+
+      <Logo theme='light'/>
+
     </div>
 
   </div>);

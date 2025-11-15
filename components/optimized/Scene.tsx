@@ -305,7 +305,7 @@ export default function Scene() {
       const falconThreeRangeMobile = scaleRange(0.25, 0.45);
       const falconThreeRangeDesktop = scaleRange(0.25, 0.7);
       const falconThreeOpacityPointsMobile = [
-        scaleProgress(0.3),
+        scaleProgress(0.2),
         scaleProgress(0.32),
         scaleProgress(0.43),
         scaleProgress(0.45),
@@ -554,10 +554,10 @@ export default function Scene() {
             >
               <div className="relative h-full w-full ">
                 <Image
-                  src="/assets/principal.webp"
+                  src="/assets/principal(1).webp"
                   alt="Stalpi"
                   fill
-                  className="object-cover object-top"
+                  className="object-cover object-top "
                   priority
                 />
               </div>
@@ -618,7 +618,7 @@ export default function Scene() {
             >
               <div className="relative aspect-[16/10] w-[40vw] max-w-[520px] md:w-[22vw]">
                 <Image
-                  src="/assets/Falcon2.webp"
+                  src="/assets/Falcon2.png"
                   alt="Falcon 2"
                   fill
                   className="object-contain"

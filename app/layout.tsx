@@ -5,7 +5,6 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import LogoLoader from "@/components/Logoloader";
 import { Merriweather } from "next/font/google";
-import Footer from "@/components/Footer";
 
 const merriweather = Merriweather({
   weight: ["400", "700", "900"],

@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { MapPin, Mail } from 'lucide-react'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
+import Logo from '@/components/optimized/components/Logo'
 
 const GoogleMap = dynamic(() => import('@/components/Map'), {
   ssr: false,
@@ -17,7 +18,7 @@ const page = () => {
         animate={{ scale: 1, borderRadius: '0px', opacity: 1 }}
         exit={{ scale: 0.95, borderRadius: '30px', opacity: 0 }}
         transition={{ duration: 0.6, ease: 'easeInOut' }}
-        className="min-h-screen bg-[#0A0004] px-6 py-12 text-white"
+        className="min-h-screen bg-[#0A0004] px-6 py-12 text-white selection:bg-yellow-600 selection:text-white/90"
       >
         <div className="absolute mask-b-from-0 inset-0 isolate w-full opacity-20 z-6 pointer-events-none">
           <div className="relative h-full overflow-x-hidden">
@@ -86,15 +87,7 @@ const page = () => {
             <GoogleMap />
           </div>
         </div>
-        <div className="flex place-content-center mt-[30px]">
-          <Image
-            src="/footer black.png"
-            className="contain mix-blend-difference"
-            alt="logo"
-            width={250}
-            height={180}
-          />
-        </div>
+       <Logo theme='light' />
       </motion.div>
     </>
   )
