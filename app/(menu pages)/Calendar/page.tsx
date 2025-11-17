@@ -26,36 +26,61 @@ export default function Programliturgic() {
   const [fastData, setFastData] = useState<Record<string, FastInfo>>({});
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        setLoading(true);
-        const localRes = await fetch("/data/calendar.json");
-        const localData = await localRes.json();
-        setCalendar(localData);
+useEffect(() => {
+  const loadData = async () => {
+    try {
+      setLoading(true);
 
-        const fastRes = await fetch(`https://orthocal.info/api/gregorian/${year}/${month}/`);
-        const fastJson = await fastRes.json();
+      // 1. Load local calendar
+      const localRes = await fetch("/data/calendar.json");
+      const localData = await localRes.json();
+      setCalendar(localData);
 
-        const fastMap: Record<string, FastInfo> = {};
-        fastJson.forEach((entry: any) => {
-          const key = `${entry.year}-${String(entry.month).padStart(2, "0")}-${String(entry.day).padStart(2, "0")}`;
-          fastMap[key] = {
-            fast_level_desc: entry.fast_level_desc,
-            fast_exception_desc: entry.fast_exception_desc,
-          };
-        });
-
-        setFastData(fastMap);
-      } catch (error) {
-        console.error("Eroare la încărcare:", error);
-      } finally {
+      // 2. Determine month key
+      const monthKey = `${year}-${String(month).padStart(2, "0")}`;
+      const days = localData[monthKey];
+      if (!days) {
+        setFastData({});
         setLoading(false);
+        return;
       }
-    };
 
-    loadData();
-  }, [month, year]);
+      // 3. Generate list of dates in this month
+      const dateKeys = Object.keys(days);
+
+      // 4. Fetch fast info DAILY (MUCH MORE ACCURATE)
+      const fastMap: Record<string, FastInfo> = {};
+
+      await Promise.all(
+        dateKeys.map(async (dateStr) => {
+          const [y, m, d] = dateStr.split("-");
+
+          try {
+            const res = await fetch(
+              `https://orthocal.info/api/gregorian/${y}/${m}/${d}/`
+            );
+            const json = await res.json();
+
+            fastMap[dateStr] = {
+              fast_level_desc: json.fast_level_desc,
+              fast_exception_desc: json.fast_exception_desc,
+            };
+          } catch (err) {
+            console.error("Daily fetch failed for:", dateStr, err);
+          }
+        })
+      );
+
+      setFastData(fastMap);
+    } catch (error) {
+      console.error("Eroare la încărcare:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  loadData();
+}, [month, year]);
 
   const dayNames: Record<string, string> = {
     L: "luni",
