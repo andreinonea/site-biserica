@@ -80,18 +80,34 @@ const Events = () => {
         className="relative font-bold text-white/70 -mb-6" 
       >
         <h1 className="text-4xl lg:text-5xl leading-tight">
-          <div className="relative inline-block">
-            <span className="text-5xl lg:text-7xl byzantin text-[#55302f]">E</span>
-            <span className="ml-1 byzantin text-white/80">venimente</span>
-          </div>
+  <span
+    className="
+      inline-block byzantin 
+      first-letter:text-[#55302f] 
+      first-letter:text-5xl 
+      first-letter:lg:text-7xl 
+      text-white/80
+    "
+  >
+    Evenimente
+  </span>
 
-          <div className="block sm:block md:inline-block md:ml-3 lg:ml-4 mt-2 sm:mt-1 md:mt-0 ml-25 sm:ml-20 md:ml-0">
-            <span className="text-5xl lg:text-7xl byzantin text-[#55302f]">U</span>
-            <span className="ml-2 byzantin text-white/80">rmatoare</span>
-          </div>
-        </h1>
-
-
+  <span
+    className="
+      block sm:block md:inline-block 
+      md:ml-3 lg:ml-4 
+      mt-2 sm:mt-1 md:mt-0 
+      ml-25 sm:ml-20 md:ml-0
+      byzantin 
+      first-letter:text-[#55302f]
+      first-letter:text-5xl 
+      first-letter:lg:text-7xl 
+      text-white/80
+    "
+  >
+    Urmatoare
+  </span>
+</h1>
       </motion.div>
 
       {eveniment ? (
