@@ -45,7 +45,7 @@ const page = () => {
 
         <div className="max-w-3xl mx-auto space-y-10">
 
-          <div className="flex items-start gap-4">
+          <div className="flex items-start gap-4 flex-nowrap">
             <img src="./icons/phone.svg" alt="Phone" className="w-7 h-7 mt-1" />
             <div>
               <p className="text-lg font-medium text-white/90">Telefon</p>
