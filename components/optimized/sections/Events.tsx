@@ -81,13 +81,17 @@ const Events = () => {
       >
         <h1 className="text-4xl lg:text-5xl leading-tight">
           <div className="relative inline-block">
-            <span className="text-5xl lg:text-7xl byzantin text-[#55302f]">E</span>
-            <span className="ml-1 byzantin text-white/80">venimente</span>
+            <span className="text-5xl lg:text-7xl 
+             text-[#55302f]">E</span>
+            <span className="ml-1 
+             text-white/80">venimente</span>
           </div>
 
           <div className="block sm:block md:inline-block md:ml-3 lg:ml-4 mt-2 sm:mt-1 md:mt-0 ml-25 sm:ml-20 md:ml-0">
-            <span className="text-5xl lg:text-7xl byzantin text-[#55302f]">U</span>
-            <span className="ml-2 byzantin text-white/80">rmatoare</span>
+            <span className="text-5xl lg:text-7xl 
+             text-[#55302f]">U</span>
+            <span className="ml-2 
+             text-white/80">rmatoare</span>
           </div>
         </h1>
 
