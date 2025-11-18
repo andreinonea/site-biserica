@@ -72,28 +72,24 @@ const Events = () => {
         className="absolute object-cover z-1 mask-t-from-1 mask-b-from-0"
       />
       <div className="absolute  w-full h-full bg-[#0d111f] "></div>
-      <motion.div
-        ref={ref}
-        initial={{ opacity: 0, y: 50 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="relative font-bold text-white/70 -mb-6" 
+      <div
+        className="relative font-bold text-white/70 -mb-6"
       >
         <h1 className="text-4xl lg:text-5xl leading-tight">
-  <span
-    className="
+          <span
+            className="
       inline-block byzantin 
       first-letter:text-[#55302f] 
       first-letter:text-5xl 
       first-letter:lg:text-7xl 
       text-white/80
     "
-  >
-    Evenimente
-  </span>
+          >
+            Evenimente
+          </span>
 
-  <span
-    className="
+          <span
+            className="
       block sm:block md:inline-block 
       md:ml-3 lg:ml-4 
       mt-2 sm:mt-1 md:mt-0 
@@ -104,11 +100,11 @@ const Events = () => {
       first-letter:lg:text-7xl 
       text-white/80
     "
-  >
-    Urmatoare
-  </span>
-</h1>
-      </motion.div>
+          >
+            Urmatoare
+          </span>
+        </h1>
+      </div>
 
       {eveniment ? (
         <div className="relative flex items-start gap-2 mt-10 right-3">
