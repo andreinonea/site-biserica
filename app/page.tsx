@@ -5,20 +5,15 @@ import Program from "@/components/optimized/sections/Program";
 import Saints from '@/components/optimized/sections/Saints';
 import ThreeCardCarousel from "@/components/Cards";
 import DonatePage from "@/components/optimized/sections/Donate";
-import Footer from "@/components/Footer";
+import Footer from "@/components/optimized/sections/Footer";
 
-// import Program from "@/components/Program";
-// import Sfzi from "@/components/Sfzi";
 // import Footer from "@/components/Footer";
-// import Events from "@/components/Events";
-// import Donate from "@/components/Donate";
-// import HeroSection from "@/components/HeroSection";
-// import Background from "@/components/spec/background";
 
 export default function Home() {
+  
   return (
-    <div className="relative bg-[#C59D30] overflow-hidden">
-      <Background priority />
+    <div className="relative bg-[#dfb84c] overflow-hidden selection:bg-yellow-600 selection:text-black/90" >
+      <Background priority className="select-none" />
       <section className="relative">
         <HeroSection />
       </section>
@@ -31,15 +26,6 @@ export default function Home() {
       <Saints/>
       <DonatePage/>
       <Footer/>
-
-      {/* <Background classname="top-[50vh] opacity-30 " /> */}
-      {/* <HeroSection /> */}
-      {/* <Program />
-      <Events />
-      <ThreeCardCarousel />
-      <Sfzi  />
-      <Donate />
-      <Footer /> */}
     </div>
   );
 }

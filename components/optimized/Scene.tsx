@@ -5,6 +5,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import useDebug from "../hooks/useDebug";
+import useFixedViewportHeight from "../hooks/useFixedViewport";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -111,7 +112,13 @@ const scaleRange = (start: number, end: number): [number, number] => [
 export default function Scene() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [quote, setQuote] = useState<DailyQuote>(fallbackQuote);
+  const fixedViewportHeight = useFixedViewportHeight();
+  const viewportHeightRef = useRef<number>(0);
+  const viewportWidthRef = useRef<number>(0);
   const debug = useDebug();
+  const doubledViewportHeight = fixedViewportHeight ? fixedViewportHeight * 2 : 0;
+  const sceneHeightStyle = doubledViewportHeight ? `${doubledViewportHeight}px` : undefined;
+  const pinnedHeight = fixedViewportHeight ? `${fixedViewportHeight}px` : undefined;
 
   useEffect(() => {
     if (typeof window === "undefined") {
@@ -184,19 +191,78 @@ export default function Scene() {
     };
   }, []);
 
+  useEffect(() => {
+    if (typeof window === "undefined" || !fixedViewportHeight) {
+      return;
+    }
+    viewportHeightRef.current = fixedViewportHeight;
+    ScrollTrigger.refresh();
+  }, [fixedViewportHeight]);
+
   useLayoutEffect(() => {
     const container = containerRef.current;
-    if (!container) {
+    if (!container || typeof window == 'undefined') {
       return;
     }
 
-    const computeScrollDistance = () => {
-      const height = container.scrollHeight || 0;
-      const viewport = window.innerHeight || 1;
-      if (height <= viewport) {
-        return viewport;
+    const readViewportHeight = () => {
+      const visual = window.visualViewport;
+      return Math.round((visual?.height ?? window.innerHeight) || 0);
+    };
+
+    const readViewportWidth = () => {
+      const visual = window.visualViewport;
+      return Math.round((visual?.width ?? window.innerWidth) || 0);
+    };
+
+    viewportHeightRef.current =
+      viewportHeightRef.current || fixedViewportHeight || readViewportHeight();
+    viewportWidthRef.current = viewportWidthRef.current || readViewportWidth();
+
+    const mediaElements = Array.from(
+      container.querySelectorAll("img")
+    ) as HTMLImageElement[];
+
+    const handleMediaLoad = () => {
+      ScrollTrigger.refresh();
+    };
+
+    const handleResize = () => {
+      const nextHeight = readViewportHeight();
+      const nextWidth = readViewportWidth();
+
+      const widthDelta = Math.abs(nextWidth - viewportWidthRef.current);
+      const heightDelta = Math.abs(nextHeight - viewportHeightRef.current);
+      const orientationChanged = widthDelta > 80;
+      const majorHeightChange = heightDelta > 160;
+
+      if (!orientationChanged && !majorHeightChange) {
+        return;
       }
-      return (height - viewport);
+
+      viewportHeightRef.current = nextHeight;
+      viewportWidthRef.current = nextWidth;
+      ScrollTrigger.refresh();
+    };
+
+    mediaElements.forEach((img) => {
+      if (img.complete) {
+        return;
+      }
+      img.addEventListener("load", handleMediaLoad);
+      img.addEventListener("error", handleMediaLoad);
+    });
+
+    window.addEventListener("resize", handleResize);
+    window.visualViewport?.addEventListener("resize", handleResize);
+
+    let refreshRaf: number | null = null;
+
+    const computeScrollDistance = () => {
+      const height = container.scrollHeight || container.clientHeight || 0;
+      const viewport = viewportHeightRef.current || readViewportHeight() || 1;
+      const distance = height <= viewport ? viewport : height - viewport;
+      return Math.max(1, Math.round(distance));
     };
 
     const ctx = gsap.context(() => {
@@ -283,7 +349,7 @@ export default function Scene() {
       const falconThreeRangeMobile = scaleRange(0.25, 0.45);
       const falconThreeRangeDesktop = scaleRange(0.25, 0.7);
       const falconThreeOpacityPointsMobile = [
-        scaleProgress(0.3),
+        scaleProgress(0.2),
         scaleProgress(0.32),
         scaleProgress(0.43),
         scaleProgress(0.45),
@@ -294,7 +360,7 @@ export default function Scene() {
         scaleProgress(0.65),
         scaleProgress(0.7),
       ];
-      const [quoteFadeInStart, quoteFadeInEnd] = scaleRange(-0.2, 0.16);
+      const [quoteFadeInStart, quoteFadeInEnd] = scaleRange(-0.5, 0.16);
       const [quoteFadeOutStart, quoteFadeOutEnd] = scaleRange(0.55, 0.75);
       const [quoteScaleStart, quoteScaleEnd] = scaleRange(-0.2, 0.6);
       const [quoteShiftStart, quoteShiftEnd] = scaleRange(-0.2, 0.7);
@@ -319,10 +385,14 @@ export default function Scene() {
       }
 
       const updateScene = (progress: number) => {
-        const vhUnit = window.innerHeight * 0.01;
-        const vwUnit = window.innerWidth * 0.01;
+        if (typeof window == 'undefined') return;
 
-        const isDesktop = window.innerWidth >= 1024;
+        const viewportHeight = viewportHeightRef.current || readViewportHeight();
+        const viewportWidth = viewportWidthRef.current || readViewportWidth();
+        const vhUnit = viewportHeight * 0.01;
+        const vwUnit = viewportWidth * 0.01;
+
+        const isDesktop = viewportWidth >= 1024;
 
         const cloudOpacityFade = isDesktop ? cloudOpacityFadeDesktop : cloudOpacityFadeMobile;
         const [cloudOffsetStart, cloudOffsetEnd] = isDesktop
@@ -471,7 +541,7 @@ export default function Scene() {
       const scrollTrigger = ScrollTrigger.create({
         trigger: container,
         start: "top top",
-        end: () => "=" + computeScrollDistance(),
+        end: () => "+=" + computeScrollDistance(),
         scrub: true,
         pin: true,
         pinSpacing: true,
@@ -481,6 +551,7 @@ export default function Scene() {
         onRefresh: ({ progress }) => updateScene(progress ?? 0),
       });
 
+      refreshRaf = window.requestAnimationFrame(() => ScrollTrigger.refresh());
       updateScene(scrollTrigger.progress ?? 0);
 
       return () => {
@@ -488,7 +559,18 @@ export default function Scene() {
       };
     }, container);
 
-    return () => ctx.revert();
+    return () => {
+      if (refreshRaf !== null) {
+        cancelAnimationFrame(refreshRaf);
+      }
+      window.removeEventListener("resize", handleResize);
+      window.visualViewport?.removeEventListener("resize", handleResize);
+      mediaElements.forEach((img) => {
+        img.removeEventListener("load", handleMediaLoad);
+        img.removeEventListener("error", handleMediaLoad);
+      });
+      ctx.revert();
+    };
   }, [debug]);
 
   return (
@@ -496,6 +578,7 @@ export default function Scene() {
       ref={containerRef}
       className="relative h-[200vh] w-full overflow-visible"
       style={{
+        height: sceneHeightStyle,
         WebkitMaskImage:
           "linear-gradient(to bottom, black 0%, black calc(100% - 250px), transparent 100%)",
         maskImage:
@@ -504,13 +587,16 @@ export default function Scene() {
         maskSize: "100% 100%",
       }}
     >
-      <div className="absolute inset-0 h-[200vh] w-full">
+      <div className="absolute inset-0 h-[200vh] w-full" style={{ height: sceneHeightStyle }}>
         <div data-scene="sky" className="relative h-full">
           <Image src="/assets/Sky.webp" alt="Sky" fill className="object-cover" priority />
         </div>
 
-        <div className="absolute inset-0 h-[200vh] w-full overflow-hidden">
-          <div className="sticky top-0 h-screen overflow-hidden">
+        <div
+          className="absolute inset-0 h-[200vh] w-full overflow-hidden"
+          style={{ height: sceneHeightStyle }}
+        >
+          <div className="sticky top-0 h-screen overflow-hidden" style={{ height: pinnedHeight }}>
             <div className="absolute inset-0 bg-transparent" aria-hidden data-scene="background" />
 
             <div
@@ -520,10 +606,10 @@ export default function Scene() {
             >
               <div className="relative h-full w-full ">
                 <Image
-                  src="/assets/principal.webp"
+                  src="/assets/principal(1).webp"
                   alt="Stalpi"
                   fill
-                  className="object-cover object-top"
+                  className="object-cover object-top "
                   priority
                 />
               </div>
@@ -584,7 +670,7 @@ export default function Scene() {
             >
               <div className="relative aspect-[16/10] w-[40vw] max-w-[520px] md:w-[22vw]">
                 <Image
-                  src="/assets/Falcon2.webp"
+                  src="/assets/Falcon2.png"
                   alt="Falcon 2"
                   fill
                   className="object-contain"
@@ -615,26 +701,35 @@ export default function Scene() {
             >
               <div className="pointer-events-auto mx-auto max-w-3xl select-text px-4 text-center text-white/90 sm:max-w-2xl md:max-w-4xl md:px-6">
                 <p className="text-xl font-medium leading-snug sm:text-2xl md:text-3xl lg:text-4xl">
-                  <span className="pr-2 text-[#c95d43]">"</span>
+                  <span className="pr-2 text-[#c95d43]/90">„</span>
                   {quote.text}
-                  <span className="pl-2 text-[#c95d43]">"</span>
+                  <span className="pl-2 text-[#c95d43]/90">”</span>
                 </p>
                 {quote.author ? (
-                  <p className="mt-4 text-sm uppercase tracking-wide text-white/60 md:text-base">
+                  <p className="mt-4 text-sm uppercase tracking-wide text-[#c95d43]/80 md:text-base">
                     - {quote.author}
                   </p>
                 ) : null}
                 <div
                   data-scene="quote-hint"
-                  className="mt-8 flex items-center justify-center gap-2 text-xs text-white/60 md:text-sm"
+                  className="mt-20 flex items-center justify-center gap-2 text-xs text-white/60 md:text-sm"
                 >
-                  <span>Gliseaza in jos</span>
+                    <span className="text-[17px]">Glisează în jos</span>
                   <Image
-                    src="/icons/ScrollDownArrows.gif"
+                    src="/icons/curve-arrow-down.svg"
                     alt="Scroll down"
-                    width={30}
+                    width={20}
                     height={20}
                     unoptimized
+                    className="animate-bounce mt-3 block md:hidden"
+                  />
+                   <Image
+                    src="/icons/curve-arrow-down.svg"
+                    alt="Scroll down"
+                    width={30}
+                    height={30}
+                    unoptimized
+                    className="animate-bounce mt-3 hidden md:block"
                   />
                 </div>
               </div>

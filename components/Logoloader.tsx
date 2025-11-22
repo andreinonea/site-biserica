@@ -13,6 +13,9 @@ export default function LogoLoader({ children }: LogoLoaderProps) {
   const logoRef = useRef<HTMLImageElement>(null);
 
   useLayoutEffect(() => {
+    if (typeof window == "undefined"){
+      return;
+    }
     if (!overlayRef.current || !logoRef.current) {
       return;
     }

@@ -1,4 +1,5 @@
 "use client";
+import Logo from "@/components/optimized/components/Logo";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
@@ -65,8 +66,9 @@ export default function Page() {
               alt="program-background"
               fill
             />
-            <div className="absolute inset-0 z-5 bg-gradient-to-b from-[#5a2c00]/40 via-[#8a4b00]/30 to-[#2e1200]/50 mix-blend-overlay" />
-
+            <div className="absolute inset-0 z-5 bg-gradient-to-b 
+                       from-[#FFDB99]/80 via-[#D49649]/50 to-[#5E2308]/90 
+                       mix-blend-overlay" />
           </div>
         </div>
 
@@ -78,7 +80,7 @@ export default function Page() {
         <div className="relative z-1 max-w-4xl mx-auto space-y-10 mb-20">
           {program.map((zi, i) => (
             <div key={i} className="border-b border-[#C59D30]/30 pb-4">
-              <span className="text-2xl font-semibold text-[#C59D30]">
+              <span className="text-2xl font-[merriweather] font-semibold text-[#C59D30]">
                 {zi.zi_saptamana.charAt(0).toUpperCase() +
                   zi.zi_saptamana.slice(1)}
               </span>
@@ -94,15 +96,7 @@ export default function Page() {
             </div>
           ))}
         </div>
-        <div className="flex place-content-center mt-[30px]">
-          <Image
-            src="/footer black.png"
-            className="contain mix-blend-difference"
-            alt="logo"
-            width={250}
-            height={180}
-          />
-        </div>
+        <Logo theme='light' />
       </motion.div>
     </div>
   );

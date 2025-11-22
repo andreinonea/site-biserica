@@ -1,16 +1,9 @@
 "use client";
 
-import { useRef, useEffect, useState, PropsWithChildren } from "react";
-import {
-  motion,
-  useInView,
-  useMotionTemplate,
-  useScroll,
-  useTransform,
-} from "framer-motion";
+import { useRef, useEffect, useState } from "react";
+import { motion, useInView } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { easeInOutCirc } from "@/app/constants";
 import IconFrame from "../components/FrameButton";
 
 type Eveniment = {
@@ -36,7 +29,6 @@ const Events = () => {
         const azi = new Date();
         azi.setHours(0, 0, 0, 0);
 
-        // Dacă fișierul este un array:
         const viitoare = data
           .filter((ev: any) => new Date(ev.date) >= azi)
           .sort(
@@ -56,8 +48,9 @@ const Events = () => {
   }, []);
 
   return (
-    <div className="relative grid place-items-center w-full pb-40 mx-auto select-none" >
-      <div className="relative h-20 w-full z-2 -mt-4 mb-30 select-none ">
+    <div className="relative grid place-items-center w-full pb-40 mx-auto z-0">
+      {/* Top pattern */}
+      <div className="relative h-20 w-full z-1 -mt-4 mb-30 pointer-events-none">
         <Image
           src={"/patterns/pattern0.png"}
           className="object-cover"
@@ -65,76 +58,111 @@ const Events = () => {
           fill
         />
       </div>
+
+      {/* Background images */}
       <Image
         alt="background-events"
         src={"/covers/cover1.png"}
         fill
-        className="absolute object-cover z-1 mask-t-from-1 mask-b-from-0 select-none"
+        className="absolute object-cover z-1 mask-t-from-1 mask-b-from-0 pointer-events-none"
       />
-      <div className="absolute  w-full h-full bg-[#0d111f] select-none"></div>
+      <div className="absolute w-full h-full bg-[#0d111f] z-0 pointer-events-none"></div>
+
+      {/* Event content */}
       <motion.div
         ref={ref}
         initial={{ opacity: 0, y: 50 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="relative font-bold text-white/70"
+        className="relative z-10 font-bold text-white/70 -mb-6 text-center"
       >
-        <h1 className="text-2xl lg:text-5xl">
-          <span className="text-4xl lg:text-6xl font-[Byzantin] text-[#693c3a]">E</span>venimente{" "}
-          <span className="text-4xl lg:text-6xl font-[Byzantin] text-[#693c3a]">U</span>rmătoare
+        <h1 className="relative text-4xl lg:text-5xl leading-tight z-10 text-center">
+          <span
+            className="
+      inline-block byzantin
+      first-letter:text-[#55302f]
+      first-letter:text-5xl
+      first-letter:lg:text-7xl
+      sm:ml-0 px-0
+      text-white/80 pr-10
+    "
+          >
+           Evenimente
+          </span>
+
+          <span
+            className="
+      block sm:block md:inline-block
+      
+      mt-2 sm:mt-1 md:mt-0
+            byzantin
+      first-letter:text-[#55302f]
+      first-letter:text-5xl
+      first-letter:lg:text-7xl
+      text-white/80 pl-10
+    "
+          >
+            Urmatoare
+          </span>
         </h1>
       </motion.div>
 
       {eveniment ? (
-        <div className="relative flex items-start gap-2 mt-6 select-none">
-          <div className="mt-4">
+        <div className="relative flex items-start gap-2 mt-10 z-10">
+          <div>
             <Image
-              src="/icons/diamond.svg"
-              alt="diamond icon"
-              width={24}
-              height={24}
+              src="/icons/sculptura.png"
+              alt="icon"
+              width={40}
+              height={30}
+              className="mt-1 pointer-events-none"
             />
           </div>
 
-          <div className="text-white/70 mb-15">
-            <div className="text-xl lg:text-2xl">
-              {eveniment.title}
-            </div>
+          <div className="text-white/70">
+            <div className="text-xl lg:text-2xl">{eveniment.title}</div>
             <div className="flex items-center gap-2 text-base">
               {eveniment.date &&
                 new Intl.DateTimeFormat("ro-RO", {
                   day: "numeric",
                   month: "long",
                 }).format(new Date(eveniment.date))}
-              <Image
-                src="/icons/dot.svg"
-                alt="dot icon"
-                width={24}
-                height={24}
-              />
-              ora {eveniment.hour}
+              {eveniment.hour && (
+                <>
+                  <Image
+                    src="/icons/dot.svg"
+                    alt="dot icon"
+                    width={24}
+                    height={24}
+                    className="pointer-events-none"
+                  />
+                  ora {eveniment.hour}
+                </>
+              )}
             </div>
           </div>
         </div>
       ) : (
-        <p className=" mt-6 text-white/50">Nu există evenimente disponibile.</p>
+        <p className="mt-6 text-white/50 z-10">
+          Nu există evenimente anunțate în viitorul apropiat.
+        </p>
       )}
 
-
-      <div className="relative z-1">
-      <IconFrame bgColor="bg-[#55302f]" textColor="text-white/50" >
-            <Link href={"Evenimente"} className="text-base z-2 p-2 px-5">
-            {"Vezi toate evenimentele"}
-            </Link>
-            </IconFrame>    
+      {/* Button */}
+      <div className="relative z-10 mt-10">
+        <IconFrame bgColor="bg-[#55302f]" textColor="text-white/50">
+          <Link href={"Evenimente"} className="text-base z-10 p-2 px-5">
+            Vezi toate evenimentele
+          </Link>
+        </IconFrame>
       </div>
-      
-      
-      <div className="relative w-full h-15 -mb-3 -bottom-40 transform translate-y-1/2 z-5">
+
+      {/* Bottom pattern */}
+      <div className="relative w-full h-15 -mb-3 -bottom-40 transform translate-y-1/2 z-0 pointer-events-none">
         <Image
           src={"/patterns/top-bar.png"}
           alt="top-bar-pattern"
-          className="object-cover "
+          className="object-cover"
           fill
         />
       </div>

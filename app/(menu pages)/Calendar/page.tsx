@@ -1,8 +1,9 @@
-'use client';
+"use client";
 
-import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
-import Image from 'next/image';
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import Image from "next/image";
+import Logo from "@/components/optimized/components/Logo";
 
 type LocalDay = {
   zi: number;
@@ -19,9 +20,8 @@ type FastInfo = {
 
 export default function Programliturgic() {
   const today = new Date();
-  const [month, setMonth] = useState(today.getMonth() + 1); // 1-based
+  const [month, setMonth] = useState(today.getMonth() + 1);
   const [year, setYear] = useState(today.getFullYear());
-
   const [calendar, setCalendar] = useState<Record<string, Record<string, LocalDay>> | null>(null);
   const [fastData, setFastData] = useState<Record<string, FastInfo>>({});
   const [loading, setLoading] = useState(true);
@@ -59,51 +59,67 @@ export default function Programliturgic() {
   }, [month, year]);
 
   const dayNames: Record<string, string> = {
-    'L': 'luni',
-    'Ma': 'marți',
-    'Mi': 'miercuri',
-    'J': 'joi',
-    'V': 'vineri',
-    'S': 'sâmbătă',
-    'D': 'duminică'
+    L: "luni",
+    Ma: "marți",
+    Mi: "miercuri",
+    J: "joi",
+    V: "vineri",
+    S: "sâmbătă",
+    D: "duminică",
   };
 
   const monthNames = [
-    'ianuarie', 'februarie', 'martie', 'aprilie', 'mai', 'iunie',
-    'iulie', 'august', 'septembrie', 'octombrie', 'noiembrie', 'decembrie'
+    "ianuarie",
+    "februarie",
+    "martie",
+    "aprilie",
+    "mai",
+    "iunie",
+    "iulie",
+    "august",
+    "septembrie",
+    "octombrie",
+    "noiembrie",
+    "decembrie",
   ];
 
   const fastLevelTranslations: Record<string, string> = {
-    'Fast': 'Post',
-    'No Fast': 'Fără post',
-    'Nativity Fast': 'Postul Nașterii Domnului',
-    'Lenten Fast': 'Postul Mare',
-    'Dormition Fast': 'Postul Adormirii Maicii Domnului',
-    'Apostles Fast': 'Postul Sfinților Apostoli'
+    Fast: "Post",
+    "No Fast": "Fără post",
+    "Nativity Fast": "Postul Nașterii Domnului",
+    "Lenten Fast": "Postul Mare",
+    "Dormition Fast": "Postul Adormirii Maicii Domnului",
+    "Apostles Fast": "Postul Sfinților Apostoli",
   };
 
   const fastExceptionTranslations: Record<string, string> = {
-    'Fast Free': 'Dezlegare la toate',
-    'Fish, Wine and Oil are Allowed': 'Dezlegare la pește, vin și untdelemn',
-    'Meat Fast': 'Post fără carne',
-    'No overrides': 'Fără dezlegări',
-    'Strict Fast': 'Post aspru',
-    'Strict Fast (Wine and Oil)': 'Post aspru (dezlegare la vin și untdelemn)',
-    'Wine and Oil are Allowed': 'Dezlegare la vin și untdelemn',
-    'Wine is Allowed': 'Dezlegare la vin',
-    'Wine, Oil and Caviar are Allowed': 'Dezlegare la vin, untdelemn și icre'
+    "Fast Free": "Dezlegare la toate",
+    "Fish, Wine and Oil are Allowed": "Dezlegare la pește, vin și untdelemn",
+    "Meat Fast": "Post fără carne",
+    "No overrides": "Fără dezlegări",
+    "Strict Fast": "Post aspru",
+    "Strict Fast (Wine and Oil)": "Post aspru (dezlegare la vin și untdelemn)",
+    "Wine and Oil are Allowed": "Dezlegare la vin și untdelemn",
+    "Wine is Allowed": "Dezlegare la vin",
+    "Wine, Oil and Caviar are Allowed": "Dezlegare la vin, untdelemn și icre",
   };
 
-  const translateFastLevel = (text?: string) =>
-    text ? (fastLevelTranslations[text] ?? text) : '';
+  const fastExceptionIcons: Record<string, string[]> = {
+    "Fast Free": ["/icons/fast-free.svg"],
+    "Fish, Wine and Oil are Allowed": ["/icons/fish.svg", "/icons/wine.svg", "/icons/oil.svg"],
+    "Meat Fast": ["/icons/meat.svg"],
+    "No overrides": ["/icons/no-overrides.svg"],
+    "Wine and Oil are Allowed": ["/icons/wine.svg", "/icons/oil.svg"],
+    "Wine is Allowed": ["/icons/wine.svg"],
+    "Wine, Oil and Caviar are Allowed": ["/icons/wine.svg", "/icons/oil.svg", "/icons/caviar.svg"],
+  };
 
-  const translateFastException = (text?: string) =>
-    text ? (fastExceptionTranslations[text] ?? text) : '';
-
-  const getMonthName = (monthNumber: number) => monthNames[monthNumber - 1] || '';
+  const translateFastLevel = (text?: string) => (text ? fastLevelTranslations[text] ?? text : "");
+  const translateFastException = (text?: string) => (text ? fastExceptionTranslations[text] ?? text : "");
+  const getMonthName = (monthNumber: number) => monthNames[monthNumber - 1] || "";
 
   const formatDate = (dateStr: string, data: LocalDay) => {
-    const [_, m, d] = dateStr.split('-');
+    const [_, m, d] = dateStr.split("-");
     const ziSapt = dayNames[data.zi_saptamana] || data.zi_saptamana;
     const luna = getMonthName(parseInt(m));
     return `${parseInt(d)} ${luna}, ${ziSapt}`;
@@ -112,7 +128,6 @@ export default function Programliturgic() {
   const changeMonth = (offset: number) => {
     let newMonth = month + offset;
     let newYear = year;
-
     if (newMonth < 1) {
       newMonth = 12;
       newYear -= 1;
@@ -120,61 +135,77 @@ export default function Programliturgic() {
       newMonth = 1;
       newYear += 1;
     }
-
     setMonth(newMonth);
     setYear(newYear);
   };
 
   return (
     <motion.div
-      initial={{ scale: 0.98, borderRadius: '16px', opacity: 0 }}
-      animate={{ scale: 1, borderRadius: '0px', opacity: 1 }}
-      exit={{ scale: 0.98, borderRadius: '16px', opacity: 0 }}
-      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-      className="min-h-screen bg-[#0A0004] px-6 py-12 pt-[100px] text-white selection:bg-[#C59D30]"
+      initial={{ scale: 0.975, borderRadius: "30px", opacity: 0 }}
+      animate={{ scale: 1, borderRadius: "0px", opacity: 1 }}
+      exit={{ scale: 0.975, borderRadius: "30px", opacity: 0 }}
+      transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+      className="relative min-h-screen bg-[#0A0004] text-white overflow-hidden"
     >
-      <div className="absolute h-full mask-b-from-0 inset-0 isolate w-full opacity-20 z-1 select-none" >
-        <div className="relative h-full ">
+      <div className="absolute  mask-b-from-0 inset-0 isolate w-full  opacity-30">
+        <div className="relative w-full h-full">
           <Image
             fill
-            className="z-4 object-cover absolute mix-blend-multiply"
-            alt="background"
-            src={"/background/concrete_wall_003_rough_8k.jpg"}
+            priority
+            alt="background-desktop"
+            src={"/background/concrete_wall_003_rough_8k.webp"}
+            className="hidden sm:block z-4 absolute object-cover object-top mix-blend-multiply"
+          />
+
+          <Image
+            fill
+            priority
+            alt="background-mobile"
+            src={"/background/concrete_wall_003_rough_8k phone.webp"}
+            className="block sm:hidden z-4 absolute object-cover object-cover mix-blend-multiply"
           />
           <Image
-            className="z-2 blur-md bg-black-800 object-cover"
-            src={"/assets/fundal-program.png"}
+            className="z-2 blur-md bg-black-500 object-cover"
+            src={"/assets/fundal-program_phone.webp"}
             alt="program-background"
             fill
           />
+          <div className="absolute inset-0 z-5 bg-gradient-to-b 
+                from-[#FFDB99]/80 via-[#D49649]/50 to-[#5E2308]/90 
+                mix-blend-overlay" />
         </div>
       </div>
 
-      <div className="relative max-w-4xl mx-auto z-1 cursor-pointer">
-        <div className="flex justify-between items-center mt-3 mb-20 ">
-          <button onClick={() => changeMonth(-1)} className="mr-1 text-[#C59D30]/60 hover:underline">
+      <div className="relative z-5 max-w-4xl mx-auto px-6 py-12 pt-[100px] selection:bg-yellow-600 selection:text-white/90">
+        <div className="flex justify-between items-center mt-3 mb-20">
+          {/* Small screens */}
+          <button
+            onClick={() => changeMonth(-1)}
+            className="mr-1 text-[#C59D30]/60 hover:underline md:hidden"
+          >
             luna anterioară ←
           </button>
 
+          {/* Large screens */}
+          <button
+            onClick={() => changeMonth(-1)}
+            className="mr-1 text-[#C59D30]/60 hover:underline hidden md:inline"
+          >
+            ← luna anterioară
+          </button>
           <h1 className="text-[30px] text-center">
-            Calendar {getMonthName(month)}{" "}
-            <span className="font-[Dutch Mediaeval] ">{year}</span>
+            Calendar {getMonthName(month)} <span className="font-[Dutch Mediaeval]">{year}</span>
           </h1>
-
           <button onClick={() => changeMonth(1)} className="ml-2 text-[#C59D30]/60 hover:underline">
             luna următoare →
           </button>
         </div>
 
         {loading && <p className="text-gray-400">Se încarcă...</p>}
-        {!loading && calendar && Object.keys(calendar).length === 0 && (
-          <p className="text-red-400">Eroare la încărcarea datelor.</p>
-        )}
 
         {!loading && calendar && (() => {
-          const monthKey = `${year}-${String(month).padStart(2, '0')}`;
+          const monthKey = `${year}-${String(month).padStart(2, "0")}`;
           const days = calendar[monthKey];
-
           if (!days) return <p className="text-gray-400">Nu există date pentru această lună.</p>;
 
           return Object.entries(days).map(([date, data]) => {
@@ -184,50 +215,46 @@ export default function Programliturgic() {
 
             return (
               <div key={date} className="mb-6 border-b border-[#C59D30]/30 pb-4">
-                <p className="text-lg font-semibold mb-2 text-[#C59D30] ">{formatDate(date, data)}</p>
-
+                <p className="text-lg font-[merriweather] font-semibold mb-2 text-[#C59D30]">{formatDate(date, data)}</p>
                 {data.sfinți?.length > 0 && (
-                  <>
-                    <p><strong className='text-[#C59D30]/80 italic'>Sfinți și sărbători:</strong></p>
-                    <ul className="list-none ml-4 text-white/90">
-                      {data.sfinți.map((s, i) => (
-                        <li key={i} className="flex items-start gap-2">
-                          <Image
-                            src="/icons/trandafir (3).svg"
-                            alt="trandafir"
-                            width={16}
-                            height={16}
-                            className="mt-1"
-                          />
-                          <span className='text-white/80 '>{s}</span>
-                        </li>
-                      ))}
-                    </ul>
-
-
-                  </>
+                  <ul className="list-none ml-4 text-white/90">
+                    {data.sfinți.map((s, i) => (
+                      <li key={i} className="flex items-start gap-2">
+                        <Image src="/icons/trandafir (3).svg" alt="trandafir" width={16} height={16} className="mt-1" />
+                        <span>{s}</span>
+                      </li>
+                    ))}
+                  </ul>
                 )}
 
                 {translatedFastLevel && (
-                  <p className="mt-2 "><strong className='text-[#C59D30]/80 italic'>Post:</strong> <p className=" inline-block text-white/80">{translatedFastLevel}</p></p>
+                  <p className="mt-2">
+                    <strong className="text-[#C59D30]/80 italic font-[merriweather]">Post:</strong>{" "}
+                    <span className="text-white/80">{translatedFastLevel}</span>
+                  </p>
                 )}
-                {translatedFastException && (
-                  <p><strong className='text-[#C59D30]/80 italic'>Dezlegări:</strong> <p className=" inline text-white/80">{translatedFastException}</p></p>
+
+                {translatedFastException && fastInfo?.fast_level_desc !== "No Fast" && (
+                  <div className="flex items-center gap-2 mt-2">
+                    <strong className="text-[#C59D30]/80 italic">Dezlegări:</strong>
+                    <span className="text-white/80">{translatedFastException}</span>
+                    {fastInfo?.fast_exception_desc &&
+                      fastExceptionIcons[fastInfo.fast_exception_desc] && (
+                        <div className="flex items-center gap-2 mt-2">
+                          {fastExceptionIcons[fastInfo.fast_exception_desc].map((icon, idx) => (
+                            <Image key={idx} src={icon} alt="" width={20} height={20} />
+                          ))}
+                        </div>
+                      )}
+                  </div>
                 )}
               </div>
             );
           });
         })()}
       </div>
-      <div className="flex place-content-center mt-[30px]">
-        <Image
-          src="/footer black.png"
-          className="contain mix-blend-difference"
-          alt="logo"
-          width={250}
-          height={180}
-        />
-      </div>
+
+      <Logo theme='light' />
     </motion.div>
   );
 }

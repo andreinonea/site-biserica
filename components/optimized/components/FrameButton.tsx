@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Flower } from "lucide-react";
+import { Cross } from "lucide-react";
+import Image from "next/image";
 
 interface iconFrameProps {
   bgColor?: string;
@@ -53,9 +54,9 @@ export default function IconFrame({
       {/* Decor background circles */}
       <div className="absolute">
         <div
-          className={`rounded-full ${bgColor} w-7 h-7 absolute -top-4 left-0 -translate-x-1/2 grid place-items-center`}
+          className={`rounded-full ${bgColor} w-7 h-7 absolute -top-4 left-1 -translate-x-1/2 grid place-items-center`}
         >
-          <Flower className="w-4 h-4" />
+          <Image src="/icons/button.webp" alt="cross" width={14} height={20} />
         </div>
       </div>
       {children}

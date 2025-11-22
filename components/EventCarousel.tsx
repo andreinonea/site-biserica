@@ -30,6 +30,7 @@ export default function SimpleCarousel({ slides }: { slides: Slide[] }) {
   useEffect(() => {
     const update = () => {
       if (containerRef.current) setWidth(containerRef.current.offsetWidth);
+      ;
     };
     update();
     const ro = new ResizeObserver(update);
@@ -66,7 +67,11 @@ export default function SimpleCarousel({ slides }: { slides: Slide[] }) {
   const maxLightboxDrag = Math.max(0, (slides.length - 1) * lightboxWidth);
 
   const handleDragEnd = () => {
-    const xEnd = x.get();
+
+    let xEnd = x.get();
+    const offset = Math.abs(xEnd / (width + slideGap)) > current ? -width / 5 : width / 5;
+    xEnd += offset;
+
     if (width === 0) return;
     const rawIndex = Math.round(Math.abs(xEnd) / (width + slideGap));
     const newIndex = Math.min(Math.max(rawIndex, 0), slides.length - 1);
@@ -75,7 +80,9 @@ export default function SimpleCarousel({ slides }: { slides: Slide[] }) {
   };
 
   const handleLightboxDragEnd = (_: any, info: any) => {
-    const xEnd = lightboxX.get();
+    let xEnd = lightboxX.get();
+    const offset = Math.abs(xEnd / lightboxWidth) > lightboxIndex ? -lightboxWidth / 3 : lightboxWidth / 3;
+    xEnd += offset;
     if (lightboxWidth === 0) return;
     const rawIndex = Math.round(Math.abs(xEnd) / lightboxWidth);
     const newIndex = Math.min(Math.max(rawIndex, 0), slides.length - 1);
@@ -87,6 +94,7 @@ export default function SimpleCarousel({ slides }: { slides: Slide[] }) {
   const next = () => setCurrent((p) => (p === slides.length - 1 ? slides.length - 1 : p + 1));
   const lightboxPrev = () => setLightboxIndex((p) => (p === 0 ? 0 : p - 1));
   const lightboxNext = () => setLightboxIndex((p) => (p === slides.length - 1 ? slides.length - 1 : p + 1));
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
     <div className="relative group">
@@ -98,14 +106,21 @@ export default function SimpleCarousel({ slides }: { slides: Slide[] }) {
             }`}
           aria-label="Previous Slide"
         >
-          &#10094;
+          <Image
+            src="/icons/arrow-left-circle.svg"
+            alt="Zoom icon"
+            width={40}
+            height={40}
+            className="drop-shadow-lg"
+          />
         </button>
 
         {/* Carousel viewport */}
         <div
           ref={containerRef}
-          className="relative h-64 md:h-80 w-full max-w-md rounded overflow-hidden border border-white/20"
+          className="relative h-70 md:h-[28rem] w-full max-w-2xl rounded overflow-hidden border border-white/20"
         >
+
           <motion.div
             style={{ x }}
             className="flex h-full gap-[16px]"
@@ -117,23 +132,51 @@ export default function SimpleCarousel({ slides }: { slides: Slide[] }) {
             {slides.map((s, i) => {
               const src = typeof s === "string" ? s : s.image;
               const caption = typeof s === "string" ? undefined : s.caption;
+
               return (
                 <div
                   key={i}
-                  className="relative h-full flex-shrink-0 cursor-pointer"
+                  className="relative h-full flex-shrink-0 cursor-pointer group"
                   style={{ minWidth: width ? `${width}px` : "100%" }}
                   onClick={() => {
                     setLightboxOpen(true);
                     setLightboxIndex(i);
                   }}
+                  onMouseEnter={() => setHoveredIndex(i)}
+                  onMouseLeave={() => setHoveredIndex(null)}
+                  onTouchStart={() => setHoveredIndex(i)}
                 >
                   <Image
                     src={src}
                     alt={caption ?? `Slide ${i + 1}`}
                     fill
-                    className="object-cover rounded"
+                    className="object-cover rounded transition-transform duration-300 group-hover:scale-105"
                     priority
                   />
+
+                  {/* Show magnifier only for the active (hovered/touched) slide */}
+                  {hoveredIndex === i && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/50 group-hover:bg-black/20 transition">
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="transition"
+                      >
+
+                        <Image
+                          src="/icons/magnifying-glass.svg"
+                          alt="Zoom icon"
+                          width={40}
+                          height={40}
+                          className="drop-shadow-lg"
+                        />
+
+
+                      </motion.div>
+                    </div>
+                  )}
+
                   {caption && (
                     <div className="absolute bottom-0 left-0 w-full bg-black/40 text-sm p-2 text-center">
                       {caption}
@@ -142,6 +185,9 @@ export default function SimpleCarousel({ slides }: { slides: Slide[] }) {
                 </div>
               );
             })}
+
+
+
           </motion.div>
         </div>
 
@@ -152,7 +198,13 @@ export default function SimpleCarousel({ slides }: { slides: Slide[] }) {
             }`}
           aria-label="Next Slide"
         >
-          &#10095;
+          <Image
+            src="/icons/arrow-right-circle.svg"
+            alt="Zoom icon"
+            width={40}
+            height={40}
+            className="drop-shadow-lg"
+          />
         </button>
       </div>
 
@@ -188,15 +240,23 @@ export default function SimpleCarousel({ slides }: { slides: Slide[] }) {
             {/* Lightbox Container */}
             <div
               ref={lightboxContainerRef}
-              className="relative w-full max-w-3xl h-[80vh] flex items-center overflow-hidden"
+              className="relative w-full max-w-3xl h-[80vh] flex items-center overflow-hidden "
             >
               {/* Left Arrow */}
               {lightboxIndex > 0 && (
                 <button
                   onClick={lightboxPrev}
-                  className="absolute left-2 text-white text-3xl z-50 cursor-pointer transition transform hover:scale-110 hover:text-yellow-400"
+                  className="absolute left-2 rounded-full text-white text-3xl z-50 cursor-pointer
+               transition transform hover:scale-110 hover:text-yellow-400
+               backdrop-blur-sm drop-shadow-[0_0_8px_rgba(0,0,0,0.8)]"
                 >
-                  &#10094;
+                  <Image
+                    src="/icons/arrow-left.svg"
+                    alt="Zoom icon"
+                    width={30}
+                    height={30}
+                    className="drop-shadow-[0_0_6px_rgba(0,0,0,0.8)]"
+                  />
                 </button>
               )}
 
@@ -204,18 +264,34 @@ export default function SimpleCarousel({ slides }: { slides: Slide[] }) {
               {lightboxIndex < slides.length - 1 && (
                 <button
                   onClick={lightboxNext}
-                  className="absolute right-2 text-white text-3xl z-50 cursor-pointer transition transform hover:scale-110 hover:text-yellow-400"
+                  className="absolute rounded-full right-2 text-white text-3xl z-50 cursor-pointer
+               transition transform hover:scale-110 hover:text-yellow-400
+               backdrop-blur-sm drop-shadow-[0_0_8px_rgba(0,0,0,0.8)]"
                 >
-                  &#10095;
+                  <Image
+                    src="/icons/arrow-right.svg"
+                    alt="Zoom icon"
+                    width={30}
+                    height={30}
+                    className="drop-shadow-[0_0_6px_rgba(0,0,0,0.8)]"
+                  />
                 </button>
               )}
 
               {/* Close Button */}
               <button
                 onClick={() => setLightboxOpen(false)}
-                className="absolute md:top-0 top-18  right-1 text-white text-3xl z-50 cursor-pointer"
+                className="absolute md:top-0 right-2 top-10 right text-white rounded-full text-3xl z-50 cursor-pointer
+             transition transform hover:scale-110 hover:text-red-400
+             backdrop-blur-sm drop-shadow-[0_0_8px_rgba(0,0,0,0.8)]"
               >
-                &times;
+                <Image
+                    src="/icons/x.svg"
+                    alt="Zoom icon"
+                    width={30}
+                    height={30}
+                    className="drop-shadow-[0_0_6px_rgba(0,0,0,0.8)]"
+                  />
               </button>
 
               {/* Swipeable Images */}

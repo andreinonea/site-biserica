@@ -4,6 +4,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import SimpleCarousel from "@/components/EventCarousel";
 import { motion } from "framer-motion";
+import Logo from "@/components/optimized/components/Logo";
 
 type Slide = { image: string; caption?: string };
 
@@ -54,7 +55,7 @@ const EvenimentePage = () => {
   };
 
   return (
-    <div className="text-white  min-h-screen bg-[#0A0004] ">
+    <div className="text-white  min-h-screen bg-[#0A0004] selection:bg-yellow-600 selection:text-white/90">
       <motion.div
         initial={{ scale: 0.95, borderRadius: "30px", opacity: 0 }}
         animate={{ scale: 1, borderRadius: "0px", opacity: 1 }}
@@ -85,8 +86,9 @@ const EvenimentePage = () => {
               alt="program-background"
               fill
             />
-            <div className="absolute inset-0 z-5 bg-gradient-to-b from-[#5a2c00]/40 via-[#8a4b00]/30 to-[#2e1200]/50 mix-blend-overlay" />
-
+            <div className="absolute inset-0 z-5 bg-gradient-to-b 
+                from-[#FFDB99]/80 via-[#D49649]/50 to-[#5E2308]/90 
+                mix-blend-overlay" />
           </div>
         </div>
 
@@ -112,7 +114,7 @@ const EvenimentePage = () => {
                       className="mt-1"
                     />
                     <div className="flex flex-col">
-                      <div className="text-lg font-semibold">{ev.title}</div>
+                      <div className="text-lg font-[merriweather] font-semibold">{ev.title}</div>
                       <div className="text-sm text-white/70">
                         {formatDate(ev.date)} • ora {ev.hour || "–"}
                       </div>
@@ -158,7 +160,7 @@ const EvenimentePage = () => {
                           className="mt-1 shrink-0"
                         />
                         <div>
-                          <div className="text-lg font-semibold">{ev.title}</div>
+                          <div className="text-lg font-[merriweather] font-semibold">{ev.title}</div>
                           <div className="text-sm text-white/70">{formatDate(ev.date)}</div>
                           <div className="text-sm text-white/50">
                             {ev.adresa || ev.location || "–"}
@@ -168,7 +170,7 @@ const EvenimentePage = () => {
                     </div>
 
                     {ev.slides && ev.slides.length > 0 && (
-                      <div className="w-full md:w-1/2 mt-4 md:mt-0">
+                      <div className="px-0 md:px-4 w-full md:w-1/2 mt-4 md:mt-0">
                         <SimpleCarousel slides={ev.slides} />
                       </div>
                     )}
@@ -179,15 +181,7 @@ const EvenimentePage = () => {
           </section>
 
         </div>
-        <div className="flex place-content-center mt-[30px]">
-          <Image
-            src="/footer black.png"
-            className="contain mix-blend-difference"
-            alt="logo"
-            width={250}
-            height={180}
-          />
-        </div>
+        <Logo theme='light' />
       </motion.div>
     </div>
 

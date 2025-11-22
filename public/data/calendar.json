@@ -439,9 +439,7 @@
         "Ev. Luca 10, 38-42; 11, 27-28"
       ],
       "tip": "Praznic împărătesc",
-      "dezlegări": [
-        "dezlegare la pește"
-      ]
+      "dezlegări": []
     },
     "2025-09-09": {
       "zi": 9,
@@ -719,18 +717,19 @@
       "sfinți": [
         "Acoperământul Maicii Domnului",
         "Sfântul Apostol Anania",
-        "Sfântul Roman Melodul",
-        "Sfântul Ioan Cucuzel"
+        "Sfântul Cuvios Iosif și Chiriac de la Bisericani",
+        "Sfântul Cuvios Roman Melodul"
       ],
-      "tip": "Sărbătoare",
-      "dezlegări": []
+      "tip": "Sărbătoare mare",
+      "dezlegări": [
+        "pește"
+      ]
     },
     "2025-10-02": {
       "zi": 2,
       "zi_saptamana": "J",
       "sfinți": [
-        "Sfântul Sfințit Mucenic Ciprian și Sfânta Muceniță Iustina",
-        "Sfântul Cuvios Teofil Mărturisitorul"
+        "Sfinții Mucenici Ciprian și Iustina fecioara"
       ],
       "tip": "Zi obișnuită",
       "dezlegări": []
@@ -740,7 +739,7 @@
       "zi_saptamana": "V",
       "sfinți": [
         "Sfântul Dionisie Areopagitul",
-        "Sfântul Cuvios Teoctist"
+        "Sfântul Mucenic Teoctist"
       ],
       "tip": "Zi obișnuită",
       "dezlegări": []
@@ -749,20 +748,21 @@
       "zi": 4,
       "zi_saptamana": "S",
       "sfinți": [
-        "Sfânta Muceniță Ierotidia",
-        "Sfântul Mucenic Domnina"
+        "Sfântul Ierotei, episcopul Atenei",
+        "Sfântul Preot Mărturisitor Dumitru Stăniloae"
       ],
-      "tip": "Zi obișnuită",
+      "tip": "Pomenire importantă",
       "dezlegări": []
     },
     "2025-10-05": {
       "zi": 5,
       "zi_saptamana": "D",
       "sfinți": [
-        " Duminica a 19-a după Rusalii",
-        "Sfânta Muceniță Haritina"
+        "Sfântul Cuvios Daniil și Misail de la Mănăstirea Turnu",
+        "Sfânta Muceniță Haritina",
+        "Duminica a 19-a după Rusalii"
       ],
-      "tip": "Zi obișnuită",
+      "tip": "Duminică",
       "dezlegări": []
     },
     "2025-10-06": {
@@ -770,17 +770,16 @@
       "zi_saptamana": "L",
       "sfinți": [
         "Sfântul Apostol Toma",
-        "Sfântul Mucenic Ermenegild"
+        "Sfânta Muceniță Erotida"
       ],
-      "tip": "Sărbătoare",
+      "tip": "Zi obișnuită",
       "dezlegări": []
     },
     "2025-10-07": {
       "zi": 7,
       "zi_saptamana": "M",
       "sfinți": [
-        "Sfântul Mucenic Serghie și Sfântul Mucenic Vah",
-        "Sfântul Ierarh Policarp al Smirnei"
+        "Sfinții Mari Mucenici Serghie și Vah"
       ],
       "tip": "Zi obișnuită",
       "dezlegări": []
@@ -789,8 +788,7 @@
       "zi": 8,
       "zi_saptamana": "M",
       "sfinți": [
-        "Sfânta Cuvioasă Pelaghia",
-        "Sfântul Cuvios Taisia"
+        "Sfintele Cuvioase Pelaghia și Taisia"
       ],
       "tip": "Zi obișnuită",
       "dezlegări": []
@@ -799,8 +797,8 @@
       "zi": 9,
       "zi_saptamana": "J",
       "sfinți": [
-        "Sfântul Apostol Iacov al lui Alfeu",
-        "Sfântul Andronic și soția sa Atanasia"
+        "Sfântul Apostol Iacob al lui Alfeu",
+        "Sfinții Cuvioși Andronic și soția sa Atanasia"
       ],
       "tip": "Zi obișnuită",
       "dezlegări": []
@@ -809,8 +807,8 @@
       "zi": 10,
       "zi_saptamana": "V",
       "sfinți": [
-        "Sfântul Mucenic Evlampie și sora sa Evlampia",
-        "Sfântul Cuvios Vasile cel Tânăr"
+        "Sfinții Mucenici Evlampie și sora sa Evlampia",
+        "Sfântul Cuvios Vasile Mărturisitorul"
       ],
       "tip": "Zi obișnuită",
       "dezlegări": []
@@ -819,8 +817,8 @@
       "zi": 11,
       "zi_saptamana": "S",
       "sfinți": [
-        "Sfântul Apostol Filip, unul din cei 70",
-        "Sfântul Teofan Mărturisitorul"
+        "Sfântul Apostol Filip, unul dintre cei 7 diaconi",
+        "Sfântul Ierarh Teofan Mărturisitorul"
       ],
       "tip": "Zi obișnuită",
       "dezlegări": []
@@ -829,20 +827,21 @@
       "zi": 12,
       "zi_saptamana": "D",
       "sfinți": [
-        "Duminica a 20-a după Rusalii",
-        "Sfântul Mucenic Probus"
+        "Sfinții Mucenici Provos, Tarah și Andronic",
+        "Sfinții Ierarhi Cosma și Damian",
+        "Duminica a 21-a după Rusalii"
       ],
-      "tip": "Zi obișnuită",
+      "tip": "Duminică",
       "dezlegări": []
     },
     "2025-10-13": {
       "zi": 13,
       "zi_saptamana": "L",
       "sfinți": [
-        "Sfântul Ierarh Grigorie Palama",
-        "Sfântul Cuvios Chiril Filoteitul"
+        "Aducerea moaștelor Sfântului Apostol Andrei la Iași",
+        "Sfinții Mucenici Carp, Papil, Agatodor și Agatonica"
       ],
-      "tip": "Zi obișnuită",
+      "tip": "Pomenire importantă",
       "dezlegări": []
     },
     "2025-10-14": {
@@ -858,8 +857,7 @@
       "zi": 15,
       "zi_saptamana": "M",
       "sfinți": [
-        "Sfântul Cuvios Eftimie cel Nou",
-        "Sfântul Luca din Demna"
+        "Sfinții Mucenici Nazarie, Gervasie, Protazie și Chelsie"
       ],
       "tip": "Zi obișnuită",
       "dezlegări": []
@@ -868,8 +866,7 @@
       "zi": 16,
       "zi_saptamana": "J",
       "sfinți": [
-        "Sfânta Muceniță Longhina",
-        "Sfântul Mucenic Mal"
+        "Sfântul Mucenic Lucian, preotul din Antiohia"
       ],
       "tip": "Zi obișnuită",
       "dezlegări": []
@@ -879,7 +876,7 @@
       "zi_saptamana": "V",
       "sfinți": [
         "Sfântul Prooroc Osea",
-        "Sfântul Mucenic Andrei Criteanul"
+        "Sfântul Cuvios Andrei Criteanul"
       ],
       "tip": "Zi obișnuită",
       "dezlegări": []
@@ -888,7 +885,8 @@
       "zi": 18,
       "zi_saptamana": "S",
       "sfinți": [
-        "Sfântul Apostol și Evanghelist Luca"
+        "Sfântul Apostol și Evanghelist Luca",
+        "Sfântul Mucenic Marin cel Bătrân"
       ],
       "tip": "Sărbătoare",
       "dezlegări": []
@@ -897,18 +895,20 @@
       "zi": 19,
       "zi_saptamana": "D",
       "sfinți": [
-        "Duminica a 21-a după Rusalii",
         "Sfântul Prooroc Ioil",
-        "Sfântul Mucenic Uar"
+        "Sfântul Mucenic Uar",
+        "Sfânta Muceniță Cleopatra",
+        "Duminica a 20-a după Rusalii"
       ],
-      "tip": "Zi obișnuită",
+      "tip": "Duminică",
       "dezlegări": []
     },
     "2025-10-20": {
       "zi": 20,
       "zi_saptamana": "L",
       "sfinți": [
-        "Sfântul Mare Mucenic Artemie"
+        "Sfântul Mare Mucenic Artemie",
+        "Sfântul Cuvios Gherasim din Chefalonia"
       ],
       "tip": "Zi obișnuită",
       "dezlegări": []
@@ -917,18 +917,19 @@
       "zi": 21,
       "zi_saptamana": "M",
       "sfinți": [
-        "Sfântul Cuvios Ilarion cel Mare",
-        "Sfântul Mucenic Dometie"
+        "Sfinții Cuvioși Mărturisitori Visarion și Sofronie",
+        "Sfântul Mucenic Oprea",
+        "Sfinții Preoți Mărturisitori Ioan din Galeș și Moise Măcinic din Sibiel",
+        "Sfântul Cuvios Ilarion cel Mare"
       ],
-      "tip": "Zi obișnuită",
+      "tip": "Pomenire importantă",
       "dezlegări": []
     },
     "2025-10-22": {
       "zi": 22,
       "zi_saptamana": "M",
       "sfinți": [
-        "Sfântul Averchie, episcopul Ierapolei",
-        "Sfântul Cuvios Luchian"
+        "Sfântul Ierarh Averchie, episcopul Ierapolei"
       ],
       "tip": "Zi obișnuită",
       "dezlegări": []
@@ -937,9 +938,10 @@
       "zi": 23,
       "zi_saptamana": "J",
       "sfinți": [
-        "Sfântul Ierarh Iacob, ruda Domnului"
+        "Sfântul Apostol Iacob, rudenia Domnului",
+        "Sfântul Preot Mucenic Constantin Sârbu"
       ],
-      "tip": "Zi obișnuită",
+      "tip": "Pomenire importantă",
       "dezlegări": []
     },
     "2025-10-24": {
@@ -947,7 +949,7 @@
       "zi_saptamana": "V",
       "sfinți": [
         "Sfântul Mare Mucenic Areta",
-        "Sfântul Mucenic Sebastian"
+        "Sfinții Mucenici Marcu, Sotirih și Valentin"
       ],
       "tip": "Zi obișnuită",
       "dezlegări": []
@@ -956,8 +958,7 @@
       "zi": 25,
       "zi_saptamana": "S",
       "sfinți": [
-        "Sfânta Mare Muceniță Hristina",
-        "Sfântul Mucenic Marcian"
+        "Sfinții Mucenici Marcu și Tavita"
       ],
       "tip": "Zi obișnuită",
       "dezlegări": []
@@ -966,8 +967,8 @@
       "zi": 26,
       "zi_saptamana": "D",
       "sfinți": [
-        "Sfântul Mare Mucenic Dimitrie, Izvorâtorul de mir",
-        "Duminica a 22-a după Rusalii"
+        "Sfântul Mare Mucenic Dimitrie, Izvorâtorul de Mir",
+        "Duminica a 23-a după Rusalii"
       ],
       "tip": "Sărbătoare mare",
       "dezlegări": []
@@ -976,8 +977,7 @@
       "zi": 27,
       "zi_saptamana": "L",
       "sfinți": [
-        "Sfântul Cuvios Dimitrie cel Nou, Ocrotitorul Bucureștilor",
-        "Sfântul Mucenic Nestor"
+        "Sfântul Cuvios Dimitrie cel Nou, Ocrotitorul Bucureștilor"
       ],
       "tip": "Sărbătoare mare",
       "dezlegări": []
@@ -986,17 +986,20 @@
       "zi": 28,
       "zi_saptamana": "M",
       "sfinți": [
-        "Sfântul Mucenic Terentie și soția sa Neonila cu fiii lor"
+        "Sfântul Ierarh Iachint, Mitropolitul Țării Românești",
+        "Sfânta Cuvioasă Teofana Basarab",
+        "Sfinții Mucenici Terentie, Neonila și fiii lor",
+        "Sfântul Ierarh Firmilian, Episcopul Cezareei Capadociei"
       ],
-      "tip": "Zi obișnuită",
+      "tip": "Pomenire importantă",
       "dezlegări": []
     },
     "2025-10-29": {
       "zi": 29,
       "zi_saptamana": "M",
       "sfinți": [
-        "Sfântul Mucenic Anastasie",
-        "Sfântul Avramie"
+        "Sfânta Cuvioasă Anastasia Romana",
+        "Sfântul Cuvios Avramie și Maria, nepoata sa"
       ],
       "tip": "Zi obișnuită",
       "dezlegări": []
@@ -1005,7 +1008,7 @@
       "zi": 30,
       "zi_saptamana": "J",
       "sfinți": [
-        "Sfântul Sfințit Mucenic Zenovie, Episcopul Ciliciei, și sora sa Zenovia",
+        "Sfinții Mucenici Zenovie, Episcopul Ciliciei, și sora sa Zenovia",
         "Sfântul Apostol Cleopa"
       ],
       "tip": "Zi obișnuită",
@@ -1015,11 +1018,641 @@
       "zi": 31,
       "zi_saptamana": "V",
       "sfinți": [
-        "Sfântul Apostol Stahie, Amplie, Urban, Narcis și Apelie dintre cei 70",
-        "Sfântul Cuvios Epimah"
+        "Sfinții Apostoli Apelie, Stahie, Amplie, Urban, Aristobul și Narcis",
+        "Sfântul Mucenic Epimah"
       ],
       "tip": "Zi obișnuită",
       "dezlegări": []
     }
+  },
+  "2025-11": {
+    "2025-11-01": {
+      "zi": 1,
+      "zi_saptamana": "S",
+      "sfinți": [
+        "Sfinții doctori fără de arginți Cosma și Damian din Asia"
+      ],
+      "tip": "Zi obișnuită",
+      "dezlegări": []
+    },
+    "2025-11-02": {
+      "zi": 2,
+      "zi_saptamana": "D",
+      "sfinți": [
+        "Sfinții Mucenici Achindin, Pigasie, Afton, Elpidifor și Anempodist",
+        "Duminica a 22-a după Rusalii"
+      ],
+      "tip": "Zi obișnuită",
+      "dezlegări": []
+    },
+    "2025-11-03": {
+      "zi": 3,
+      "zi_saptamana": "L",
+      "sfinți": [
+        "Sfinții Mucenici Achepsima, Iosif și Aitala",
+        "Așezarea moaștelor Sfântului Mare Mucenic Gheorghe în Lida"
+      ],
+      "tip": "Zi obișnuită",
+      "dezlegări": []
+    },
+    "2025-11-04": {
+      "zi": 4,
+      "zi_saptamana": "Ma",
+      "sfinți": [
+        "Sfântul Cuvios Ioanichie cel Mare",
+        "Sfinții Mucenici Nicandru și Ermeu",
+        "Sfântul Cuvios Gheorghe Mărturisitorul din Drama"
+      ],
+      "tip": "Zi obișnuită",
+      "dezlegări": []
+    },
+    "2025-11-05": {
+      "zi": 5,
+      "zi_saptamana": "Mi",
+      "sfinți": [
+        "Sfinții Mucenici Galaction și Epistimia"
+      ],
+      "tip": "Zi obișnuită",
+      "dezlegări": []
+    },
+    "2025-11-06": {
+      "zi": 6,
+      "zi_saptamana": "J",
+      "sfinți": [
+        "Sfântul Pavel Mărturisitorul, arhiepiscopul Constantinopolului",
+        "Sfântul Luca din Sicilia"
+      ],
+      "tip": "Zi obișnuită",
+      "dezlegări": []
+    },
+    "2025-11-07": {
+      "zi": 7,
+      "zi_saptamana": "V",
+      "sfinți": [
+        "Sfinții 33 de Mucenici din Melitina",
+        "Sfântul Cuvios Lazăr din Muntele Galisiei"
+      ],
+      "tip": "Zi obișnuită",
+      "dezlegări": []
+    },
+    "2025-11-08": {
+      "zi": 8,
+      "zi_saptamana": "S",
+      "sfinți": [
+        "Soborul Sfinților Arhangheli Mihail și Gavriil și al tuturor cereștilor puteri"
+      ],
+      "tip": "Sărbătoare mare",
+      "dezlegări": []
+    },
+    "2025-11-09": {
+      "zi": 9,
+      "zi_saptamana": "D",
+      "sfinți": [
+        "Sfântul Ierarh Nectarie de la Eghina",
+        "Sfinții Mucenici Claudiu, Castor, Sempronian și Nicostrat",
+        "Sfântul Mucenic Onisifor și Porfirie",
+        "Sfânta Cuvioasă Matrona",
+        "Duminica a 24-a după Rusalii"
+      ],
+      "tip": "Zi obișnuită",
+      "dezlegări": []
+    },
+    "2025-11-10": {
+      "zi": 10,
+      "zi_saptamana": "L",
+      "sfinți": [
+        "Sfinții Apostoli Olimp, Rodion, Sosipatru, Erast, Terțiu și Cvart",
+        "Sfântul Cuvios Visarion de la Lainici",
+        "Sfântul Mucenic Orest"
+      ],
+      "tip": "Zi obișnuită",
+      "dezlegări": []
+    },
+    "2025-11-11": {
+      "zi": 11,
+      "zi_saptamana": "Ma",
+      "sfinți": [
+        "Sfântul Mare Mucenic Mina",
+        "Sfinții Mucenici Victor, Vichentie și Ștefanida",
+        "Sfântul Cuvios Teodor Studitul"
+      ],
+      "tip": "Zi obișnuită",
+      "dezlegări": []
+    },
+    "2025-11-12": {
+      "zi": 12,
+      "zi_saptamana": "Mi",
+      "sfinți": [
+        "Sfinții Martiri și Mărturisitori Năsăudeni: Atanasie Todoran din Bichigiu, Vasile din Mocod, Grigorie din Zagra și Vasile din Telciu",
+        "Sfântul Ioan cel Milostiv, patriarhul Alexandriei",
+        "Sfântul Cuvios Nil Pustnicul"
+      ],
+      "tip": "Sărbătoare",
+      "dezlegări": []
+    },
+    "2025-11-13": {
+      "zi": 13,
+      "zi_saptamana": "J",
+      "sfinți": [
+        "Sfântul Ioan Gură de Aur, arhiepiscopul Constantinopolului"
+      ],
+      "tip": "Sărbătoare",
+      "dezlegări": []
+    },
+    "2025-11-14": {
+      "zi": 14,
+      "zi_saptamana": "V",
+      "sfinți": [
+        "Sfântul Apostol Filip, unul dintre cei 12",
+        "Sfântul Grigorie Palama, arhiepiscopul Tesalonicului"
+      ],
+      "tip": "Sărbătoare",
+      "dezlegări": []
+    },
+    "2025-11-15": {
+      "zi": 15,
+      "zi_saptamana": "S",
+      "sfinți": [
+        "Sfântul Cuvios Paisie de la Neamț",
+        "Sfinții Mucenici Gurie, Samona și Aviv diaconul"
+      ],
+      "tip": "Sărbătoare",
+      "dezlegări": []
+    },
+    "2025-11-16": {
+      "zi": 16,
+      "zi_saptamana": "D",
+      "sfinți": [
+        "Sfântul Apostol și Evanghelist Matei",
+        "Duminica a 25-a după Rusalii"
+      ],
+      "tip": "Sărbătoare",
+      "dezlegări": []
+    },
+    "2025-11-17": {
+      "zi": 17,
+      "zi_saptamana": "L",
+      "sfinți": [
+        "Sfântul Ierarh Grigorie Taumaturgul",
+        "Sfântul Cuvios Lazăr Zugravul"
+      ],
+      "tip": "Zi obișnuită",
+      "dezlegări": []
+    },
+    "2025-11-18": {
+      "zi": 18,
+      "zi_saptamana": "Ma",
+      "sfinți": [
+        "Sfinții Mucenici Platon, Roman și Zaheu"
+      ],
+      "tip": "Zi obișnuită",
+      "dezlegări": []
+    },
+    "2025-11-19": {
+      "zi": 19,
+      "zi_saptamana": "Mi",
+      "sfinți": [
+        "Sfântul Prooroc Avdie",
+        "Sfântul Mucenic Varlam"
+      ],
+      "tip": "Zi obișnuită",
+      "dezlegări": []
+    },
+    "2025-11-20": {
+      "zi": 20,
+      "zi_saptamana": "J",
+      "sfinți": [
+        "Sfântul Cuvios Grigorie Decapolitul",
+        "Sfântul Mucenic Dasie"
+      ],
+      "tip": "Sărbătoare",
+      "dezlegări": []
+    },
+    "2025-11-21": {
+      "zi": 21,
+      "zi_saptamana": "V",
+      "sfinți": [
+        "Intrarea în Biserică a Maicii Domnului"
+      ],
+      "tip": "Sărbătoare mare",
+      "dezlegări": ["pește"]
+    },
+    "2025-11-22": {
+      "zi": 22,
+      "zi_saptamana": "S",
+      "sfinți": [
+        "Sfântul Apostol Filimon",
+        "Sfântul Arhip",
+        "Sfântul Onisim",
+        "Sfânta Muceniță Cecilia"
+      ],
+      "tip": "Zi obișnuită",
+      "dezlegări": ["pește"]
+    },
+    "2025-11-23": {
+      "zi": 23,
+      "zi_saptamana": "D",
+      "sfinți": [
+        "Sfântul Cuvios Antonie de la Iezerul Vâlcii",
+        "Sfântul Ierarh Amfilohie, episcopul Iconiei",
+        "Sfântul Grigorie, episcopul Arcanghelului",
+        "Duminica a 26-a după Rusalii"
+      ],
+      "tip": "Zi obișnuită",
+      "dezlegări": ["pește"]
+    },
+    "2025-11-24": {
+      "zi": 24,
+      "zi_saptamana": "L",
+      "sfinți": [
+        "Sfinții Mucenici Clement, episcopul Romei și Petru, episcopul Alexandriei"
+      ],
+      "tip": "Zi obișnuită",
+      "dezlegări": []
+    },
+    "2025-11-25": {
+      "zi": 25,
+      "zi_saptamana": "Ma",
+      "sfinți": [
+        "Odovania praznicului Intrării în Biserică a Maicii Domnului",
+        "Sfânta Mare Muceniță Ecaterina",
+        "Sfântul Mare Mucenic Mercurie"
+      ],
+      "tip": "Sărbătoare",
+      "dezlegări": ["pește"]
+    },
+    "2025-11-26": {
+      "zi": 26,
+      "zi_saptamana": "Mi",
+      "sfinți": [
+        "Sfântul Cuvios Alipie Stâlpnicul",
+        "Sfântul Cuvios Nikon",
+        "Sfântul Stelian Paflagonul"
+      ],
+      "tip": "Zi obișnuită",
+      "dezlegări": []
+    },
+    "2025-11-27": {
+      "zi": 27,
+      "zi_saptamana": "J",
+      "sfinți": [
+        "Sfântul Mare Mucenic Iacob Persul",
+        "Sfântul Cuvios Natanail"
+      ],
+      "tip": "Zi obișnuită",
+      "dezlegări": []
+    },
+    "2025-11-28": {
+      "zi": 28,
+      "zi_saptamana": "V",
+      "sfinți": [
+        "Sfântul Cuvios Mărturisitor Arsenie de la Prislop",
+        "Sfântul Cuvios Ștefan cel Nou"
+      ],
+      "tip": "Sărbătoare",
+      "dezlegări": []
+    },
+    "2025-11-29": {
+      "zi": 29,
+      "zi_saptamana": "S",
+      "sfinți": [
+        "Sfinții Mucenici Paramon și Filumen",
+        "Sfântul Cuvios Pitirun"
+      ],
+      "tip": "Zi obișnuită",
+      "dezlegări": ["pește"]
+    },
+    "2025-11-30": {
+      "zi": 30,
+      "zi_saptamana": "D",
+      "sfinți": [
+        "Sfântul Apostol Andrei cel întâi chemat, Ocrotitorul României",
+        "Sfântul Ierarh Andrei Șaguna, Mitropolitul Transilvaniei",
+        "Sfântul Ier. Frumentie, episcopul Etiopiei",
+        "Duminica a 30-a după Rusalii"
+      ],
+      "tip": "Sărbătoare mare",
+      "dezlegări": ["pește"]
+    }
+  },
+  "2025-12": {
+    "2025-12-01": {
+      "zi": 1,
+      "zi_saptamana": "L",
+      "sfinți": [
+        "Sfântul Proroc Naum",
+        "Sfântul Filaret cel Milostiv (Tedeum)"
+      ],
+      "tip": "Zi obișnuită",
+      "dezlegări": []
+    },
+    "2025-12-02": {
+      "zi": 2,
+      "zi_saptamana": "Ma",
+      "sfinți": [
+        "Sfântul Cuvios Paisie și Cleopa de la Sihăstria",
+        "Sfântul Proroc Avacum",
+        "Sfântul Solomon, arhiepiscopul Efesului"
+      ],
+      "tip": "Zi obișnuită",
+      "dezlegări": ["pește"]
+    },
+    "2025-12-03": {
+      "zi": 3,
+      "zi_saptamana": "Mi",
+      "sfinți": [
+        "Sfântul Cuvios Gheorghe de la Cernica și Căldărușani",
+        "Sfântul Proroc Sofonie"
+      ],
+      "tip": "Zi obișnuită",
+      "dezlegări": []
+    },
+    "2025-12-04": {
+      "zi": 4,
+      "zi_saptamana": "J",
+      "sfinți": [
+        "Sfânta Mare Muceniță Varvara",
+        "Sfântul Ioan Damaschin"
+      ],
+      "tip": "Zi obișnuită",
+      "dezlegări": ["pește"]
+    },
+    "2025-12-05": {
+      "zi": 5,
+      "zi_saptamana": "V",
+      "sfinți": [
+        "Sfântul Cuvios Sava cel Sfințit"
+      ],
+      "tip": "Zi obișnuită",
+      "dezlegări": []
+    },
+    "2025-12-06": {
+      "zi": 6,
+      "zi_saptamana": "S",
+      "sfinți": [
+        "Sfântul Ierarh Nicolae, arhiepiscopul Mirelor Lichiei, făcătorul de minuni"
+      ],
+      "tip": "Sărbătoare mare",
+      "dezlegări": ["pește"]
+    },
+    "2025-12-07": {
+      "zi": 7,
+      "zi_saptamana": "D",
+      "sfinți": [
+        "Sfânta Muceniță Filofteia de la Curtea de Argeș",
+        "Sfântul Ierarh Ambrozie, episcopul Mediolanului",
+        "Duminica a 27-a după Rusalii"
+      ],
+      "tip": "Duminică",
+      "dezlegări": ["pește"]
+    },
+    "2025-12-08": {
+      "zi": 8,
+      "zi_saptamana": "L",
+      "sfinți": [
+        "Sfântul Cuvios Patapie",
+        "Sfinții Apostoli Cezar, Tihic și Onisifor"
+      ],
+      "tip": "Zi obișnuită",
+      "dezlegări": []
+    },
+    "2025-12-09": {
+      "zi": 9,
+      "zi_saptamana": "Ma",
+      "sfinți": [
+        "Zămislirea Sfintei Fecioare Maria de către Sfânta Ana",
+        "Sfânta Ana, mama Prorocului Samuel"
+      ],
+      "tip": "Sărbătoare",
+      "dezlegări": ["pește"]
+    },
+    "2025-12-10": {
+      "zi": 10,
+      "zi_saptamana": "Mi",
+      "sfinți": [
+        "Sfântul Mucenic Mina",
+        "Sfântul Ermogen",
+        "Sfântul Evgraf"
+      ],
+      "tip": "Zi obișnuită",
+      "dezlegări": []
+    },
+    "2025-12-11": {
+      "zi": 11,
+      "zi_saptamana": "J",
+      "sfinți": [
+        "Sfântul Cuvios Daniil Stâlpnicul",
+        "Sfântul Luca cel Nou"
+      ],
+      "tip": "Zi obișnuită",
+      "dezlegări": []
+    },
+    "2025-12-12": {
+      "zi": 12,
+      "zi_saptamana": "V",
+      "sfinți": [
+        "Sfântul Ierarh Spiridon, episcopul Trimitundei, făcătorul de minuni"
+      ],
+      "tip": "Sărbătoare",
+      "dezlegări": []
+    },
+    "2025-12-13": {
+      "zi": 13,
+      "zi_saptamana": "S",
+      "sfinți": [
+        "Sfântul Ierarh Dosoftei, mitropolitul Moldovei",
+        "Sfinți Mărturisitori și mucenici (mențiuni locale și mucenițe precum Lucia)"
+      ],
+      "tip": "Sărbătoare",
+      "dezlegări": ["pește"]
+    },
+    "2025-12-14": {
+      "zi": 14,
+      "zi_saptamana": "D",
+      "sfinți": [
+        "Sfinții Mucenici Tirs, Calinic, Filimon și Apolonie",
+        "Duminica a 28-a după Rusalii"
+      ],
+      "tip": "Duminică",
+      "dezlegări": ["pește"]
+    },
+    "2025-12-15": {
+      "zi": 15,
+      "zi_saptamana": "L",
+      "sfinți": [
+        "Sfântul Sfințit Mucenic Elefterie, episcopul Iliriei",
+        "Sfintele mucenițe Antia și Suzana",
+        "Sfântul Cuvios Pavel din Latro"
+      ],
+      "tip": "Zi obișnuită",
+      "dezlegări": []
+    },
+    "2025-12-16": {
+      "zi": 16,
+      "zi_saptamana": "Ma",
+      "sfinți": [
+        "Sfântul Proroc Agheu",
+        "Sfânta Teofana împărăteasa"
+      ],
+      "tip": "Zi obișnuită",
+      "dezlegări": []
+    },
+    "2025-12-17": {
+      "zi": 17,
+      "zi_saptamana": "Mi",
+      "sfinți": [
+        "Sfântul Proroc Daniel",
+        "Sfinții trei tineri: Anania, Azaria și Misail"
+      ],
+      "tip": "Zi obișnuită",
+      "dezlegări": []
+    },
+    "2025-12-18": {
+      "zi": 18,
+      "zi_saptamana": "J",
+      "sfinți": [
+        "Sfântul Cuvios Daniil Sihăstrul",
+        "Sfinții Mucenici Sebastian și Zoe",
+        "Sfântul Ierarh Modest, arhiepiscopul Ierusalimului"
+      ],
+      "tip": "Zi obișnuită",
+      "dezlegări": ["pește"]
+    },
+    "2025-12-19": {
+      "zi": 19,
+      "zi_saptamana": "V",
+      "sfinți": [
+        "Sfântul Mucenic Bonifatie",
+        "Sfânta Aglaia",
+        "Sfântul Ierarh Grichentie, episcopul Etiopiei"
+      ],
+      "tip": "Zi obișnuită",
+      "dezlegări": []
+    },
+    "2025-12-20": {
+      "zi": 20,
+      "zi_saptamana": "S",
+      "sfinți": [
+        "Înainte-prăznuirea Nașterii Domnului",
+        "Sfântul Ierarh Ignatie Teoforul, episcopul Antiohiei",
+        "Sfântul Cuvios Serafim cel Răbdător de la Sâmbăta de Sus"
+      ],
+      "tip": "Înainte-prăznuire",
+      "dezlegări": []
+    },
+    "2025-12-21": {
+      "zi": 21,
+      "zi_saptamana": "D",
+      "sfinți": [
+        "Sfinți: Iuliana din Nicomidia și Temistocle",
+        "Duminica dinaintea Nașterii Domnului"
+      ],
+      "tip": "Duminică",
+      "dezlegări": []
+    },
+    "2025-12-22": {
+      "zi": 22,
+      "zi_saptamana": "L",
+      "sfinți": [
+        "Sfântul Ierarh Petru Movilă, mitropolitul Kievului",
+        "Sfânta Mare Muceniță Anastasia"
+      ],
+      "tip": "Zi obișnuită",
+      "dezlegări": []
+    },
+    "2025-12-23": {
+      "zi": 23,
+      "zi_saptamana": "Ma",
+      "sfinți": [
+        "Sfinții 10 Mucenici din Creta",
+        "Sfântul Ierarh Pavel, arhiepiscopul Neocezareei"
+      ],
+      "tip": "Zi obișnuită",
+      "dezlegări": []
+    },
+    "2025-12-24": {
+      "zi": 24,
+      "zi_saptamana": "Mi",
+      "sfinți": [
+        "Sfânta Cuvioasă Eugenia",
+        "Ajunul Praznicului Nașterii Domnului"
+      ],
+      "tip": "Ajunul Praznicului",
+      "dezlegări": []
+    },
+    "2025-12-25": {
+      "zi": 25,
+      "zi_saptamana": "J",
+      "sfinți": [
+        "Nașterea Domnului (Crăciunul)"
+      ],
+      "tip": "Praznic împărătesc",
+      "dezlegări": []
+    },
+    "2025-12-26": {
+      "zi": 26,
+      "zi_saptamana": "V",
+      "sfinți": [
+        "Soborul Maicii Domnului",
+        "Sfântul Cuvios Nicodim cel Sfințit de la Tismana",
+        "Sfântul Cuvios Gherasim de la Tismana"
+      ],
+      "tip": "Sărbătoare",
+      "dezlegări": []
+    },
+    "2025-12-27": {
+      "zi": 27,
+      "zi_saptamana": "S",
+      "sfinți": [
+        "Sfântul Apostol și întâiul Mucenic și Arhidiacon Ștefan",
+        "Sfântul Cuvios Teodor Mărturisitorul"
+      ],
+      "tip": "Sărbătoare",
+      "dezlegări": []
+    },
+    "2025-12-28": {
+      "zi": 28,
+      "zi_saptamana": "D",
+      "sfinți": [
+        "Sfinții 20.000 de Mucenici din Nicomidia",
+        "Duminica după Nașterea Domnului"
+      ],
+      "tip": "Duminică",
+      "dezlegări": []
+    },
+    "2025-12-29": {
+      "zi": 29,
+      "zi_saptamana": "L",
+      "sfinți": [
+        "Sfinții 14.000 de prunci uciși de porunca lui Irod",
+        "Sfântul Cuvios Marcel",
+        "Sfântul Tadeu"
+      ],
+      "tip": "Zi obișnuită",
+      "dezlegări": []
+    },
+    "2025-12-30": {
+      "zi": 30,
+      "zi_saptamana": "Ma",
+      "sfinți": [
+        "Sfânta Muceniță Anisia, fecioara"
+      ],
+      "tip": "Zi obișnuită",
+      "dezlegări": []
+    },
+    "2025-12-31": {
+      "zi": 31,
+      "zi_saptamana": "Mi",
+      "sfinți": [
+        "Odovania praznicului Nașterii Domnului",
+        "Sfântul Mucenic Hermes",
+        "Sfânta Cuvioasă Melania Romana"
+      ],
+      "tip": "Odovania praznicului",
+      "dezlegări": []
+    }
   }
 }
+
+
+

@@ -10,7 +10,7 @@ import Image from "next/image";
 type LocalDay = {
   zi: number;
   zi_saptamana: string;
-  "sfinti": string[];
+  "sfinți": string[];
   tip: string;
   "dezlegari": string[];
 };
@@ -49,26 +49,33 @@ const Sfzi = () => {
     return () => ctx.revert();
   }, []);
 
-  useEffect(() => {
+   useEffect(() => {
     const today = new Date();
     const yyyy = today.getFullYear();
     const mm = String(today.getMonth() + 1).padStart(2, "0");
     const dd = String(today.getDate()).padStart(2, "0");
+
     const dateKey = `${yyyy}-${mm}-${dd}`;
     const monthKey = `${yyyy}-${mm}`;
 
     fetch("/data/calendar.json")
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) throw new Error("Calendar JSON not found");
+        return res.json();
+      })
       .then((data: Record<string, Record<string, LocalDay>>) => {
         const entry = data[monthKey]?.[dateKey];
-        if (entry && entry["sfinti"]?.length > 0) {
-          setSfinti(entry["sfinti"]);
+        console.log("Today's entry:", entry); // debug
+
+        if (entry && entry.sfinți?.length > 0) {
+          setSfinti(entry.sfinți);
         } else {
-          setSfinti(["Niciun sfant inregistrat azi."]);
+          setSfinti(["Niciun sfânt înregistrat azi."]);
         }
       })
-      .catch(() => {
-        setSfinti(["Eroare la incarcarea calendarului."]);
+      .catch((err) => {
+        console.error("Eroare la încărcarea calendarului:", err);
+        setSfinti(["Eroare la încărcarea calendarului."]);
       });
   }, []);
 
@@ -77,7 +84,7 @@ const Sfzi = () => {
       <div className="">
         <div className="flex justify-center">
           <div className="w-full flex flex-col justify-center min-w-min">
-            <section className="relative overflow-hidden w-full h-[60vh] lg:h-[30vh]">
+            <section className="relative overflow-hidden w-full h-[60vh] ">
             {/* Image background section */}
               <Image
                   fill
@@ -95,11 +102,11 @@ const Sfzi = () => {
                   ref={titleRef}
                   className="text-5xl sm:text-6xl md:text-8xl font-normal text-white drop-shadow-lg shadow-white"
                 >
-                  <span className="text-6xl sm:text-7xl md:text-9xl font-[Byzantin] text-[#c95d43]">
+                  <span className="text-6xl sm:text-7xl md:text-9xl byzantin text-[#c95d43]">
                     S
                   </span>
                   fintii{" "}
-                  <span className="text-6xl sm:text-7xl md:text-9xl font-[Byzantin] text-[#c95d43]">
+                  <span className="text-6xl sm:text-7xl md:text-9xl byzantin text-[#c95d43]">
                     Z
                   </span>
                   ilei

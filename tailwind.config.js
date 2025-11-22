@@ -5,8 +5,16 @@ module.exports = {
     './components/**/*.{js,ts,jsx,tsx}',
     './app/**/*.{js,ts,jsx,tsx}',
   ],
+  safelist: [
+    'font-[Byzantin]',
+  ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        playfair: ["'Playfair Display'", "serif"],
+      },
+    },
   },
+
   plugins: [],
 };
