@@ -20,9 +20,9 @@ export default function DonatePage({ opacity = 1, x = 0, y = 0 }) {
   const imageY = useTransform(baseY, (value) => value + y);
 
   const titleOpacity = useTransform(clampedProgress, [0.35, 0.55], [0, 1]);
-  const titleY = useTransform(clampedProgress, [0.35, 0.5, .52, 0.7], [-100, 100, 120, -50]);
+  const titleY = useTransform(clampedProgress, [0.35, 0.45, 0.55, 0.7], [-100, 50, 50, -50]);
+  const subtitleY = useTransform(clampedProgress, [0.4, 0.5, 0.6, 0.75], [-30, 60, 60, -50]);
   const subtitleOpacity = useTransform(clampedProgress, [0.3, 0.7], [0, 1]);
-  const subtitleY = useTransform(clampedProgress, [0.4, 0.55, 0.6, 0.75], [-30, 150,180, -50]);
 
   return (
     <section
