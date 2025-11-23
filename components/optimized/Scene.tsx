@@ -205,8 +205,6 @@ export default function Scene() {
       return;
     }
 
-<<<<<<< HEAD
-=======
     const readViewportHeight = () => {
       const visual = window.visualViewport;
       return Math.round((visual?.height ?? window.innerHeight) || 0);
@@ -221,7 +219,6 @@ export default function Scene() {
       viewportHeightRef.current || fixedViewportHeight || readViewportHeight();
     viewportWidthRef.current = viewportWidthRef.current || readViewportWidth();
 
->>>>>>> friend/main
     const mediaElements = Array.from(
       container.querySelectorAll("img")
     ) as HTMLImageElement[];
@@ -231,15 +228,6 @@ export default function Scene() {
     };
 
     const handleResize = () => {
-<<<<<<< HEAD
-      ScrollTrigger.refresh();
-    };
-
-    mediaElements.forEach((img) => {
-      if (img.complete) {
-        return;
-      }
-=======
       const nextHeight = readViewportHeight();
       const nextWidth = readViewportWidth();
 
@@ -261,26 +249,18 @@ export default function Scene() {
       if (img.complete) {
         return;
       }
->>>>>>> friend/main
       img.addEventListener("load", handleMediaLoad);
       img.addEventListener("error", handleMediaLoad);
     });
 
     window.addEventListener("resize", handleResize);
-<<<<<<< HEAD
-=======
     window.visualViewport?.addEventListener("resize", handleResize);
->>>>>>> friend/main
 
     let refreshRaf: number | null = null;
 
     const computeScrollDistance = () => {
       const height = container.scrollHeight || container.clientHeight || 0;
-<<<<<<< HEAD
-      const viewport = window.innerHeight || 1;
-=======
       const viewport = viewportHeightRef.current || readViewportHeight() || 1;
->>>>>>> friend/main
       const distance = height <= viewport ? viewport : height - viewport;
       return Math.max(1, Math.round(distance));
     };
@@ -406,11 +386,6 @@ export default function Scene() {
 
       const updateScene = (progress: number) => {
         if (typeof window == 'undefined') return;
-<<<<<<< HEAD
-        const vhUnit = window.innerHeight * 0.01;
-        const vwUnit = window.innerWidth * 0.01;
-=======
->>>>>>> friend/main
 
         const viewportHeight = viewportHeightRef.current || readViewportHeight();
         const viewportWidth = viewportWidthRef.current || readViewportWidth();
@@ -589,10 +564,7 @@ export default function Scene() {
         cancelAnimationFrame(refreshRaf);
       }
       window.removeEventListener("resize", handleResize);
-<<<<<<< HEAD
-=======
       window.visualViewport?.removeEventListener("resize", handleResize);
->>>>>>> friend/main
       mediaElements.forEach((img) => {
         img.removeEventListener("load", handleMediaLoad);
         img.removeEventListener("error", handleMediaLoad);
