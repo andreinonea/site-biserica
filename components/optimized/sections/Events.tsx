@@ -116,21 +116,10 @@ const Events = () => {
       text-white/80 pr-10
     "
           >
-           Evenimente
+           Evenimente Urmatoare
+
           </span>
 
-          <span
-            className="
-      block sm:block md:inline-block
-      
-      mt-2 sm:mt-1 md:mt-0
-            byzantin
-   
-      text-white/80 pl-10
-    "
-          >
-            Urmatoare
-          </span>
         </h1>
       </motion.div>
 
