@@ -76,7 +76,7 @@ const Events = () => {
         transition={{ duration: 0.8, ease: "easeOut" }}
         className="relative z-10 font-bold text-white/70 -mb-6 text-center"
       >
-        <h1 className="relative text-4xl lg:text-5xl leading-tight z-10 text-center">
+        {/* <h1 className="relative text-4xl lg:text-5xl leading-tight z-10 text-center">
           <span
             className="
       inline-block byzantin
@@ -99,6 +99,33 @@ const Events = () => {
       first-letter:text-[#55302f]
       first-letter:text-5xl
       first-letter:lg:text-7xl
+      text-white/80 pl-10
+    "
+          >
+            Urmatoare
+          </span>
+        </h1> */}
+        <h1 className="relative text-4xl lg:text-5xl leading-tight z-10 text-center">
+          <span
+            className="
+      inline-block byzantin
+      first-letter:text-[#55302f]
+      first-letter:text-5xl
+      first-letter:lg:text-7xl
+      sm:ml-0 px-0
+      text-white/80 pr-10
+    "
+          >
+           Evenimente
+          </span>
+
+          <span
+            className="
+      block sm:block md:inline-block
+      
+      mt-2 sm:mt-1 md:mt-0
+            byzantin
+   
       text-white/80 pl-10
     "
           >
