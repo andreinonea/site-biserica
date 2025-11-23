@@ -5,6 +5,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import useDebug from "../hooks/useDebug";
+import useFixedViewportHeight from "../hooks/useFixedViewport";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -111,7 +112,13 @@ const scaleRange = (start: number, end: number): [number, number] => [
 export default function Scene() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [quote, setQuote] = useState<DailyQuote>(fallbackQuote);
+  const fixedViewportHeight = useFixedViewportHeight();
+  const viewportHeightRef = useRef<number>(0);
+  const viewportWidthRef = useRef<number>(0);
   const debug = useDebug();
+  const doubledViewportHeight = fixedViewportHeight ? fixedViewportHeight * 2 : 0;
+  const sceneHeightStyle = doubledViewportHeight ? `${doubledViewportHeight}px` : undefined;
+  const pinnedHeight = fixedViewportHeight ? `${fixedViewportHeight}px` : undefined;
 
   useEffect(() => {
     if (typeof window === "undefined") {
@@ -184,12 +191,37 @@ export default function Scene() {
     };
   }, []);
 
+  useEffect(() => {
+    if (typeof window === "undefined" || !fixedViewportHeight) {
+      return;
+    }
+    viewportHeightRef.current = fixedViewportHeight;
+    ScrollTrigger.refresh();
+  }, [fixedViewportHeight]);
+
   useLayoutEffect(() => {
     const container = containerRef.current;
     if (!container || typeof window == 'undefined') {
       return;
     }
 
+<<<<<<< HEAD
+=======
+    const readViewportHeight = () => {
+      const visual = window.visualViewport;
+      return Math.round((visual?.height ?? window.innerHeight) || 0);
+    };
+
+    const readViewportWidth = () => {
+      const visual = window.visualViewport;
+      return Math.round((visual?.width ?? window.innerWidth) || 0);
+    };
+
+    viewportHeightRef.current =
+      viewportHeightRef.current || fixedViewportHeight || readViewportHeight();
+    viewportWidthRef.current = viewportWidthRef.current || readViewportWidth();
+
+>>>>>>> friend/main
     const mediaElements = Array.from(
       container.querySelectorAll("img")
     ) as HTMLImageElement[];
@@ -199,6 +231,7 @@ export default function Scene() {
     };
 
     const handleResize = () => {
+<<<<<<< HEAD
       ScrollTrigger.refresh();
     };
 
@@ -206,17 +239,48 @@ export default function Scene() {
       if (img.complete) {
         return;
       }
+=======
+      const nextHeight = readViewportHeight();
+      const nextWidth = readViewportWidth();
+
+      const widthDelta = Math.abs(nextWidth - viewportWidthRef.current);
+      const heightDelta = Math.abs(nextHeight - viewportHeightRef.current);
+      const orientationChanged = widthDelta > 80;
+      const majorHeightChange = heightDelta > 160;
+
+      if (!orientationChanged && !majorHeightChange) {
+        return;
+      }
+
+      viewportHeightRef.current = nextHeight;
+      viewportWidthRef.current = nextWidth;
+      ScrollTrigger.refresh();
+    };
+
+    mediaElements.forEach((img) => {
+      if (img.complete) {
+        return;
+      }
+>>>>>>> friend/main
       img.addEventListener("load", handleMediaLoad);
       img.addEventListener("error", handleMediaLoad);
     });
 
     window.addEventListener("resize", handleResize);
+<<<<<<< HEAD
+=======
+    window.visualViewport?.addEventListener("resize", handleResize);
+>>>>>>> friend/main
 
     let refreshRaf: number | null = null;
 
     const computeScrollDistance = () => {
       const height = container.scrollHeight || container.clientHeight || 0;
+<<<<<<< HEAD
       const viewport = window.innerHeight || 1;
+=======
+      const viewport = viewportHeightRef.current || readViewportHeight() || 1;
+>>>>>>> friend/main
       const distance = height <= viewport ? viewport : height - viewport;
       return Math.max(1, Math.round(distance));
     };
@@ -342,10 +406,18 @@ export default function Scene() {
 
       const updateScene = (progress: number) => {
         if (typeof window == 'undefined') return;
+<<<<<<< HEAD
         const vhUnit = window.innerHeight * 0.01;
         const vwUnit = window.innerWidth * 0.01;
+=======
+>>>>>>> friend/main
 
-        const isDesktop = window.innerWidth >= 1024;
+        const viewportHeight = viewportHeightRef.current || readViewportHeight();
+        const viewportWidth = viewportWidthRef.current || readViewportWidth();
+        const vhUnit = viewportHeight * 0.01;
+        const vwUnit = viewportWidth * 0.01;
+
+        const isDesktop = viewportWidth >= 1024;
 
         const cloudOpacityFade = isDesktop ? cloudOpacityFadeDesktop : cloudOpacityFadeMobile;
         const [cloudOffsetStart, cloudOffsetEnd] = isDesktop
@@ -517,6 +589,10 @@ export default function Scene() {
         cancelAnimationFrame(refreshRaf);
       }
       window.removeEventListener("resize", handleResize);
+<<<<<<< HEAD
+=======
+      window.visualViewport?.removeEventListener("resize", handleResize);
+>>>>>>> friend/main
       mediaElements.forEach((img) => {
         img.removeEventListener("load", handleMediaLoad);
         img.removeEventListener("error", handleMediaLoad);
@@ -530,6 +606,7 @@ export default function Scene() {
       ref={containerRef}
       className="relative h-[200vh] w-full overflow-visible"
       style={{
+        height: sceneHeightStyle,
         WebkitMaskImage:
           "linear-gradient(to bottom, black 0%, black calc(100% - 250px), transparent 100%)",
         maskImage:
@@ -538,13 +615,16 @@ export default function Scene() {
         maskSize: "100% 100%",
       }}
     >
-      <div className="absolute inset-0 h-[200vh] w-full">
+      <div className="absolute inset-0 h-[200vh] w-full" style={{ height: sceneHeightStyle }}>
         <div data-scene="sky" className="relative h-full">
           <Image src="/assets/Sky.webp" alt="Sky" fill className="object-cover" priority />
         </div>
 
-        <div className="absolute inset-0 h-[200vh] w-full overflow-hidden">
-          <div className="sticky top-0 h-screen overflow-hidden">
+        <div
+          className="absolute inset-0 h-[200vh] w-full overflow-hidden"
+          style={{ height: sceneHeightStyle }}
+        >
+          <div className="sticky top-0 h-screen overflow-hidden" style={{ height: pinnedHeight }}>
             <div className="absolute inset-0 bg-transparent" aria-hidden data-scene="background" />
 
             <div

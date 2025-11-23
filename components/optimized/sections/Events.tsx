@@ -83,24 +83,23 @@ const Events = () => {
       first-letter:text-[#55302f]
       first-letter:text-5xl
       first-letter:lg:text-7xl
-      -ml-20 sm:ml-0 px-0
-      text-white/80
+      sm:ml-0 px-0
+      text-white/80 pr-10
     "
           >
-            Evenimente
+           Evenimente
           </span>
 
           <span
             className="
       block sm:block md:inline-block
-      md:ml-3 lg:ml-4
+      
       mt-2 sm:mt-1 md:mt-0
-      ml-25 sm:ml-20 md:ml-0
-      byzantin
+            byzantin
       first-letter:text-[#55302f]
       first-letter:text-5xl
       first-letter:lg:text-7xl
-      text-white/80
+      text-white/80 pl-10
     "
           >
             Urmatoare
