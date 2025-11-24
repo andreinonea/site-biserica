@@ -230,14 +230,21 @@ export default function Programliturgic() {
 
       <div className="relative z-5 max-w-4xl mx-auto px-6 py-12 pt-[100px] selection:bg-yellow-600 selection:text-white/90">
         <div className="flex justify-between items-center mt-3 mb-20">
-          
+          {/* Small screens */}
           <button
             onClick={() => changeMonth(-1)}
-            className="mr-1 text-[#C59D30]/60 hover:underline"
+            className="mr-1 text-[#C59D30]/60 hover:underline md:hidden"
+          >
+            luna anterioară ←
+          </button>
+
+          {/* Large screens */}
+          <button
+            onClick={() => changeMonth(-1)}
+            className="mr-1 text-[#C59D30]/60 hover:underline hidden md:inline"
           >
             ← luna anterioară
           </button>
-
           <h1 className="text-[30px] text-center">
             Calendar {getMonthName(month)} <span className="font-[Dutch Mediaeval]">{year}</span>
           </h1>
@@ -245,7 +252,6 @@ export default function Programliturgic() {
             luna următoare →
           </button>
         </div>
-
         {loading && <p className="text-gray-400">Se încarcă...</p>}
 
         {!loading && calendar && (() => {
