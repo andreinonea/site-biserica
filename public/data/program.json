@@ -1,22 +1,24 @@
 {
   "duminică": {
-    "data": "26 octombrie",
+    "data": "23 noiembrie",
     "activitati": [
       { "nume": "Utrenia", "ora": "8:00" },
       { "nume": "Dumnezeiasca Liturghie", "ora": "" }
     ]
   },
   "luni": {
-    "data": "27 octombrie",
+    "data": "24 noiembrie",
     "activitati": [
       { "nume": "Ceasul I", "ora": "6:00" },
       { "nume": "Dumnezeiasca Liturghie", "ora": "" },
       { "nume": "Paraclisul Sf. Mc. Trifon", "ora": "17:00" },
-      { "nume": "Rugăciuni pentru cei bolnavi", "ora": "" }
+      { "nume": "Rugăciuni pentru cei bolnavi", "ora": "" },
+      { "nume": "Taina Spovedaniei", "ora": "" }
+
     ]
   },
   "marți": {
-    "data": "28 octombrie",
+    "data": "25 noiembrie",
     "activitati": [
       { "nume": "Ceasul I", "ora": "6:00" },
       { "nume": "Dumnezeiasca Liturghie", "ora": "" },
@@ -24,7 +26,7 @@
     ]
   },
   "miercuri": {
-    "data": "29 octombrie",
+    "data": "26 noiembrie",
     "activitati": [
       { "nume": "Ceasul I", "ora": "6:00" },
       { "nume": "Dumnezeiasca Liturghie", "ora": "" },
@@ -32,15 +34,17 @@
     ]
   },
   "joi": {
-    "data": "30 octombrie",
+    "data": "27 noiembrie",
     "activitati": [
       { "nume": "Ceasul I", "ora": "6:00" },
       { "nume": "Dumnezeiasca Liturghie", "ora": "" },
-      { "nume": "Biserica este deschisă până la orele", "ora": "14:00" }
+      { "nume": "Acatistul Maicii Domnului", "ora": "17:00" },
+      { "nume": "Taina Spovedaniei", "ora": "17:30" }
+
     ]
   },
   "vineri": {
-    "data": "31 octombrie",
+    "data": "28 noiembrie",
     "activitati": [
       { "nume": "Ceasul I", "ora": "6:00" },
       { "nume": "Dumnezeiasca Liturghie", "ora": "" },
@@ -48,15 +52,15 @@
     ]
   },
   "sâmbătă": {
-    "data": "1 noiembrie",
+    "data": "29 noiembrie",
     "activitati": [
-      { "nume": "Utrenia", "ora": "8:00" },
-      { "nume": "Dumnezeiasca Liturghie", "ora": "" },
-      { "nume": "Pomenirea de obște a celor adormiți", "ora": "" }
+      { "nume": "Dumnezeiasca Liturghie", "ora": "8:30" },
+      { "nume": "Pomenirea de obște a celor adormiți", "ora": "" },
+      { "nume": "Vecernia și Litia", "ora": "16:00" }
     ]
   },
   "Duminică": {
-    "data": "2 noiembrie",
+    "data": "30 noiembrie",
     "activitati": [
       { "nume": "Utrenia", "ora": "8:00" },
       { "nume": "Dumnezeiasca Liturghie", "ora": "" }

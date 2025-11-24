@@ -69,22 +69,12 @@
       }
     ]
   },
-   {
-    "title": "Eveniment special 6",
-    "date": "2025-10-16",
-    "hour": "15:00",
-    "location": "Strada Foișorului 119"
-  },
- {
-    "title": "Eveniment special 6",
-    "date": "2025-12-16",
-    "hour": "15:00",
-    "location": "Strada Foișorului 119"
-  },
+   
+ 
   {
-    "title": "Eveniment special 6",
-    "date": "2025-11-16",
-    "hour": "15:00",
+    "title": "Instalarea unui nou preot",
+    "date": "2025-11-30",
+    "hour": "12:00",
     "location": "Strada Foișorului 119"
   }
 ]

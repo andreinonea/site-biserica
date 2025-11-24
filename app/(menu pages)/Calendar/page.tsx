@@ -9,47 +9,28 @@ type LocalDay = {
   zi: number;
   zi_saptamana: string;
   sfinți: string[];
-  tip: string;
-  dezlegări: string[];
-};
-
-type FastInfo = {
-  fast_level_desc: string;
-  fast_exception_desc?: string;
+  tip?: string;
+  tip_post?: string;
+  post_name?: string;
+  dezlegări?: string[]; 
 };
 
 export default function Programliturgic() {
   const today = new Date();
-  const [month, setMonth] = useState(today.getMonth() + 1);
-  const [year, setYear] = useState(today.getFullYear());
+  const [month, setMonth] = useState<number>(today.getMonth() + 1);
+  const [year, setYear] = useState<number>(today.getFullYear());
   const [calendar, setCalendar] = useState<Record<string, Record<string, LocalDay>> | null>(null);
-  const [fastData, setFastData] = useState<Record<string, FastInfo>>({});
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const loadData = async () => {
+      setLoading(true);
       try {
-        setLoading(true);
-
-        const localRes = await fetch('/data/calendar.json');
+        const localRes = await fetch("/data/calendar.json");
         const localData = await localRes.json();
         setCalendar(localData);
-
-        const fastRes = await fetch(`https://orthocal.info/api/gregorian/${year}/${month}/`);
-        const fastJson = await fastRes.json();
-
-        const fastMap: Record<string, FastInfo> = {};
-        fastJson.forEach((entry: any) => {
-          const key = `${entry.year}-${String(entry.month).padStart(2, '0')}-${String(entry.day).padStart(2, '0')}`;
-          fastMap[key] = {
-            fast_level_desc: entry.fast_level_desc,
-            fast_exception_desc: entry.fast_exception_desc
-          };
-        });
-
-        setFastData(fastMap);
-      } catch (error) {
-        console.error('Eroare la încărcare:', error);
+      } catch (err) {
+        console.error("Eroare la încărcare calendar local:", err);
       } finally {
         setLoading(false);
       }
@@ -83,39 +64,6 @@ export default function Programliturgic() {
     "decembrie",
   ];
 
-  const fastLevelTranslations: Record<string, string> = {
-    Fast: "Post",
-    "No Fast": "Fără post",
-    "Nativity Fast": "Postul Nașterii Domnului",
-    "Lenten Fast": "Postul Mare",
-    "Dormition Fast": "Postul Adormirii Maicii Domnului",
-    "Apostles Fast": "Postul Sfinților Apostoli",
-  };
-
-  const fastExceptionTranslations: Record<string, string> = {
-    "Fast Free": "Dezlegare la toate",
-    "Fish, Wine and Oil are Allowed": "Dezlegare la pește, vin și untdelemn",
-    "Meat Fast": "Post fără carne",
-    "No overrides": "Fără dezlegări",
-    "Strict Fast": "Post aspru",
-    "Strict Fast (Wine and Oil)": "Post aspru (dezlegare la vin și untdelemn)",
-    "Wine and Oil are Allowed": "Dezlegare la vin și untdelemn",
-    "Wine is Allowed": "Dezlegare la vin",
-    "Wine, Oil and Caviar are Allowed": "Dezlegare la vin, untdelemn și icre",
-  };
-
-  const fastExceptionIcons: Record<string, string[]> = {
-    "Fast Free": ["/icons/fast-free.svg"],
-    "Fish, Wine and Oil are Allowed": ["/icons/fish.svg", "/icons/wine.svg", "/icons/oil.svg"],
-    "Meat Fast": ["/icons/meat.svg"],
-    "No overrides": ["/icons/no-overrides.svg"],
-    "Wine and Oil are Allowed": ["/icons/wine.svg", "/icons/oil.svg"],
-    "Wine is Allowed": ["/icons/wine.svg"],
-    "Wine, Oil and Caviar are Allowed": ["/icons/wine.svg", "/icons/oil.svg", "/icons/caviar.svg"],
-  };
-
-  const translateFastLevel = (text?: string) => (text ? fastLevelTranslations[text] ?? text : "");
-  const translateFastException = (text?: string) => (text ? fastExceptionTranslations[text] ?? text : "");
   const getMonthName = (monthNumber: number) => monthNames[monthNumber - 1] || "";
 
   const formatDate = (dateStr: string, data: LocalDay) => {
@@ -138,6 +86,110 @@ export default function Programliturgic() {
     setMonth(newMonth);
     setYear(newYear);
   };
+
+  // detect dezlegări from both explicit array and bracket notes in sfinți text
+  const extractDezlegari = (day: LocalDay) => {
+    const found = {
+      fish: false, // dezlegare la pește -> show fish, wine, oil icons
+      harti: false, // harti -> show harti.svg
+    };
+
+    if (Array.isArray(day.dezlegări)) {
+      for (const d of day.dezlegări) {
+        if (!d) continue;
+        const low = d.toLowerCase();
+        if (low.includes("pește") || low.includes("peste") || low.includes("pește, vin") || low.includes("pește vin")) {
+          found.fish = true;
+        }
+        if (low.includes("hart") || low.includes("harți") || low.includes("harti") || low.includes("hărți")) {
+          found.harti = true;
+        }
+      }
+    }
+
+    if (Array.isArray(day.sfinți)) {
+      const bracketRegex = /\(([^)]+)\)/gi;
+      for (const s of day.sfinți) {
+        if (!s) continue;
+        let m;
+        while ((m = bracketRegex.exec(s)) !== null) {
+          const content = m[1].toLowerCase();
+          if (content.includes("dezlegare la pește") || content.includes("dezlegare la peste") || content.includes("dezlegare la pește, vin și untdelemn") || content.includes("dezlegare la peste, vin și untdelemn")) {
+            found.fish = true;
+          }
+          if (content.includes("hart") || content.includes("harți") || content.includes("harti") || content.includes("hărți")) {
+            found.harti = true;
+          }
+        }
+      }
+    }
+
+    return found;
+  };
+
+  const renderDezlegariIconsAndText = (found: { fish: boolean; harti: boolean }) => {
+    const icons: { src: string; alt?: string }[] = [];
+    const texts: string[] = [];
+
+    if (found.fish) {
+      icons.push({ src: "/icons/fish.svg", alt: "pește" });
+      icons.push({ src: "/icons/wine.svg", alt: "vin" });
+      icons.push({ src: "/icons/oil.svg", alt: "untdelemn" });
+      texts.push("Dezlegare la pește, vin și untdelemn");
+    }
+    if (found.harti) {
+      icons.push({ src: "/icons/harti.svg", alt: "harți" });
+      texts.push("Harți");
+    }
+
+    if (icons.length === 0 && texts.length === 0) return null;
+
+    return (
+      <div className="flex items-center gap-3 mt-2">
+        <strong className="text-[#C59D30]/80 italic">Dezlegări:</strong>
+        <div className="flex flex-col sm:flex-row items-start gap-2 text-white/80">
+          <div>{texts.join(", ")}</div>
+          <div className="flex items-center gap-2">
+            {icons.map((ic, idx) => (
+              <Image key={idx} src={ic.src} alt={ic.alt || ""} width={20} height={20} />
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const formatFeastType = (day: LocalDay) => {
+
+    const raw = (day.tip_post || day.tip || "").trim();
+    if (!raw) return null;
+
+    const low = raw.toLowerCase();
+    if (low === "fara post" || low === "fără post" || low === "no fast") {
+      return "Fără post";
+    }
+
+    if (low === "post" || low === "postul") {
+      if (day.post_name && typeof day.post_name === "string" && day.post_name.trim().length > 0) {
+        // ensure first letter capitalized
+        return capitalizeEachWord(day.post_name);
+      }
+      // fallback generic
+      return "Post";
+    }
+
+    // if the JSON already contains the specific name 
+    // just return it capitalized properly
+    return capitalizeEachWord(raw);
+  };
+
+  const capitalizeEachWord = (s: string) =>
+    s
+      .replace(/\s+/g, " ")
+      .trim()
+      .split(" ")
+      .map((w) => (w.length > 0 ? w[0].toUpperCase() + w.slice(1) : w))
+      .join(" ");
 
   return (
     <motion.div
@@ -178,19 +230,7 @@ export default function Programliturgic() {
 
       <div className="relative z-5 max-w-4xl mx-auto px-6 py-12 pt-[100px] selection:bg-yellow-600 selection:text-white/90">
         <div className="flex justify-between items-center mt-3 mb-20">
-          {/* Small screens */}
-          <button
-            onClick={() => changeMonth(-1)}
-            className="mr-1 text-[#C59D30]/60 hover:underline md:hidden"
-          >
-            luna anterioară ←
-          </button>
-
-          {/* Large screens */}
-          <button
-            onClick={() => changeMonth(-1)}
-            className="mr-1 text-[#C59D30]/60 hover:underline hidden md:inline"
-          >
+          <button onClick={() => changeMonth(-1)} className="mr-1 text-[#C59D30]/60 hover:underline hidden md:inline">
             ← luna anterioară
           </button>
           <h1 className="text-[30px] text-center">
@@ -209,13 +249,13 @@ export default function Programliturgic() {
           if (!days) return <p className="text-gray-400">Nu există date pentru această lună.</p>;
 
           return Object.entries(days).map(([date, data]) => {
-            const fastInfo = fastData[date];
-            const translatedFastLevel = translateFastLevel(fastInfo?.fast_level_desc);
-            const translatedFastException = translateFastException(fastInfo?.fast_exception_desc);
+            const dez = extractDezlegari(data);
+            const feast = formatFeastType(data);
 
             return (
               <div key={date} className="mb-6 border-b border-[#C59D30]/30 pb-4">
                 <p className="text-lg font-[merriweather] font-semibold mb-2 text-[#C59D30]">{formatDate(date, data)}</p>
+
                 {data.sfinți?.length > 0 && (
                   <ul className="list-none ml-4 text-white/90">
                     {data.sfinți.map((s, i) => (
@@ -227,34 +267,22 @@ export default function Programliturgic() {
                   </ul>
                 )}
 
-                {translatedFastLevel && (
+                {feast && (
                   <p className="mt-2">
                     <strong className="text-[#C59D30]/80 italic font-[merriweather]">Post:</strong>{" "}
-                    <span className="text-white/80">{translatedFastLevel}</span>
+                    <span className="text-white/80">{feast}</span>
                   </p>
                 )}
 
-                {translatedFastException && fastInfo?.fast_level_desc !== "No Fast" && (
-                  <div className="flex items-center gap-2 mt-2">
-                    <strong className="text-[#C59D30]/80 italic">Dezlegări:</strong>
-                    <span className="text-white/80">{translatedFastException}</span>
-                    {fastInfo?.fast_exception_desc &&
-                      fastExceptionIcons[fastInfo.fast_exception_desc] && (
-                        <div className="flex items-center gap-2 mt-2">
-                          {fastExceptionIcons[fastInfo.fast_exception_desc].map((icon, idx) => (
-                            <Image key={idx} src={icon} alt="" width={20} height={20} />
-                          ))}
-                        </div>
-                      )}
-                  </div>
-                )}
+                {renderDezlegariIconsAndText(dez)}
               </div>
             );
           });
         })()}
+        
       </div>
 
-      <Logo theme='light' />
+      <Logo theme="light" />
     </motion.div>
   );
 }

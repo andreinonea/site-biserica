@@ -105,46 +105,15 @@ const Events = () => {
             Urmatoare
           </span>
         </h1> */}
-        {/* <h1 className="relative text-4xl lg:text-5xl leading-tight z-10 text-center">
-          <span
-            className="
-      inline-block byzantin
-      first-letter:text-[#55302f]
-      first-letter:text-5xl
-      first-letter:lg:text-7xl
-      sm:ml-0 px-0
-      text-white/80 pr-10
-    "
-          >
-           Evenimente Urmatoare
-
-          </span>
-
-        </h1> */}
-        <h1 className="relative text-4xl lg:text-5xl leading-tight z-10 text-center">
-          <span
-            className="
-      inline-block byzantin
-      first-letter:text-[#55302f]
-      first-letter:text-5xl
-      first-letter:lg:text-7xl
-      text-white/80
-    "
-          >
-            <span className="block sm:inline-block sm:translate-y-[4px]">
-              Evenimente
-            </span>
-
-            <span className="block sm:inline-block sm:translate-y-[-4px] sm:ml-2">
-              Urmatoare
-            </span>
-          </span>
+        <h1 className="relative text-4xl lg:text-5xl -mt-10 leading-tight z-10 text-center inline-block byzantin text-white/70">
+            Evenimente Urmatoare
         </h1>
+
 
       </motion.div>
 
       {eveniment ? (
-        <div className="relative flex items-start gap-2 mt-10 z-10">
+        <div className="relative flex items-start gap-2 mt-18 z-10">
           <div>
             <Image
               src="/icons/sculptura.png"

@@ -15,18 +15,16 @@ type Card = {
   btnTxt: string;
   btnHref: string;
   imageSrc: string | null;
-  imageAlt: string;
   variant: CardVariant;
 };
 
 const Cards: Card[] = [
   {
-    title: "Istorie Biserica",
-    desc: "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum",
+    title: "Scurta monografie",
+    desc: "Prezentare succintă a Bisericii Foișorul Mavrocordaților",
     btnTxt: "Citeste mai multe",
     btnHref: "/About",
     imageSrc: "/assets/imgpictura.png",
-    imageAlt: "Zzor",
     variant: "Card1",
   },
   {
@@ -35,7 +33,6 @@ const Cards: Card[] = [
     btnTxt: "Asculta aici",
     btnHref: "/Cateheze",
     imageSrc: "/assets/ciucuri.png",
-    imageAlt: "Amón Lopez",
     variant: "Card2",
   },
   {
@@ -44,7 +41,6 @@ const Cards: Card[] = [
     btnTxt: "Afla mai multe",
     btnHref: "/Contact",
     imageSrc: null,
-    imageAlt: "Marisa",
     variant: "Card3",
   },
 ];
@@ -140,7 +136,7 @@ export default function CardSection() {
               {card.imageSrc && (
                 <Image
                   src={card.imageSrc}
-                  alt={card.imageAlt}
+                  alt=""
                   fill
                   sizes="100vw"
                 />
