@@ -12,7 +12,7 @@ type LocalDay = {
   tip?: string;
   tip_post?: string;
   post_name?: string;
-  dezlegări?: string[]; 
+  dezlegări?: string[];
 };
 
 export default function Programliturgic() {
@@ -230,9 +230,14 @@ export default function Programliturgic() {
 
       <div className="relative z-5 max-w-4xl mx-auto px-6 py-12 pt-[100px] selection:bg-yellow-600 selection:text-white/90">
         <div className="flex justify-between items-center mt-3 mb-20">
-          <button onClick={() => changeMonth(-1)} className="mr-1 text-[#C59D30]/60 hover:underline hidden md:inline">
+          
+          <button
+            onClick={() => changeMonth(-1)}
+            className="mr-1 text-[#C59D30]/60 hover:underline"
+          >
             ← luna anterioară
           </button>
+
           <h1 className="text-[30px] text-center">
             Calendar {getMonthName(month)} <span className="font-[Dutch Mediaeval]">{year}</span>
           </h1>
@@ -279,7 +284,7 @@ export default function Programliturgic() {
             );
           });
         })()}
-        
+
       </div>
 
       <Logo theme="light" />
