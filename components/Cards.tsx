@@ -29,15 +29,15 @@ const Cards: Card[] = [
   },
   {
     title: "Cateheze",
-    desc: "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum",
+    desc: "Dialoguri catehetice și cuvântări cu caracter mistagogic",
     btnTxt: "Asculta aici",
     btnHref: "/Cateheze",
     imageSrc: "/assets/ciucuri.png",
     variant: "Card2",
   },
   {
-    title: "Card 3",
-    desc: "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum",
+    title: "Organizator spovedanie",
+    desc: "Aici poți afla când și dacă te mai poți înscrie pentru Taina Mărturisirii în ziua aleasă de tine",
     btnTxt: "Afla mai multe",
     btnHref: "/Contact",
     imageSrc: null,

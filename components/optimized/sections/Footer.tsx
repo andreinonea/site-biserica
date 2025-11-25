@@ -28,7 +28,10 @@ const Footer = () => {
               href="tel:+40712345678"
               className="text-white/70 hover:underline"
             >
-              +40 723 257 569
+              Preoți slujitori
+             Sorin Petre Georgescu 
+             Constantin Sandu
+             Gheorghe Oprea
             </a>
           </div>
         </div>
