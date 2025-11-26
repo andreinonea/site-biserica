@@ -1,15 +1,19 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Mail, MapPin } from "lucide-react";
 import Logo from "../components/Logo";
 
-
-
 const Footer = () => {
-  return (<div>
-    <div className="bg-[#0b0a24] backdrop-blur-xl  bg-gradient-to-b z-5 relative ">
-      <div className="flex place-content-center py-5">
+  const priests = [
+    { name: "Preot Sorin Petre Georgescu", phone: "+40 742 039 585" },
+    { name: "Preot Constantin Sandu", phone: "+40 723 929 011" },
+    { name: "Preot Gheorghe Oprea", phone: "+40 723 257 569" },
+  ];
+
+  return (
+    <footer className="bg-[#0b0a24] backdrop-blur-xl bg-gradient-to-b relative z-5">
+      {/* Logo */}
+      <div className="flex justify-center py-6">
         <Image
           src="/logo_negru_1.webp"
           className="invert-100 select-none"
@@ -18,61 +22,79 @@ const Footer = () => {
           height={80}
         />
       </div>
-      <div className="max-w-3xl mx-auto flex md:flex-row flex-col gap-10 px-10">
-        <div className="flex justify-start items-center gap-4">
 
-          <img src="./icons/phone.svg" alt="Phone" className="w-7 h-7 mt-1" />
-          <div>
-            <p className="text-lg font-medium text-white/90">Telefon</p>
-            <a
-              href="tel:+40712345678"
-              className="text-white/70 hover:underline"
-            >
-              Preoți slujitori
-             Sorin Petre Georgescu 
-             Constantin Sandu
-             Gheorghe Oprea
-            </a>
+      {/* Main footer content */}
+      <div className="max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row gap-10 lg:gap-32">
+        {/* Telefon */}
+        <div className="flex flex-col md:flex-[2] lg:flex-[3] gap-4">
+          <div className="flex items-start gap-4">
+            <img src="./icons/phone.svg" className="w-7 h-7 mt-1 md:mt-2" />
+            <div className="flex flex-col">
+              <p className="text-lg font-medium text-white/90">Telefon</p>
+              <div className="text-white/70 mt-1 space-y-2">
+                {priests.map((p) => (
+                  <div
+                    key={p.phone}
+                    className="flex flex-col md:flex-col lg:flex-row md:justify-start lg:justify-between md:items-start lg:items-center"
+                  >
+                    <span>{p.name}</span>
+                    <a
+                      href={`tel:${p.phone}`}
+                      className="hover:underline text-[#c95d43] mt-1 lg:mt-0 lg:ml-4"
+                    >
+                      {p.phone}
+                    </a>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
 
-        <div className="flex justify-start items-center gap-4">
-          <img src="./icons/map.svg" alt="map pin" className="w-7 h-7 mt-1" />
-          <div>
-            <p className="text-lg font-medium text-white/90">Adresă</p>
-            <p className="text-white/70">
-              Strada Foișorului Nr. 119, București
-            </p>
-            <a
-              href="https://www.google.com/maps/place/Strada+Foișorului+119,+București"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm text-[#c95d43] hover:underline"
-            >
-              Vezi pe Google Maps
-            </a>
+        {/* Adresă */}
+        <div className="flex flex-col md:flex-[1.5] lg:flex-[2] gap-2">
+          <div className="flex items-start gap-4">
+            <img src="./icons/map.svg" className="w-7 h-7 mt-1" />
+            <div>
+              <p className="text-lg font-medium text-white/90">Adresă</p>
+              <p className="text-white/70">
+                Strada Foișorului Nr. 119, București
+              </p>
+              <Link
+                href="https://www.google.com/maps/place/Strada+Foișorului+119,+București"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-[#c95d43] hover:underline"
+              >
+                Vezi pe Google Maps
+              </Link>
+            </div>
           </div>
         </div>
 
-        <div className="flex  justify-start items-center gap-4">
-          <img src="./icons/mail.svg" alt="email" className="w-7 h-7 mt-1" />
-          <div>
-            <p className="text-lg font-medium text-white/90">Email</p>
-            <a
-              href="mailto:contact@biserica.ro"
-              className="text-white/70 hover:underline"
-            >
-              bisericafoisor@gmail.ro
-            </a>
+        {/* Email */}
+        <div className="flex flex-col md:flex-[1] lg:flex-[1] gap-2">
+          <div className="flex items-start gap-4">
+            <img src="./icons/mail.svg" className="w-7 h-7 mt-1" />
+            <div>
+              <p className="text-lg font-medium text-white/90">Email</p>
+              <a
+                href="mailto:contact@biserica.ro"
+                className="text-white/70 hover:underline"
+              >
+                bisericafoisor@gmail.com
+              </a>
+            </div>
           </div>
         </div>
       </div>
 
-      <Logo theme='light'/>
-
-    </div>
-
-  </div>);
+      {/* Bottom Logo */}
+      <div className="flex justify-center py-4">
+        <Logo theme="light" />
+      </div>
+    </footer>
+  );
 };
 
 export default Footer;

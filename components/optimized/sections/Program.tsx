@@ -78,7 +78,7 @@ const Program = () => {
       <div className="z-2 px-4 mb-2 flex flex-col items-center gap-6">
         <div className="w-full max-w-3xl p-4 md:p-6 flex flex-col sm:flex-row md:items-center sm:items-start justify-center gap-4">
        
-          <h1 className="text-5xl md:text-7xl font-bold text-gray text-center sm:text-left sm:flex-1 first-letter:text-6xl  md:first-letter:text-9xl first-letter:text-[#A03E18] text-[#2b220a]">
+          <h1 className="font-bold text-gray text-center sm:text-left sm:flex-1 text-5xl md:text-7xl first-letter:text-7xl  md:first-letter:text-9xl first-letter:text-[#A03E18] text-[#2b220a]">
             Astazi
           </h1>
 

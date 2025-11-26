@@ -32,7 +32,7 @@ const Cards: Card[] = [
     desc: "Dialoguri catehetice și cuvântări cu caracter mistagogic",
     btnTxt: "Asculta aici",
     btnHref: "/Cateheze",
-    imageSrc: "/assets/ciucuri.png",
+    imageSrc: "/assets/pauni.webp",
     variant: "Card2",
   },
   {
@@ -40,7 +40,7 @@ const Cards: Card[] = [
     desc: "Aici poți afla când și dacă te mai poți înscrie pentru Taina Mărturisirii în ziua aleasă de tine",
     btnTxt: "Afla mai multe",
     btnHref: "/Contact",
-    imageSrc: null,
+    imageSrc: "/assets/pelican.webp",
     variant: "Card3",
   },
 ];
@@ -99,7 +99,6 @@ export default function CardSection() {
 
         });
 
-        // Optional subtle parallax on image
         const image = card.querySelector("figure img");
         if (image) {
           gsap.to(image, {
@@ -127,7 +126,7 @@ export default function CardSection() {
           <article
             key={card.title}
             className="c-card relative flex flex-col overflow-hidden 
-             border border-[#202330] rounded-xl bg-white text-[#202330] 
+             border border-[#202330] rounded-xl text-[#202330] bg-[#F2EEE3]
              shadow-2xl shadow-black/40"
           >
             <figure

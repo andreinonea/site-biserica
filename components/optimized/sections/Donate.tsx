@@ -18,14 +18,15 @@ export default function DonatePage({ opacity = 1, x = 0, y = 0 }) {
     Math.min(Math.max(value, 0), 1)
   );
 
-  const scale = useTransform(clampedProgress, [0, 0.5, .8], [1.15, 1.3, 1]);
-  const baseY = useTransform(clampedProgress, [0, 0.65, .7], [-120, 40, 0]);
+  const scale = useTransform(clampedProgress, [0, 0.5, 1], [2, 1.12, 1]);
+  const baseY = useTransform(clampedProgress, [0, 0.5, 1], [220, 40, 0]);
   const imageY = useTransform(baseY, (value) => value + y);
 
-  const titleOpacity = useTransform(clampedProgress, [0.35, 0.55], [0, 1]);
-  const titleY = useTransform(clampedProgress, [0.35, 0.45, 0.55, 0.7], [-100, 50, 50, -50]);
-  const subtitleY = useTransform(clampedProgress, [0.4, 0.5, 0.6, 0.75], [-30, 60, 60, -50]);
-  const subtitleOpacity = useTransform(clampedProgress, [0.3, 0.7], [0, 1]);
+  const titleOpacity = useTransform(clampedProgress, [0.45, 0.65], [0, 1]);
+  const titleY = useTransform(clampedProgress, [0.65, 0.85], [100, -50]);
+  const subtitleOpacity = useTransform(clampedProgress, [0.5, 0.7], [0, 1]);
+  const subtitleY = useTransform(clampedProgress, [0.6, 0.9], [120, -80]);
+
 
   return (
     <section
@@ -52,27 +53,42 @@ export default function DonatePage({ opacity = 1, x = 0, y = 0 }) {
             src="/assets/iesire(1).png"
             priority
             quality={100}
-            className="object-cover object-bottom md:hidden"
+            className="object-cover object-bottom md:hidden z-2"
             alt="background"
           />
+
+          <div className="absolute inset-0 z-0">
+            <Image
+              fill
+              sizes="100vw"
+              src="/assets/stars.jpeg"
+              quality={100}
+              className="object-cover object-bottom "
+              alt="stars background"
+            />
+            <div className="absolute inset-0 bg-black/40" /> {/* Dark overlay */}
+          </div>
+
+
+
 
           <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-4 px-6 text-center text-white">
             <motion.h2
               style={{ opacity: titleOpacity, y: titleY }}
-              className="text-4xl font-semibold tracking-tight drop-shadow-lg"
+              className="text-4xl lg:text-5xl font-semibold tracking-tight drop-shadow-2xl z-3"
             >
-              Support Our Mission
+              Daruind <span className="text-2xl lg:text-4xl byzantin">vei</span> dobandi
             </motion.h2>
+
             <motion.p
               style={{ opacity: subtitleOpacity, y: subtitleY }}
-              className="max-w-[60vw] text-base text-white/80 sm:text-lg text-shadow-black/50 shadow-2xs"
+              className="max-w-[60vw] text-base sm:text-lg text-white/90 z-3 drop-shadow-xl"
             >
-              Discover how your generosity helps us serve the community every day.
+              "Foișorul" Smarandei Doamna, numit și al Mavrocordaților, are atâta nevoie de ajutorul tău, privitorule și omule drag, pentru a renaște din negura vremii și cenușa veacului trecut la mareția-i de odinioară. Dacă ai dare de suflet și dare de mână poți ajuta chiar acum lăsând darul tău <strong> aici </strong>.
             </motion.p>
           </div>
         </motion.div>
       </div>
-
     </section>
   );
 }
