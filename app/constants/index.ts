@@ -3,8 +3,8 @@ export const LINKS = [
     { label: "Program    Liturgic", path: "Program-Liturgic" },
     { label: "Evenimente", path: "Evenimente" },
     { label: "Calendar", path: "Calendar" },
-    { label: "Prezentare    Biserica", path: "About" },
     { label: "Cateheze", path: "Cateheze" },
+    { label: "Prezentare    Biserica", path: "About" },
     { label: "Contact", path: "Contact" },
   ];
 
