@@ -56,7 +56,6 @@ export default function Navbar() {
           />
         </button>
 
-        {/* Logo in header */}
         <div
           className={`inset-x-0 absolute top-0 left-1/2 transition-all duration-300 -translate-x-1/2 h-full select-none ${open ? "" : "pt-2"
             }`}
@@ -113,16 +112,6 @@ export default function Navbar() {
               ))}
             </nav>
 
-            {/* Bottom logo */}
-            <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2">
-              <Image
-                src="/assets/centenar.webp"
-                alt="logo centenar"
-                width={100}
-                height={100}
-                className="opacity-90"
-              />
-            </div>
           </motion.div>
         )}
       </AnimatePresence>

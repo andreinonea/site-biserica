@@ -128,36 +128,40 @@ export default function Programliturgic() {
   };
 
   const renderDezlegariIconsAndText = (found: { fish: boolean; harti: boolean }) => {
-    const icons: { src: string; alt?: string }[] = [];
-    const texts: string[] = [];
+  const icons: { src: string; alt?: string }[] = [];
+  const texts: string[] = [];
 
-    if (found.fish) {
-      icons.push({ src: "/icons/fish.svg", alt: "pește" });
-      icons.push({ src: "/icons/wine.svg", alt: "vin" });
-      icons.push({ src: "/icons/oil.svg", alt: "untdelemn" });
-      texts.push("Dezlegare la pește, vin și untdelemn");
-    }
-    if (found.harti) {
-      icons.push({ src: "/icons/harti.svg", alt: "harți" });
-      texts.push("Harți");
-    }
+  if (found.fish) {
+    icons.push({ src: "/icons/fish.svg", alt: "pește" });
+    icons.push({ src: "/icons/wine.svg", alt: "vin" });
+    icons.push({ src: "/icons/oil.svg", alt: "untdelemn" });
+    texts.push("Dezlegare la pește, vin și untdelemn");
+  }
+  if (found.harti) {
+    icons.push({ src: "/icons/harti.svg", alt: "harți" });
+    texts.push("Harți");
+  }
 
-    if (icons.length === 0 && texts.length === 0) return null;
+  if (icons.length === 0 && texts.length === 0) return null;
 
-    return (
-      <div className="flex items-center gap-3 mt-2">
-        <strong className="text-[#C59D30]/80 italic">Dezlegări:</strong>
-        <div className="flex flex-col sm:flex-row items-start gap-2 text-white/80">
-          <div>{texts.join(", ")}</div>
-          <div className="flex items-center gap-2">
-            {icons.map((ic, idx) => (
-              <Image key={idx} src={ic.src} alt={ic.alt || ""} width={20} height={20} />
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  };
+  return (
+    <p className="mt-2 text-white/80">
+      <strong className="text-[#C59D30]/80 italic mr-1">Dezlegări:</strong>
+      {texts.join(", ")}{" "}
+      {icons.map((ic, idx) => (
+        <Image
+          key={idx}
+          src={ic.src}
+          alt={ic.alt || ""}
+          width={20}
+          height={20}
+          className="inline align-middle ml-1 -mt-1"
+        />
+      ))}
+    </p>
+  );
+};
+
 
   const formatFeastType = (day: LocalDay) => {
 

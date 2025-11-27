@@ -39,7 +39,7 @@ const Cards: Card[] = [
     title: "Organizator spovedanie",
     desc: "Aici poți afla când și dacă te mai poți înscrie pentru Taina Mărturisirii în ziua aleasă de tine",
     btnTxt: "Afla mai multe",
-    btnHref: "/Contact",
+    btnHref: "/Programator",
     imageSrc: "/assets/pelican.webp",
     variant: "Card3",
   },

@@ -12,7 +12,6 @@ const Footer = () => {
 
   return (
     <footer className="bg-[#0b0a24] backdrop-blur-xl bg-gradient-to-b relative z-5">
-      {/* Logo */}
       <div className="flex justify-center py-6">
         <Image
           src="/logo_negru_1.webp"
@@ -23,9 +22,7 @@ const Footer = () => {
         />
       </div>
 
-      {/* Main footer content */}
       <div className="max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row gap-10 lg:gap-32">
-        {/* Telefon */}
         <div className="flex flex-col md:flex-[2] lg:flex-[3] gap-4">
           <div className="flex items-start gap-4">
             <img src="./icons/phone.svg" className="w-7 h-7 mt-1 md:mt-2" />
@@ -51,7 +48,6 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Adresă */}
         <div className="flex flex-col md:flex-[1.5] lg:flex-[2] gap-2">
           <div className="flex items-start gap-4">
             <img src="./icons/map.svg" className="w-7 h-7 mt-1" />
@@ -72,7 +68,6 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Email */}
         <div className="flex flex-col md:flex-[1] lg:flex-[1] gap-2">
           <div className="flex items-start gap-4">
             <img src="./icons/mail.svg" className="w-7 h-7 mt-1" />
@@ -89,7 +84,6 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Bottom Logo */}
       <div className="flex justify-center py-4">
         <Logo theme="light" />
       </div>
