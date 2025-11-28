@@ -165,7 +165,7 @@ export default function CardSection() {
         ))}
       </div>
 
-      <div className="absolute bottom-0  w-full h-15 overflow-hidden z-5">
+      <div className="absolute bottom-0  w-full h-15 overflow-hidden z-1">
         <Image
           src="/patterns/top-bar.png"
           alt="top-bar-pattern"

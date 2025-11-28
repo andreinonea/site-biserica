@@ -27,8 +27,8 @@ const Footer = () => {
           <div className="flex items-start gap-4">
             <img src="./icons/phone.svg" className="w-7 h-7 mt-1 md:mt-2" />
             <div className="flex flex-col">
-              <p className="text-lg font-medium text-white/90">Telefon</p>
-              <div className="text-white/70 mt-1 space-y-2">
+              <p className="text-xl font-medium text-white/90">Telefon</p>
+              <div className="text-white/70 mt-2 space-y-2">
                 {priests.map((p) => (
                   <div
                     key={p.phone}
@@ -37,7 +37,7 @@ const Footer = () => {
                     <span>{p.name}</span>
                     <a
                       href={`tel:${p.phone}`}
-                      className="hover:underline text-[#c95d43] mt-1 lg:mt-0 lg:ml-4"
+                      className="hover:underline text-[#c95d43]  lg:mt-0 lg:ml-4"
                     >
                       {p.phone}
                     </a>
@@ -52,8 +52,8 @@ const Footer = () => {
           <div className="flex items-start gap-4">
             <img src="./icons/map.svg" className="w-7 h-7 mt-1" />
             <div>
-              <p className="text-lg font-medium text-white/90">Adresă</p>
-              <p className="text-white/70">
+              <p className="text-xl font-medium text-white/90">Adresă</p>
+              <p className="text-white/70 ">
                 Strada Foișorului Nr. 119, București
               </p>
               <Link
@@ -69,13 +69,13 @@ const Footer = () => {
         </div>
 
         <div className="flex flex-col md:flex-[1] lg:flex-[1] gap-2">
-          <div className="flex items-start gap-4">
+          <div className="flex items-start gap-5 mr-2">
             <img src="./icons/mail.svg" className="w-7 h-7 mt-1" />
             <div>
-              <p className="text-lg font-medium text-white/90">Email</p>
+              <p className="text-xl font-medium text-white/90">Email</p>
               <a
                 href="mailto:contact@biserica.ro"
-                className="text-white/70 hover:underline"
+                className="text-[#c95d43] hover:underline"
               >
                 bisericafoisor@gmail.com
               </a>

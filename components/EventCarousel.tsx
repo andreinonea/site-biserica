@@ -99,7 +99,7 @@ export default function SimpleCarousel({ slides }: { slides: Slide[] }) {
   return (
     <div className="relative group">
       <div className="flex items-center justify-center gap-4">
-        {/* Left arrow (carousel) */}
+        {/* Left arrow */}
         <button
           onClick={prev}
           className={`text-[#C59D30] text-2xl hover:text-yellow-400 rounded-full p-2 z-10 opacity-70 group-hover:opacity-100 transition cursor-pointer ${current === 0 ? "invisible" : "visible"
@@ -191,7 +191,7 @@ export default function SimpleCarousel({ slides }: { slides: Slide[] }) {
           </motion.div>
         </div>
 
-        {/* Right arrow (carousel) */}
+        {/* Right arrow */}
         <button
           onClick={next}
           className={`text-[#C59D30] text-2xl hover:text-yellow-400 rounded-full p-2 z-10 opacity-70 group-hover:opacity-100 transition cursor-pointer ${current === slides.length - 1 ? "invisible" : "visible"
@@ -221,7 +221,6 @@ export default function SimpleCarousel({ slides }: { slides: Slide[] }) {
         ))}
       </div>
 
-      {/* Lightbox Modal with polished effects */}
       <AnimatePresence>
         {lightboxOpen && (
           <motion.div
