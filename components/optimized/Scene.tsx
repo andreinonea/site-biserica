@@ -311,7 +311,7 @@ export default function Scene() {
       const cloudOffsetRangeMobile = scaleRange(0.05, CLOUD_OFFSET_END_MOBILE);
       const cloudOffsetRangeDesktop = scaleRange(0.05, CLOUD_OFFSET_END_DESKTOP);
 
-      const [saintRangeStart, saintRangeEnd] = scaleRange(0, 1.1);
+      const [saintRangeStart, saintRangeEnd] = scaleRange(0, 1.4);
 
       const [principalScaleStart, principalScaleEnd] = scaleRange(0, 0.4);
       const [principalYStart, principalYEnd] = scaleRange(0.2, 1);
@@ -633,8 +633,8 @@ export default function Scene() {
 
             <div
               data-scene="saint"
-              className="absolute left-1/2 -top-1/4 -translate-x-1/2 translate-y-1/2 z-20"
-              style={{ willChange: "transform, opacity" }}
+              className="absolute left-1/2  -translate-x-1/2 translate-y-1/2 z-120"
+              style={{ willChange: "transform, opacity" , top : fixedViewportHeight / viewportWidthRef.current < 16/9*1.1 ? -540 : -200}}
             >
               <div className="relative aspect-[3/4] w-[70vw] max-w-[320px] sm:w-[50vw] md:w-[30vw]">
                 <Image
@@ -696,23 +696,23 @@ export default function Scene() {
             </div>
             <div
               data-scene="quote-wrapper"
-              className="pointer-events-none absolute inset-x-4 top-[42%] z-10 flex justify-center px-2 md:top-[40%]"
+              className="pointer-events-none absolute inset-x-4 top-[42%] z-[100] flex justify-center px-2 md:top-[40%]"
               style={{ willChange: "transform, opacity" }}
             >
-              <div className="pointer-events-auto mx-auto max-w-3xl select-text px-4 text-center text-white/90 sm:max-w-2xl md:max-w-4xl md:px-6">
-                <p className="text-xl font-medium leading-snug sm:text-2xl md:text-3xl lg:text-4xl">
+              <div className=" pointer-events-auto mx-auto max-w-3xl select-text px-4 text-center text-white/90 sm:max-w-2xl md:max-w-4xl md:px-6"> 
+                <p className="text-shadow-black/30 text-shadow-lg text-xl font-medium leading-snug sm:text-2xl md:text-3xl lg:text-4xl">
                   <span className="pr-2 text-[#c95d43]/90">„</span>
                   {quote.text}
                   <span className="pl-2 text-[#c95d43]/90">”</span>
                 </p>
                 {quote.author ? (
-                  <p className="mt-4 text-sm uppercase tracking-wide text-[#c95d43]/80 md:text-base">
+                  <p className="text-shadow-black/10 text-shadow-lg mt-4 text-sm uppercase tracking-wide text-[#c95d43]/80 md:text-base">
                     - {quote.author}
                   </p>
                 ) : null}
                 <div
                   data-scene="quote-hint"
-                  className="mt-20 flex items-center justify-center gap-2 text-xs text-white/60 md:text-sm"
+                  className="text-shadow-black/20 text-shadow-lg mt-20 flex items-center justify-center gap-2 text-xs text-white/60 md:text-sm"
                 >
                     <span className="text-[17px]">Glisează în jos</span>
                   <Image

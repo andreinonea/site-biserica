@@ -122,15 +122,15 @@ export default function CardSection() {
   return (
     <section ref={rootRef} className="relative text-white mt-40 overflow-hidden">
       <div className="l-cards mx-auto flex max-w-[1200px] flex-col gap-6 px-6 pb-42">
-        {Cards.map((card) => (
+        {Cards.map((card, idx) => (
           <article
             key={card.title}
             className="c-card relative flex flex-col overflow-hidden 
              border border-[#202330] rounded-xl text-[#202330] bg-[#F2EEE3]
-             shadow-2xl shadow-black/40"
+             shadow-2xl shadow-black/40 w-full md:w-3/4! md:mx-auto!"
           >
             <figure
-              className={`c-card__figure w-full relative ${variantClasses[card.variant]}`}
+              className={`c-card__figure relative ${variantClasses[card.variant]}`}
             >
               {card.imageSrc && (
                 <Image
@@ -138,6 +138,7 @@ export default function CardSection() {
                   alt=""
                   fill
                   sizes="100vw"
+                  // className = {idx == 1 ? "object-fit max-w-150 mx-auto object-top" : ""}
                 />
               )}
             </figure>
