@@ -4,8 +4,9 @@ on:
     branches:
       - main
 jobs:
-  check:
+  build:
     runs-on:
       labels: [self-hosted, foisor]
     steps:
       - uses: actions/checkout@v6
+      - run: echo $(pwd)
