@@ -1,0 +1,11 @@
+name: Production
+on: 
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    runs-on:
+      labels: [self-hosted, foisor]
+    steps:
+      - run: echo "caca"
