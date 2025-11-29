@@ -87,6 +87,12 @@ const Footer = () => {
       <div className="flex justify-center py-4">
         <Logo theme="light" />
       </div>
+      <div className="flex justify-center py-4 text-white/80 select-none">
+        <p className="text-sm sm:text-base md:text-lg">
+          &copy; 2025 Biserica Foișor. Toate drepturile rezervate.
+        </p>
+      </div>
+
     </footer>
   );
 };

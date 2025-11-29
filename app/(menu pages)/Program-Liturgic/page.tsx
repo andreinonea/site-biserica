@@ -43,33 +43,23 @@ export default function Page() {
         transition={{ duration: 0.6, ease: "easeInOut" }}
         className="relative min-h-screen w-full px-6 py-12 text-white overflow-hidden"
       >
-        <div className="absolute  mask-b-from-0 inset-0 isolate w-full  opacity-30 z-6">
+        <div className="absolute  mask-b-from-0 inset-0  w-full  opacity-50 md:opacity-80 ">
           <div className="relative w-full h-full">
-            <Image
-              fill
-              priority
-              alt="background-desktop"
-              src={"/background/concrete_wall_003_rough_8k.webp"}
-              className="hidden sm:block z-4 absolute object-cover object-center mix-blend-multiply"
-            />
-
-            <Image
-              fill
-              priority
-              alt="background-mobile"
-              src={"/background/concrete_wall_003_rough_8k phone.webp"}
-              className="block sm:hidden z-4 absolute object-cover object-left mix-blend-multiply"
-            />
-            <Image
-              className="z-2 blur-md bg-black-500 object-cover"
-              src={"/assets/fundal-program_phone.webp"}
+        
+          <Image
+              className="z-2 object-cover md:hidden "
+              src={"/assets/fundal-phone.png"}
               alt="program-background"
               fill
             />
-            <div className="absolute inset-0 z-5 bg-gradient-to-b 
-                       from-[#FFDB99]/80 via-[#D49649]/50 to-[#5E2308]/90 
-                       mix-blend-overlay" />
-          </div>
+
+          <Image
+              className="z-2 object-cover hidden md:block opacity-40 "
+              src={"/assets/fundal2.png"}
+              alt="program-background"
+              fill
+            />
+          </div> 
         </div>
 
 

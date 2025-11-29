@@ -609,9 +609,9 @@ export default function Scene() {
               className="absolute left-1/2  -translate-x-1/2 translate-y-1/2 z-120"
               style={{ willChange: "transform, opacity", top: fixedViewportHeight / viewportWidthRef.current < 16 / 9 * 1.1 ? -540 : -200 }}
             >
-              <div className="relative aspect-[3/4] w-[70vw] max-w-[320px] sm:w-[50vw] md:w-[30vw] md:scale-200 lg:scale-160">
+              <div className="relative aspect-[3/4] w-[70vw] max-w-[320px] sm:w-[50vw] md:w-[30vw] scale-120 md:scale-200 lg:scale-160">
                 <Image
-                  src="/assets/SfTrifon.webp"
+                  src="/assets/SfTrifon.webp" 
                   alt="Sfantul Trifon"
                   fill
                   className="object-contain"

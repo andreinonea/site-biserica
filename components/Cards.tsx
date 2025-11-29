@@ -126,7 +126,7 @@ export default function CardSection() {
           <article
             key={card.title}
             className="c-card relative flex flex-col overflow-hidden 
-             border border-[#202330] rounded-xl text-[#202330] bg-[#F2EEE3]
+             border border-[#202330] rounded-xl text-[#202330] bg-[#E1D4B7]
              shadow-2xl shadow-black/40 w-full md:w-3/4! md:mx-auto!"
           >
             <figure

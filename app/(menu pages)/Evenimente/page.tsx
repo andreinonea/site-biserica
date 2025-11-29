@@ -63,39 +63,28 @@ const EvenimentePage = () => {
         transition={{ duration: 0.6, ease: "easeInOut" }}
         className="min-h-screen w-full px-6 py-12 overflow-hidden"
       >
-        <div className="absolute  mask-b-from-0 inset-0 isolate w-full  opacity-30 z-6">
+        <div className="absolute  mask-b-from-0 inset-0  w-full  opacity-50 md:opacity-100 ">
           <div className="relative w-full h-full">
-            <Image
-              fill
-              priority
-              alt="background-desktop"
-              src={"/background/concrete_wall_003_rough_8k.webp"}
-              className="hidden sm:block z-4 absolute object-cover object-center mix-blend-multiply"
-            />
 
             <Image
-              fill
-              priority
-              alt="background-mobile"
-              src={"/background/concrete_wall_003_rough_8k phone.webp"}
-              className="block sm:hidden z-4 absolute object-cover object-left mix-blend-multiply"
-            />
-            <Image
-              className="z-2 blur-md bg-black-500 object-cover"
-              src={"/assets/fundal-program_phone.webp"}
+              className="z-2 object-cover md:hidden "
+              src={"/assets/fundal-phone.png"}
               alt="program-background"
               fill
             />
-            <div className="absolute inset-0 z-5 bg-gradient-to-b 
-                from-[#FFDB99]/80 via-[#D49649]/50 to-[#5E2308]/90 
-                mix-blend-overlay" />
+
+            <Image
+              className="z-2 object-cover hidden md:block opacity-40 "
+              src={"/assets/fundal.png"}
+              alt="program-background"
+              fill
+            />
           </div>
         </div>
-
         <div className="relative z-8 max-w-4xl mx-auto">
           {/* Upcoming Events */}
           <section className="mb-20 mt-25">
-            <h1 className="text-3xl md:text-4xl font-semibold text-[#C59D30] mb-8 text-center">
+            <h1 className="text-3xl md:text-4xl font-semibold text-[#CFA73A] mb-8 text-center">
               Evenimente viitoare
             </h1>
             {upcoming.length === 0 ? (
@@ -132,7 +121,7 @@ const EvenimentePage = () => {
           <section>
             <div className="border-b border-[#C59D30]/30 pb-4 mb-20" />
 
-            <h1 className="text-3xl md:text-4xl font-semibold text-[#C59D30] mb-20 text-center">
+            <h1 className="text-3xl md:text-4xl font-semibold text-[#CFA73A] mb-20 text-center">
               Evenimente trecute
             </h1>
 

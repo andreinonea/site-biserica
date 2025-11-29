@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Logo from "@/components/optimized/components/Logo";
+import Background from "@/components/optimized/Background";
 
 type LocalDay = {
   zi: number;
@@ -128,39 +129,39 @@ export default function Programliturgic() {
   };
 
   const renderDezlegariIconsAndText = (found: { fish: boolean; harti: boolean }) => {
-  const icons: { src: string; alt?: string }[] = [];
-  const texts: string[] = [];
+    const icons: { src: string; alt?: string }[] = [];
+    const texts: string[] = [];
 
-  if (found.fish) {
-    icons.push({ src: "/icons/fish.svg", alt: "pește" });
-    icons.push({ src: "/icons/wine.svg", alt: "vin" });
-    icons.push({ src: "/icons/oil.svg", alt: "untdelemn" });
-    texts.push("Dezlegare la pește, vin și untdelemn");
-  }
-  if (found.harti) {
-    icons.push({ src: "/icons/harti.svg", alt: "harți" });
-    texts.push("Harți");
-  }
+    if (found.fish) {
+      icons.push({ src: "/icons/fish.svg", alt: "pește" });
+      icons.push({ src: "/icons/wine.svg", alt: "vin" });
+      icons.push({ src: "/icons/oil.svg", alt: "untdelemn" });
+      texts.push("Dezlegare la pește, vin și untdelemn");
+    }
+    if (found.harti) {
+      icons.push({ src: "/icons/harti.svg", alt: "harți" });
+      texts.push("Harți");
+    }
 
-  if (icons.length === 0 && texts.length === 0) return null;
+    if (icons.length === 0 && texts.length === 0) return null;
 
-  return (
-    <p className="mt-2 text-white/80">
-      <strong className="text-[#C59D30]/80 italic mr-1">Dezlegări:</strong>
-      {texts.join(", ")}{" "}
-      {icons.map((ic, idx) => (
-        <Image
-          key={idx}
-          src={ic.src}
-          alt={ic.alt || ""}
-          width={20}
-          height={20}
-          className="inline align-middle ml-1 -mt-1"
-        />
-      ))}
-    </p>
-  );
-};
+    return (
+      <p className="mt-2 text-white/80">
+        <strong className="text-[#C59D30]/80 italic mr-1">Dezlegări:</strong>
+        {texts.join(", ")}{" "}
+        {icons.map((ic, idx) => (
+          <Image
+            key={idx}
+            src={ic.src}
+            alt={ic.alt || ""}
+            width={20}
+            height={20}
+            className="inline align-middle ml-1 -mt-1"
+          />
+        ))}
+      </p>
+    );
+  };
 
 
   const formatFeastType = (day: LocalDay) => {
@@ -202,33 +203,28 @@ export default function Programliturgic() {
       exit={{ scale: 0.975, borderRadius: "30px", opacity: 0 }}
       transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
       className="relative min-h-screen bg-[#0A0004] text-white overflow-hidden"
-    >
-      <div className="absolute  mask-b-from-0 inset-0 isolate w-full  opacity-30">
-        <div className="relative w-full h-full">
-          <Image
-            fill
-            priority
-            alt="background-desktop"
-            src={"/background/concrete_wall_003_rough_8k.webp"}
-            className="hidden sm:block z-4 absolute object-cover object-top mix-blend-multiply"
-          />
 
-          <Image
-            fill
-            priority
-            alt="background-mobile"
-            src={"/background/concrete_wall_003_rough_8k phone.webp"}
-            className="block sm:hidden z-4 absolute object-cover object-cover mix-blend-multiply"
-          />
-          <Image
-            className="z-2 blur-md bg-black-500 object-cover"
-            src={"/assets/fundal-program_phone.webp"}
+    >
+      <div className="absolute mask-b-from-0 inset-0 w-full 
+        bg-[radial-gradient(circle_at_60%_20%,#ffd9a3_0%,#d79b5a_45%,#3a1a0f_100%)] 
+        opacity-25 md:opacity-40">
+        <div className="relative w-full h-full">
+
+          <Background />
+
+          {/* <Image
+            className="z-2 object-cover md:hidden "
+            src={"/assets/fundal-phone.png"}
             alt="program-background"
             fill
           />
-          <div className="absolute inset-0 z-5 bg-gradient-to-b 
-                from-[#FFDB99]/80 via-[#D49649]/50 to-[#5E2308]/90 
-                mix-blend-overlay" />
+
+          <Image
+            className="z-2 object-cover hidden md:block opacity-40 "
+            src={"/assets/fundal2.png"}
+            alt="program-background"
+            fill
+          /> */}
         </div>
       </div>
 
@@ -298,6 +294,6 @@ export default function Programliturgic() {
       </div>
 
       <Logo theme="light" />
-    </motion.div>
+    </motion.div >
   );
 }

@@ -1,32 +1,26 @@
 [
  
   {
-    "id": 3,
-    "title": "Test",
-    "description": "Test",
-    "audioUrl": "/audio/piano.mp3"
-  },
-   {
-    "id": 4,
-    "title": "Test 2",
-    "description": "Sunet diferit",
-    "audioUrl": "/audio/sunet.mp3"
-  },
-   {
-    "id": 5,
-    "title": "Test 3",
-    "description": "Inca un sunet diferit",
-    "audioUrl": "/audio/sunet2.mp3"
-  },  {
     "id": 1,
-    "title": "Cateheza I – Introducere",
-    "description": "Despre începuturile vieții duhovnicești.",
-    "audioUrl": "/audio/cateheza-1.mp3"
+    "title": "Duminica Inaltarii Sfintei Cruci",
+    "description": "",
+    "audioUrl": "/audio/Duminica Înălțării Sfintei Cruci.m4a"
   },
-  {
+   {
     "id": 2,
-    "title": "Cateheza II – Rugaciunea",
-    "description": "Importanța rugăciunii personale.",
-    "audioUrl": "/audio/cateheza-2.mp3"
+    "title": "Duminica vindecarii demonizatilor",
+    "description": "",
+    "audioUrl": "/audio/Duminica vindecării demonizaților.m4a"
+  },
+   {
+    "id": 3,
+    "title": "Duminica dupa Inaltarea Sfintei Cruci",
+    "description": "",
+    "audioUrl": "/audio/Duminca după Înălțarea Sfintei Cruci.m4a"
+  },  {
+    "id": 4,
+    "title": "Duminica Inaltarii Sfintei Cruci",
+    "description": "",
+    "audioUrl": "/audio/Duminica Înălțării Sfintei Cruci.m4a"
   }
 ]

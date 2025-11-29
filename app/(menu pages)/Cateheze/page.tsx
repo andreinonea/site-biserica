@@ -169,9 +169,14 @@ const CatehezaCard: React.FC<CatehezaCardProps> = ({
             type="button"
             onClick={togglePlayback}
             aria-label={`${isPlaying ? "Pauza" : "Play"} ${item.title}`}
-            className={`flex h-15 w-15 items-center justify-center rounded-full border border-white/13 bg-black/30 transition hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${isPlaying ? "border-amber-400 bg-amber-400/20" : ""
-              }`}
+            className={`flex items-center justify-center rounded-full 
+              h-[60px] w-[60px] min-w-[60px] min-h-[60px]
+              border border-white/20 bg-black/30 
+              transition hover:scale-105
+              focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400
+              ${isPlaying ? "border-amber-400 bg-amber-400/20" : ""}`}
           >
+
             {isPlaying ? (
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-amber-300" viewBox="0 0 24 24" fill="currentColor">
                 <rect x="6" y="5" width="4" height="14" rx="1" />
@@ -243,33 +248,22 @@ const CatehezePage: React.FC = () => {
         transition={{ duration: 0.6, ease: "easeInOut" }}
         className="min-h-screen w-screen px-6 py-12 text-white relative"
       >
-        <div className="absolute  mask-b-from-0 inset-0 isolate w-full  opacity-30 z-6 pointer-events-none">
+        <div className="absolute  mask-b-from-0 inset-0  w-full   opacity-50 md:opacity-100 ">
           <div className="relative w-full h-full">
-            <Image
-              fill
-              priority
-              alt="background-desktop"
-              src={"/background/concrete_wall_003_rough_8k.webp"}
-              className="hidden sm:block z-4 absolute object-cover object-center mix-blend-multiply"
-            />
 
             <Image
-              fill
-              priority
-              alt="background-mobile"
-              src={"/background/concrete_wall_003_rough_8k phone.webp"}
-              className="block sm:hidden z-4 absolute object-cover object-left mix-blend-multiply"
-            />
-            <Image
-              className="z-2 blur-md bg-black-500 object-cover"
-              src={"/assets/fundal-program_phone.webp"}
+              className="z-2 object-cover md:hidden "
+              src={"/assets/fundal-phone.png"}
               alt="program-background"
               fill
             />
-            <div className="absolute inset-0 z-5 bg-gradient-to-b 
-                        from-[#FFDB99]/80 via-[#D49649]/50 to-[#5E2308]/90 
-                        mix-blend-overlay" />
 
+            <Image
+              className="z-2 object-cover hidden md:block opacity-40 "
+              src={"/assets/fundal.png"}
+              alt="program-background"
+              fill
+            />
           </div>
         </div>
         <h1 className="text-4xl font-bold flex justify-center text-white mt-[80px] mb-12">

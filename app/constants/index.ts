@@ -4,7 +4,7 @@ export const LINKS = [
     { label: "Evenimente", path: "Evenimente" },
     { label: "Calendar", path: "Calendar" },
     { label: "Cateheze", path: "Cateheze" },
-    { label: "Prezentare    Biserica", path: "About" },
+    { label: "Istoric", path: "About" },
     { label: "Contact", path: "Contact" },
   ];
 

@@ -6,24 +6,21 @@ import Logo from "@/components/optimized/components/Logo";
 
 const aboutSections = [
   {
-    title: "Lorem ipsum dolor",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec placerat eros nec odio volutpat, ac pretium metus lacinia.",
-    image: "/assets/imagine-biserica.png",
+      "Alt hrisov al domnitorului afirmă că „biserica de la acel loc, ce se numește Foișor, este zidită de Doamna Smaranda cu hramul Nașterii Maicii Domnului”. Biserica este ridicată în imediata apropiere a casei domnești în anul 1745.",
+    image: "/assets/imagine1.jpg",
     imageAlt: "Interiorul bisericii"
   },
   {
-    title: "Lorem ipsum dolor sit",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo massa vel nisl tincidunt, in vehicula dui elementum.",
-    image: "/assets/Sfinti.jpg",
+      "În același an, biserica este închinată de Constantin Mavrocordat, fiul lui Nicolae, ca metoc al mănăstirii Radu Vodă, proprietara pământurilor pe care au fost ridicate micul palat de vară și biserica Smarandei.",
+    image: "/assets/imagine2.jpg",
     imageAlt: "Detaliu cu sfinti pictati pe pereti"
   },
   {
-    title: "Lorem ipsum dolor amet",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non nibh turpis. Pellentesque posuere ante non justo molestie fermentum.",
-    image: "/principal.png",
+      "Constantin Mavrocordat confirmă în anul sfințirii bisericii autoritatea și proprietatea mănăstirii Radu Vodă atât asupra bisericii Foișor, cât și asupra „caselor de piatră”, dar și a „satului”, aflate toate pe moșia mănăstirii, din sudul Bucureștiului.",
+    image: "/assets/imagine3.jpg",
     imageAlt: "Credinciosi reuniti in biserica"
   }
 ];
@@ -155,13 +152,11 @@ const AboutPage = () => {
       >
         <div className="mx-auto  md:px-[15vw] px-2 space-y-24">
           <header className="max-w-3xl px-10 py-20">
-            <p className="text-sm uppercase tracking-[0.4em] text-[#d6c298]">Despre noi</p>
             <h1 className="mt-4 text-4xl font-semibold uppercase md:text-5xl">
-              Lorem ipsum dolor
+              Istoricul bisericii
             </h1>
             <p className="mt-6 text-lg leading-relaxed text-[#473712]">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer eu massa sed dolor maximus volutpat non nec velit. Integer ac ligula id lacus tempor finibus.
-            </p>
+              În arhiva mănăstirii Radu Vodă se află un hrisov al lui Nicolae Vodă Mavrocordat de la 2 mai 1724, arătând că: „pe moșia mănăstirii, din jos de București, pentru plimbarea măriei sale și a altor Domni, a făcut o pereche de case domnești, cu curte împrejur și cu grădină”.</p>
           </header>
 
           <div className="space-y-20">
@@ -170,7 +165,6 @@ const AboutPage = () => {
 
               return (
                 <div
-                  key={section.title}
                   className="grid gap-10 grid-cols-2 md:items-center md:gap-16"
                 >
                   <div className={imageFirst ? "order-1 md:order-1 self-center" : "order-2 md:order-2 self-center"}>
@@ -188,9 +182,6 @@ const AboutPage = () => {
                         : "order-1 md:order-1 md:pr-12"
                     }
                   >
-                    <h2 className="text-2xl font-semibold text-[#2b220a]">
-                      {section.title}
-                    </h2>
                     <p className="mt-4 text-base leading-relaxed text-[#463712]">
                       {section.description}
                     </p>
@@ -199,6 +190,7 @@ const AboutPage = () => {
               );
             })}
           </div>
+            <p className="text-lg">Între anii 1888–1900 se realizează lucrări de reparații majore, iar în 1915 este învelit din nou acoperișul bisericii.</p>
         </div>
         <div className="flex justify-center mt-20">
           <button
