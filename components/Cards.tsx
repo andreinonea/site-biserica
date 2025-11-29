@@ -22,7 +22,7 @@ const Cards: Card[] = [
   {
     title: "Scurta monografie",
     desc: "Prezentare succintă a Bisericii Foișorul Mavrocordaților",
-    btnTxt: "Citeste mai multe",
+    btnTxt: "Citește mai multe",
     btnHref: "/About",
     imageSrc: "/assets/imgpictura.png",
     variant: "Card1",
@@ -30,15 +30,15 @@ const Cards: Card[] = [
   {
     title: "Cateheze",
     desc: "Dialoguri catehetice și cuvântări cu caracter mistagogic",
-    btnTxt: "Asculta aici",
+    btnTxt: "Ascultă aici",
     btnHref: "/Cateheze",
-    imageSrc: "/assets/pauni.webp",
+    imageSrc: "/assets/imaginecard2.jpg",
     variant: "Card2",
   },
   {
     title: "Organizator spovedanie",
     desc: "Aici poți afla când și dacă te mai poți înscrie pentru Taina Mărturisirii în ziua aleasă de tine",
-    btnTxt: "Afla mai multe",
+    btnTxt: "Află mai multe",
     btnHref: "/Programator",
     imageSrc: "/assets/pelican.webp",
     variant: "Card3",
@@ -68,7 +68,7 @@ export default function CardSection() {
 
 
 
-      // 🔹 Pin, scale and fade logic
+      //  Pin, scale and fade logic
       cards.forEach((card, index) => {
         const isLast = index === lastCardIndex;
 
@@ -138,30 +138,33 @@ export default function CardSection() {
                   alt=""
                   fill
                   sizes="100vw"
-                  // className = {idx == 1 ? "object-fit max-w-150 mx-auto object-top" : ""}
+                // className = {idx == 1 ? "object-fit max-w-150 mx-auto object-top" : ""}
                 />
               )}
             </figure>
 
-            <div className="c-card__description flex flex-col justify-center gap-6 p-10 sm:p-12 lg:p-16">
+            <div className="c-card__description flex flex-col justify-center gap-6 p-10 sm:p-12 lg:p-16 text-left">
               <h2 className="c-card__title text-3xl font-semibold text-[#202330] md:text-[40px]">
                 {card.title}
               </h2>
+
               <p className="c-card__excerpt text-base leading-relaxed text-[#202330]/80 md:text-lg">
                 {card.desc}
               </p>
-              <div className="c-card__cta mt-4 flex items-center gap-4">
+
+              <div className="c-card__cta mt-4 flex items-center w-full justify-center">
                 <Link
                   href={card.btnHref}
                   className="inline-flex items-center justify-center rounded-full 
-                   border border-[#202330] px-5 py-3 text-sm text-nowrap 
-                   font-semibold uppercase tracking-[0.2em] text-[#202330] 
-                   transition-colors duration-200 hover:bg-[#202330] hover:text-white"
+       border border-[#202330] px-5 py-3 text-sm text-nowrap 
+       font-semibold uppercase tracking-[0.2em] text-[#202330] 
+       transition-colors duration-200 hover:bg-[#202330] hover:text-white"
                 >
                   {card.btnTxt}
                 </Link>
               </div>
             </div>
+
           </article>
         ))}
       </div>

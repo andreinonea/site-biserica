@@ -4,6 +4,7 @@ import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import useFixedViewportHeight from "@/components/hooks/useFixedViewport";
+import useIsMobile from "@/components/hooks/useMobile";
 import IconFrame from "../components/FrameButton";
 
 export default function DonatePage({ opacity = 1, x = 0, y = 0 }) {
@@ -31,37 +32,75 @@ export default function DonatePage({ opacity = 1, x = 0, y = 0 }) {
 
   // Popup state
   const [showPopup, setShowPopup] = useState(false);
+  const popOutElement = useRef<HTMLDivElement>(null);
+
+  useEffect(()=>{
+    const click_event = (ev: MouseEvent)=>{
+      const el = popOutElement.current;
+      if(!el) return;
+      
+      const {x, y} = {x : ev.clientX, y : ev.clientY};
+      const { left, right, top, bottom } = el.getBoundingClientRect();
+
+      if (!(x > left && x < right && y > top && y < bottom)){
+        setShowPopup(false);
+      }
+    }
+
+    window.addEventListener('mousedown', click_event);
+    return ()=>{
+      window.removeEventListener('mousedown', click_event);
+    }
+  }, []);
 
   // Disable page scroll when popup is open
   useEffect(() => {
-  const html = document.documentElement;
-  const body = document.body;
 
-  if (showPopup) {
-    html.style.overflow = "hidden";
-    body.style.overflow = "hidden";
-  } else {
-    html.style.overflow = "";
-    body.style.overflow = "";
-  }
+    const html = document.documentElement;
+    const body = document.body;
 
-  return () => {
-    html.style.overflow = "";
-    body.style.overflow = "";
-  };
+    if (showPopup) {
+      html.style.overflow = "hidden";
+      body.style.overflow = "hidden";
+    } else {
+      html.style.overflow = "";
+      body.style.overflow = "";
+    }
+
+    return () => {
+      html.style.overflow = "";
+      body.style.overflow = "";
+
+    };
 }, [showPopup]);
+
+
+  const isMobile = useIsMobile(700);
 
   return (
     <section
       ref={sectionRef}
-      className="relative z-2 w-screen text-lg text-black"
-    >
+      className="relative z-2 w-screen text-lg text-black bg-[#171813] mask-top-fade"
+  
+      >
       <div
         className="sticky top-0 h-screen w-screen overflow-hidden bg-black"
-        style={{ height: pinnedHeight }}
+        style={
+          !isMobile ? { height: pinnedHeight ,
+          WebkitMaskImage:
+            "linear-gradient(to top, black 0%, black calc(100% - 200px), transparent 100%)",
+          maskImage:
+            "linear-gradient(to top, black 0%, black calc(100% - 200px), transparent 100%)",
+          WebkitMaskSize: "100% 100%",
+          maskSize: "100% 100%",
+
+        } : {
+          height: pinnedHeight
+        }}
+
       >
 
-      <div className="absolute top-0 md:block hidden w-full h-15 overflow-hidden z-1">
+      {/* <div className="absolute top-0 md:block hidden w-full h-15 overflow-hidden z-1">
         <Image
           src="/patterns/top-bar.png"
           alt="top-bar-pattern"
@@ -69,10 +108,10 @@ export default function DonatePage({ opacity = 1, x = 0, y = 0 }) {
           className="object-cover object-center"
         />
         <div className="absolute inset-0 bg-black/10 z-2  " />
-      </div>
+      </div> */}
 
         <motion.div
-          className="relative h-full w-full object-top left-1/2 top-1/2 -translate-1/2"
+          className="relative h-full  w-full object-top left-1/2 top-1/2 -translate-1/2"
           style={{
             scale,
             opacity,
@@ -84,7 +123,7 @@ export default function DonatePage({ opacity = 1, x = 0, y = 0 }) {
           <Image
             fill
             sizes="100vw"
-            src="/assets/iesire-wide.png"
+            src="/assets/iesire(1).png"
             priority
             quality={100}
             className="object-cover object-bottom md:hidden z-2"
@@ -104,47 +143,50 @@ export default function DonatePage({ opacity = 1, x = 0, y = 0 }) {
 
           </div>
             
-          <div className="absolute inset-0 z-0 md:hidden md:scale-250 scale-180 left-1/2 top-1/2 -translate-1/2">
+          <div className="absolute inset-0 z-0 md:hidden md:scale-250 scale-180 left-1/2 top-2/3 -translate-1/2">
             <Image
               fill
               sizes="100vw"
-              src="/assets/poza-wide.png"
+              src="/assets/poza-wide-md.png"
               quality={100}
               className="object-cover object-bottom"
               alt="stars background"
             />
-            <div className="absolute inset-0 bg-black/30 z-2  md:hidden " />
+            <div className="absolute inset-0 bg-black/50 z-2  md:hidden " />
           </div>
 
-          <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-4 px-6 text-center text-white">
+          <div className="absolute  inset-0 flex flex-col items-center justify-center gap-4 px-6 text-center text-white">
             <motion.h2
               style={{ opacity: titleOpacity, y: titleY }}
-              className="text-2xl lg:text-5xl font-semibold tracking-tight drop-shadow-2xl z-3"
+              className="text-2xl lg:text-5xl font-semibold tracking-tight drop-shadow-2xl z-3 text-shadow-black/20 text-shadow-xs bg-gradient-to-b from-yellow-600 to-orange-50 bg-clip-text text-transparent "
             >
               Daruind <span className="text-2xl lg:text-4xl byzantin">vei</span> dobandi
             </motion.h2>
 
-            <div className=" flex flex-col items-center z-15 cursor-pointer">
+            <div className=" flex flex-col items-center z-15">
               <motion.p
                 style={{ opacity: subtitleOpacity, y: subtitleY }}
-                className="max-w-[60vw] text-base sm:text-lg text-white/90 z-13 text-shadow-xs shadow-black/50"
+                className="max-w-[60vw] text-base sm:text-lg text-white/90 z-13 "
               >
-                <p className="mb-8">
+                <p className="mb-8 text-shadow-xs text-shadow-black">
                 "Foișorul" Smarandei Doamna, numit și al Mavrocordaților, are atâta nevoie
                 de ajutorul tău, privitorule și omule drag, pentru a renaște din negura
                   </p>
-              <IconFrame
-                bgColor="bg-[#786543]"
-                textColor="text-[#ddd] max-w-70 mx-auto"
-                >
-                <button
-                 onClick={() => setShowPopup(true)}
-                 className=" underline underline-offset-4 z-10 py-1"
-
-                >
-                  Detalii pentru donație
-                </button>
-              </IconFrame>
+                  <motion.div
+                    whileHover={{scale : 1.1}}
+                    onTap={() => setShowPopup(true)}
+                  >
+                    <IconFrame
+                      bgColor="bg-[#786543]"
+                      textColor="text-[#ddd] text-sm w-fit px-2 md:max-w-60 mx-auto"
+                      >
+                      <p
+                      className="py-1 z-2" 
+                      >
+                        Detalii pentru donație
+                      </p>
+                    </IconFrame>
+                  </motion.div>
               </motion.p>
               {/* <motion.p
                 style={{ opacity: subtitleOpacity, y: subtitleY }}
@@ -165,16 +207,16 @@ export default function DonatePage({ opacity = 1, x = 0, y = 0 }) {
       {showPopup && (
         <div
           className="fixed inset-0 z-[999] flex items-center justify-center bg-black/60 px-4"
-          onClick={() => setShowPopup(false)} // tap outside closes
         >
           <div
+          ref={popOutElement}
             className="relative max-w-md z-5 w-full bg-[#02021fd5] shadow-xl backdrop-blur-xl text-white p-6 rounded-2xl shadow-xl"
             onClick={(e) => e.stopPropagation()} // prevents closing when tapping inside
           >
             <button
               onClick={() => setShowPopup(false)}
               className="absolute z-5 top-3 right-3 w-4 h-4  flex items-center justify-center 
-  cursor-pointer hover:scale-110 transition"
+  cursor-pointer hover:scale-110 transition z-6"
             >
               <Image
                 src="/icons/close-circle.svg"

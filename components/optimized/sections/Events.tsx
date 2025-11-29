@@ -156,7 +156,7 @@ const Events = () => {
       {/* Button */}
       <div className="relative z-10 mt-10">
         <IconFrame bgColor="bg-[#55302f]" textColor="text-white/50">
-          <Link href={"Evenimente"} className="text-base z-10 p-2 px-5">
+          <Link href={"Evenimente"} className="text-base p-2 px-5">
             Vezi toate evenimentele
           </Link>
         </IconFrame>

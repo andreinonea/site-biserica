@@ -18,13 +18,13 @@ const QUOTE_STORAGE_KEY = "daily-quote";
 const QUOTE_DATE_STORAGE_KEY = "daily-quote-date";
 
 const fallbackQuote: DailyQuote = {
-  text: "Incepe ziua cu rugaciune si vei avea pace.",
-  author: "Proverb ortodox",
+  text: "Bucurați-vă totdeauna în Domnul. Iarăși zic: Bucurați-vă!",
+  author: "Filipeni 4,4"
 };
 
 type Setter = (value: number | string) => void;
 
-const noopSetter: Setter = () => {};
+const noopSetter: Setter = () => { };
 
 const createSetter = (
   element: Element | null | undefined,
@@ -96,10 +96,6 @@ const stayYOffset = (value: number, start: number, end: number, initialVh: numbe
 
 const BG_SCROLL = -2500;
 const SCALE = 1.25;
-const CLOUD_FADE_MOBILE = 0.08;
-const CLOUD_FADE_DESKTOP = 0.14;
-const CLOUD_OFFSET_END_MOBILE = 0.12;
-const CLOUD_OFFSET_END_DESKTOP = 0.2;
 const PROGRESS_SCALE = 1.4;
 
 const scaleProgress = (value: number) => value * PROGRESS_SCALE;
@@ -121,21 +117,17 @@ export default function Scene() {
   const pinnedHeight = fixedViewportHeight ? `${fixedViewportHeight}px` : undefined;
 
   useEffect(() => {
-    if (typeof window === "undefined") {
-      return;
-    }
+    if (typeof window === "undefined") return;
 
     let cancelled = false;
+
     const today = new Date().toISOString().slice(0, 10);
 
     const applyQuote = (value: DailyQuote, persist: boolean) => {
-      if (cancelled) {
-        return;
-      }
+      if (cancelled) return;
       setQuote(value);
-      if (!persist) {
-        return;
-      }
+      if (!persist) return;
+
       try {
         window.localStorage.setItem(QUOTE_STORAGE_KEY, JSON.stringify(value));
         window.localStorage.setItem(QUOTE_DATE_STORAGE_KEY, today);
@@ -148,48 +140,72 @@ export default function Scene() {
       try {
         const storedDate = window.localStorage.getItem(QUOTE_DATE_STORAGE_KEY);
         const storedValue = window.localStorage.getItem(QUOTE_STORAGE_KEY);
+
         if (storedValue && storedDate === today) {
-          const parsed = JSON.parse(storedValue) as DailyQuote;
-          applyQuote(parsed, false);
+          applyQuote(JSON.parse(storedValue), false);
           return true;
         }
-      } catch (error) {
-        console.warn("Failed to read stored daily quote", error);
-      }
+      } catch { }
       return false;
     };
 
-    if (!hydrateFromStorage()) {
-      const fetchQuote = async () => {
-        try {
-          const response = await fetch("/data/quote.json", { cache: "no-store" });
-          if (!response.ok) {
-            throw new Error(`HTTP ${response.status}`);
-          }
-          const quotes = (await response.json()) as DailyQuote[];
-          if (!Array.isArray(quotes) || quotes.length === 0) {
-            applyQuote(fallbackQuote, false);
-            return;
-          }
-          const startOfYear = new Date(new Date().getFullYear(), 0, 0);
-          const dayOfYear = Math.floor(
-            (Date.now() - startOfYear.getTime()) / (1000 * 60 * 60 * 24)
-          );
-          const nextQuote = quotes[dayOfYear % quotes.length] ?? fallbackQuote;
-          applyQuote(nextQuote, true);
-        } catch (error) {
-          console.warn("Failed to load quote of the day", error);
+    if (hydrateFromStorage()) return;
+
+    const QUOTE_POOL_KEY = "daily-quote-pool";
+
+    const fetchQuote = async () => {
+      try {
+        const response = await fetch("/data/quote.json", { cache: "no-store" });
+        if (!response.ok) throw new Error("HTTP " + response.status);
+
+        const quotes = (await response.json()) as DailyQuote[];
+
+        if (!Array.isArray(quotes) || quotes.length === 0) {
           applyQuote(fallbackQuote, false);
+          return;
         }
-      };
 
-      fetchQuote();
-    }
+        let pool: number[];
 
-    return () => {
-      cancelled = true;
+        try {
+          const storedPool = window.localStorage.getItem(QUOTE_POOL_KEY);
+          pool = storedPool ? JSON.parse(storedPool) : [];
+        } catch {
+          pool = [];
+        }
+
+        // dacă pool-ul e gol, îl reumplem cu indexurile tuturor citatelor
+        if (!pool || pool.length === 0) {
+          pool = Array.from({ length: quotes.length }, (_, i) => i);
+        }
+
+        // alegem un index random din pool
+        const randomIndex = Math.floor(Math.random() * pool.length);
+        const quoteIndex = pool[randomIndex];
+
+        const selectedQuote = quotes[quoteIndex] ?? fallbackQuote;
+
+        // eliminăm indexul folosit
+        pool.splice(randomIndex, 1);
+
+        // salvăm pool-ul actualizat
+        try {
+          window.localStorage.setItem(QUOTE_POOL_KEY, JSON.stringify(pool));
+        } catch { }
+
+        applyQuote(selectedQuote, true);
+
+      } catch (error) {
+        console.warn("Failed to load quote of the day", error);
+        applyQuote(fallbackQuote, false);
+      }
     };
+
+    fetchQuote();
+
+    return () => { cancelled = true };
   }, []);
+
 
   useEffect(() => {
     if (typeof window === "undefined" || !fixedViewportHeight) {
@@ -269,7 +285,6 @@ export default function Scene() {
       const select = gsap.utils.selector(container);
 
       const sky = select("[data-scene='sky']")[0];
-      const cloud = select("[data-scene='cloud']")[0];
       const saint = select("[data-scene='saint']")[0];
       const principal = select("[data-scene='principal']")[0];
       const falcon1 = select("[data-scene='falcon-1']")[0];
@@ -279,13 +294,11 @@ export default function Scene() {
       const quoteHint = select("[data-scene='quote-hint']")[0];
 
       const setSkyY = createSetter(sky, "y", "px");
-      const setCloudY = createSetter(cloud, "y", "px");
-      const setCloudOpacity = createSetter(cloud, "opacity");
 
       const setSaintY = createSetter(saint, "y", "px");
       const setSaintOpacity = createSetter(saint, "opacity");
       const setSaintScale = createSetter(saint, "scale");
-      
+
       const setPrincipalScale = createSetter(principal, "scale");
       const setPrincipalOpacity = createSetter(principal, "opacity");
       const setPrincipalY = createSetter(principal, "y", "px");
@@ -303,13 +316,6 @@ export default function Scene() {
       const setQuoteY = createSetter(quoteWrapper, "y", "px");
       const setQuoteHintOpacity = createSetter(quoteHint, "opacity");
 
-      const cloudOpacityStart = scaleProgress(0.05);
-      const cloudOpacityEndMobile = scaleProgress(0.05 + CLOUD_FADE_MOBILE);
-      const cloudOpacityEndDesktop = scaleProgress(0.05 + CLOUD_FADE_DESKTOP);
-      const cloudOpacityFadeMobile = Math.max(cloudOpacityEndMobile - cloudOpacityStart, 0.0001);
-      const cloudOpacityFadeDesktop = Math.max(cloudOpacityEndDesktop - cloudOpacityStart, 0.0001);
-      const cloudOffsetRangeMobile = scaleRange(0.05, CLOUD_OFFSET_END_MOBILE);
-      const cloudOffsetRangeDesktop = scaleRange(0.05, CLOUD_OFFSET_END_DESKTOP);
 
       const [saintRangeStart, saintRangeEnd] = scaleRange(0, 1.4);
 
@@ -364,13 +370,10 @@ export default function Scene() {
       const [quoteFadeOutStart, quoteFadeOutEnd] = scaleRange(0.55, 0.75);
       const [quoteScaleStart, quoteScaleEnd] = scaleRange(-0.2, 0.6);
       const [quoteShiftStart, quoteShiftEnd] = scaleRange(-0.2, 0.7);
-      const [quoteHintFadeInStart, quoteHintFadeInEnd] = scaleRange(-.05,0);
+      const [quoteHintFadeInStart, quoteHintFadeInEnd] = scaleRange(-.05, 0);
       const [quoteHintFadeOutStart, quoteHintFadeOutEnd] = scaleRange(0.32, 0.4);
 
 
-      if (cloud) {
-        gsap.set(cloud, { scale: SCALE });
-      }
 
       [falcon1, falcon2, falcon3].forEach((element) => {
         if (element) {
@@ -393,11 +396,6 @@ export default function Scene() {
         const vwUnit = viewportWidth * 0.01;
 
         const isDesktop = viewportWidth >= 1024;
-
-        const cloudOpacityFade = isDesktop ? cloudOpacityFadeDesktop : cloudOpacityFadeMobile;
-        const [cloudOffsetStart, cloudOffsetEnd] = isDesktop
-          ? cloudOffsetRangeDesktop
-          : cloudOffsetRangeMobile;
 
         const [falconOneRangeStart, falconOneRangeEnd] = isDesktop
           ? falconOneRangeDesktop
@@ -423,20 +421,10 @@ export default function Scene() {
 
         setSkyY(0);
 
-        setCloudOpacity(stayOpacity(progress, cloudOpacityStart, cloudOpacityFade));
-        const cloudBaseOffset = stayYOffset(
-          progress,
-          cloudOffsetStart,
-          cloudOffsetEnd,
-          10 * vhUnit
-        );
-        const cloudLift = isDesktop ? 28 : 14;
-        setCloudY(cloudBaseOffset - cloudLift);
-
         setSaintScale(
           mapRangeClamped(progress, saintRangeStart, saintRangeEnd, 0.8, isDesktop ? 1.7 : 1.2)
         );
-        setSaintOpacity(mapRangeClamped(progress, saintRangeStart, saintRangeEnd-.4, 0.8, 1));
+        setSaintOpacity(mapRangeClamped(progress, saintRangeStart, saintRangeEnd - .4, 0.8, 1));
         const saintYOffset =
           mapRangeClamped(progress, saintRangeStart, saintRangeEnd, 90, -21) * 16; // rem -> px
         setSaintY(saintYOffset);
@@ -615,28 +603,13 @@ export default function Scene() {
               </div>
             </div>
 
-            <div
-              data-scene="cloud"
-              className="absolute left-1/2 top-[18%] md:top-[17%] -translate-x-1/2 -translate-y-1/2"
-              style={{ willChange: "transform, opacity" }}
-            >
-              <div className="relative aspect-[3/2] w-[120vw] max-w-[1800px] md:w-[90vw]">
-                <Image
-                  src="/assets/cloudR.webp"
-                  alt="Cloud"
-                  fill
-                  className="object-contain"
-                  priority
-                />
-              </div>
-            </div>
 
             <div
               data-scene="saint"
               className="absolute left-1/2  -translate-x-1/2 translate-y-1/2 z-120"
-              style={{ willChange: "transform, opacity" , top : fixedViewportHeight / viewportWidthRef.current < 16/9*1.1 ? -540 : -200}}
+              style={{ willChange: "transform, opacity", top: fixedViewportHeight / viewportWidthRef.current < 16 / 9 * 1.1 ? -540 : -200 }}
             >
-              <div className="relative aspect-[3/4] w-[70vw] max-w-[320px] sm:w-[50vw] md:w-[30vw]">
+              <div className="relative aspect-[3/4] w-[70vw] max-w-[320px] sm:w-[50vw] md:w-[30vw] md:scale-200 lg:scale-160">
                 <Image
                   src="/assets/SfTrifon.webp"
                   alt="Sfantul Trifon"
@@ -652,7 +625,7 @@ export default function Scene() {
               className="absolute top-[26%]"
               style={{ willChange: "transform, opacity" }}
             >
-              <div className="relative aspect-[16/10] w-[40vw] max-w-[520px] md:w-[22vw]">
+              <div className="relative aspect-[16/10] md:scale-150 lg:scale-100 w-[40vw] max-w-[520px] md:w-[22vw]">
                 <Image
                   src="/assets/Falcon1.webp"
                   alt="Falcon 1"
@@ -666,14 +639,14 @@ export default function Scene() {
             <div
               data-scene="falcon-2"
               className="absolute top-[30%]"
-              style={{ willChange: "transform, opacity" }}
+              style={{ willChange: "transform, opacity  " }}
             >
-              <div className="relative aspect-[16/10] w-[40vw] max-w-[520px] md:w-[22vw]">
+              <div className="relative aspect-[16/10] md:scale-150 lg:scale-100 w-[40vw] max-w-[520px] md:w-[22vw]">
                 <Image
                   src="/assets/Falcon2.png"
                   alt="Falcon 2"
                   fill
-                  className="object-contain"
+                  className="object-contain "
                   priority
                 />
               </div>
@@ -684,7 +657,7 @@ export default function Scene() {
               className="absolute top-[35%]"
               style={{ willChange: "transform, opacity" }}
             >
-              <div className="relative aspect-[16/10] w-[42vw] max-w-[560px] md:w-[24vw]">
+              <div className="relative aspect-[16/10] md:scale-150 lg:scale-100 w-[42vw] max-w-[560px] md:w-[24vw]">
                 <Image
                   src="/assets/Falcon3.webp"
                   alt="Falcon 3"
@@ -699,7 +672,7 @@ export default function Scene() {
               className="pointer-events-none absolute inset-x-4 top-[42%] z-[100] flex justify-center px-2 md:top-[40%]"
               style={{ willChange: "transform, opacity" }}
             >
-              <div className=" pointer-events-auto mx-auto max-w-3xl select-text px-4 text-center text-white/90 sm:max-w-2xl md:max-w-4xl md:px-6"> 
+              <div className=" pointer-events-auto mx-auto max-w-3xl select-text px-4 text-center text-white/90 sm:max-w-2xl md:max-w-4xl md:px-6">
                 <p className="text-shadow-black/30 text-shadow-lg text-xl font-medium leading-snug sm:text-2xl md:text-3xl lg:text-4xl">
                   <span className="pr-2 text-[#c95d43]/90">„</span>
                   {quote.text}
@@ -714,7 +687,7 @@ export default function Scene() {
                   data-scene="quote-hint"
                   className="text-shadow-black/20 text-shadow-lg mt-20 flex items-center justify-center gap-2 text-xs text-white/60 md:text-sm"
                 >
-                    <span className="text-[17px]">Glisează în jos</span>
+                  <span className="text-[17px]">Glisează în jos</span>
                   <Image
                     src="/icons/curve-arrow-down.svg"
                     alt="Scroll down"
@@ -723,7 +696,7 @@ export default function Scene() {
                     unoptimized
                     className="animate-bounce mt-3 block md:hidden"
                   />
-                   <Image
+                  <Image
                     src="/icons/curve-arrow-down.svg"
                     alt="Scroll down"
                     width={30}

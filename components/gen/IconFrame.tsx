@@ -25,6 +25,7 @@ export default function IconFrame({
       transition={{ duration: .33, ease: "easeOut" }}
       className={`relative ${bgColor} ${textColor} font-medium cursor-pointer rounded-xl flex flex-col items-center gap-2 hover:opacity-90 transition`}
     >
+      {children}
       {/* Decor background circles */}
       <div className="absolute">
         <div className={`rounded-full ${bgColor} w-7 h-7 absolute -top-4 left-0 -translate-x-1/2 grid place-items-center`}>
@@ -32,7 +33,6 @@ export default function IconFrame({
         </div>
        
       </div>
-      {children}
     </motion.div>
   );
 }

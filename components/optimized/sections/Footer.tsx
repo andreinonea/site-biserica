@@ -32,12 +32,12 @@ const Footer = () => {
                 {priests.map((p) => (
                   <div
                     key={p.phone}
-                    className="flex flex-col md:flex-col lg:flex-row md:justify-start lg:justify-between md:items-start lg:items-center"
+                    className="flex flex-col md:flex-col  lg:flex-row md:justify-start lg:justify-between md:items-start lg:items-center"
                   >
                     <span>{p.name}</span>
                     <a
                       href={`tel:${p.phone}`}
-                      className="hover:underline text-[#c95d43]  lg:mt-0 lg:ml-4"
+                      className="hover:underline text-[#c95d43] italic lg:mt-0 lg:ml-4"
                     >
                       {p.phone}
                     </a>

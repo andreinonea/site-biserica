@@ -81,19 +81,19 @@ const Page = () => {
           <div>
             <p className="text-2xl lg:text-3xl font-medium">Telefon</p>
             <div className="mt-2 flex flex-col text-black/70 text-lg lg:text-xl lg:text-base">
-              <div className="flex flex-col mt-1">
+              <div className="flex flex-col italic mt-1">
                 <span>Preot Sorin Petre Georgescu</span>
                 <a href="tel:+40742039585" className="text-[#A33B20] hover:underline">
                   +40 742 039 585
                 </a>
               </div>
-              <div className="flex flex-col mt-1 ">
+              <div className="flex flex-col italic mt-1 ">
                 <span>Preot Constantin Sandu</span>
                 <a href="tel:+40723929011" className="text-[#A33B20] hover:underline">
                   +40 723 929 011
                 </a>
               </div>
-              <div className="flex flex-col mt-1">
+              <div className="flex flex-col italic mt-1">
                 <span>Preot Gheorghe Oprea</span>
                 <a href="tel:+40723257569" className="text-[#A33B20] hover:underline">
                   +40 723 257 569
