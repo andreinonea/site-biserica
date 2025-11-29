@@ -1,0 +1,11 @@
+name: Check
+on: 
+  push:
+    branches:
+      - main
+jobs:
+  check:
+    runs-on:
+      labels: [self-hosted, foisor]
+    steps:
+      - uses: actions/checkout@v6
