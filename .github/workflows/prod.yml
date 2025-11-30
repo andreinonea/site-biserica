@@ -1,14 +1,17 @@
-name: Production
+name: Release
 on: 
   push:
     branches:
       - main
 jobs:
   deploy:
-    environment: staging_environment
+    environment: Production
     runs-on:
       labels: [self-hosted, foisor]
     steps:
       - run: echo $(pwd)
       - run: echo "caca"
+      - run: node --version
+      - run: echo $USER
+      - run: nvm use 22
       - run: node --version
