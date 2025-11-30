@@ -1,24 +1,22 @@
 {
   "duminică": {
-    "data": "23 noiembrie",
+    "data": "30 noiembrie",
     "activitati": [
       { "nume": "Utrenia", "ora": "8:00" },
       { "nume": "Dumnezeiasca Liturghie", "ora": "" }
     ]
   },
   "luni": {
-    "data": "24 noiembrie",
+    "data": "1 decembrie",
     "activitati": [
       { "nume": "Ceasul I", "ora": "6:00" },
       { "nume": "Dumnezeiasca Liturghie", "ora": "" },
-      { "nume": "Paraclisul Sf. Mc. Trifon", "ora": "17:00" },
-      { "nume": "Rugăciuni pentru cei bolnavi", "ora": "" },
-      { "nume": "Taina Spovedaniei", "ora": "" }
-
+      { "nume": "Te Deum", "ora": "" },
+      { "nume": "Sfințirea Apei celei Mici", "ora": "" }
     ]
   },
-  "marți": {
-    "data": "25 noiembrie",
+  "marti": {
+    "data": "2 decembrie",
     "activitati": [
       { "nume": "Ceasul I", "ora": "6:00" },
       { "nume": "Dumnezeiasca Liturghie", "ora": "" },
@@ -26,41 +24,40 @@
     ]
   },
   "miercuri": {
-    "data": "26 noiembrie",
+    "data": "3 decembrie",
+    "activitati": [
+      { "nume": "Ceasul I", "ora": "6:00" },
+      { "nume": "Dumnezeiasca Liturghie", "ora": "" },
+      { "nume": "Taina Spovedaniei", "ora": "17:00" }
+    ]
+  },
+  "joi": {
+    "data": "4 decembrie",
     "activitati": [
       { "nume": "Ceasul I", "ora": "6:00" },
       { "nume": "Dumnezeiasca Liturghie", "ora": "" },
       { "nume": "Biserica este deschisă până la orele", "ora": "14:00" }
     ]
   },
-  "joi": {
-    "data": "27 noiembrie",
-    "activitati": [
-      { "nume": "Ceasul I", "ora": "6:00" },
-      { "nume": "Dumnezeiasca Liturghie", "ora": "" },
-      { "nume": "Acatistul Maicii Domnului", "ora": "17:00" },
-      { "nume": "Taina Spovedaniei", "ora": "17:30" }
-
-    ]
-  },
   "vineri": {
-    "data": "28 noiembrie",
+    "data": "5 decembrie",
     "activitati": [
       { "nume": "Ceasul I", "ora": "6:00" },
       { "nume": "Dumnezeiasca Liturghie", "ora": "" },
-      { "nume": "Taina Sfântului Maslu", "ora": "17:00" }
+      { "nume": "Vecernia", "ora": "17:00" },
+      { "nume": "Taina Spovedaniei", "ora": "18:00" }
     ]
   },
-  "sâmbătă": {
-    "data": "29 noiembrie",
+  "sambata": {
+    "data": "6 decembrie",
     "activitati": [
-      { "nume": "Dumnezeiasca Liturghie", "ora": "8:30" },
-      { "nume": "Pomenirea de obște a celor adormiți", "ora": "" },
-      { "nume": "Vecernia și Litia", "ora": "16:00" }
+      { "nume": "Utrenia", "ora": "8:00" },
+      { "nume": "Dumnezeiasca Liturghie", "ora": "" },
+      { "nume": "Biserica este deschisă până la orele", "ora": "14:00" }
     ]
   },
-  "Duminică": {
-    "data": "30 noiembrie",
+  "duminica": {
+    "data": "7 decembrie",
     "activitati": [
       { "nume": "Utrenia", "ora": "8:00" },
       { "nume": "Dumnezeiasca Liturghie", "ora": "" }
