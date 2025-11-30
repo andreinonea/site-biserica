@@ -6,7 +6,11 @@ on:
 jobs:
   build:
     runs-on:
-      labels: [self-hosted, foisor]
+      labels: [self-hosted, foisor, "${{ github.actor }}"]
     steps:
       - uses: actions/checkout@v6
-      - run: echo $(pwd)
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+      - run: npm install
+      - run: npm build
