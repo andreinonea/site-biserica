@@ -1,30 +1,5 @@
 [
   {
-    "title": "Concert de Colinde",
-    "date": "2024-12-20",
-    "location": "Strada Foișorului 119",
-    "slides": [
-      {
-        "image": "/assets/Sfinti.jpg"
-      },
-      {
-        "image": "/assets/SfTrifon.png"
-      },
-      {
-        "image": "/assets/imgpictura.png"
-      },
-      {
-        "image": "/assets/Sfinti.jpg"
-      },
-      {
-        "image": "/assets/Sfinti.jpg"
-      },
-      {
-        "image": "/assets/Sfinti.jpg"
-      }
-    ]
-  },
-  {
     "title": "Ziua iei",
     "date": "2025-06-22",
     "location": "Strada Foișorului 119",
@@ -196,7 +171,7 @@
     ]
   },
   {
-    "title": "Instalarea unui nou preot",
+    "title": "Instalarea Pr. Sorin",
     "date": "2025-11-30",
     "hour": "12:00",
     "location": "Strada Foișorului 119"

@@ -44,75 +44,75 @@ const Sfzi = () => {
     return () => ctx.revert();
   }, []);
 
-useEffect(() => {
-  const today = new Date();
-  const yyyy = today.getFullYear();
-  const mm = String(today.getMonth() + 1).padStart(2, "0");
-  const dd = String(today.getDate()).padStart(2, "0");
+  useEffect(() => {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, "0");
+    const dd = String(today.getDate()).padStart(2, "0");
 
-  const todayKey = `${yyyy}-${mm}-${dd}`;
-  const monthKey = `${yyyy}-${mm}`;
+    const todayKey = `${yyyy}-${mm}-${dd}`;
+    const monthKey = `${yyyy}-${mm}`;
 
-  fetch("/data/calendar.json")
-    .then((res) => {
-      if (!res.ok) throw new Error("Calendar JSON not found");
-      return res.json();
-    })
-    .then((data: Record<string, Record<string, LocalDay>>) => {
-      const entry = data[monthKey]?.[todayKey];
+    fetch("/data/calendar.json")
+      .then((res) => {
+        if (!res.ok) throw new Error("Calendar JSON not found");
+        return res.json();
+      })
+      .then((data: Record<string, Record<string, LocalDay>>) => {
+        const entry = data[monthKey]?.[todayKey];
 
-      if (entry?.sfinți?.length) {
-        setSfinti(entry.sfinți);
+        if (entry?.sfinți?.length) {
+          setSfinti(entry.sfinți);
 
-        const dez = entry.dezlegări ?? [];
-        if (dez.length) {
-          const icons: string[] = [];
-          let text = "";
+          const dez = entry.dezlegări ?? [];
+          if (dez.length) {
+            const icons: string[] = [];
+            let text = "";
 
-          const hasFish = dez.some((d) => d.toLowerCase().includes("pește"));
-          if (hasFish) {
-            icons.push("/icons/fish.svg", "/icons/wine.svg", "/icons/oil.svg");
-            text = "Dezlegare la pește, vin și untdelemn";
+            const hasFish = dez.some((d) => d.toLowerCase().includes("pește"));
+            if (hasFish) {
+              icons.push("/icons/fish.svg", "/icons/wine.svg", "/icons/oil.svg");
+              text = "Dezlegare la pește, vin și untdelemn";
+            }
+
+            const hasHarti = dez.some((d) => d.toLowerCase().includes("hart"));
+            if (hasHarti) {
+              icons.push("/icons/harti.svg");
+              text += text ? " și harți" : "Harți";
+            }
+
+            setDezlegari({ text, icons });
+          } else {
+            setDezlegari(null);
           }
-
-          const hasHarti = dez.some((d) => d.toLowerCase().includes("hart"));
-          if (hasHarti) {
-            icons.push("/icons/harti.svg");
-            text += text ? " și harți" : "Harți";
-          }
-
-          setDezlegari({ text, icons });
         } else {
+          setSfinti(["Niciun sfânt înregistrat azi."]);
           setDezlegari(null);
         }
-      } else {
-        setSfinti(["Niciun sfânt înregistrat azi."]);
+      })
+      .catch((err) => {
+        console.error("Eroare la încărcarea calendarului:", err);
+        setSfinti(["Eroare la încărcarea calendarului."]);
         setDezlegari(null);
-      }
-    })
-    .catch((err) => {
-      console.error("Eroare la încărcarea calendarului:", err);
-      setSfinti(["Eroare la încărcarea calendarului."]);
-      setDezlegari(null);
-    });
-}, []);
+      });
+  }, []);
 
   return (
     <div className="relative">
-      <section className="relative overflow-hidden w-full h-[60vh]">
+      <section className="relative overflow-hidden w-full min-h-[60vh] py-20">
         <Image
           fill
           src="/assets/Sfinti.jpg"
           alt="Sfinti"
-          className="object-cover w-full h-auto"
+          className="object-cover"
         />
 
         <div className="absolute inset-0 bg-black/65" />
 
-        <div className="absolute inset-0 flex flex-col justify-center items-center p-6 space-y-6 text-center">
+        <div className="relative z-10 flex flex-col items-center p-6 text-center mx-auto max-w-3xl space-y-6">
           <h1
             ref={titleRef}
-            className="flex flex-wrap justify-center items-center text-white drop-shadow-lg shadow-white text-center"
+            className="flex flex-wrap justify-center items-center text-white drop-shadow-lg"
           >
             <span className="text-7xl md:text-9xl byzantin text-[#c95d43]">S</span>
             <span className="text-3xl md:text-6xl byzantin ml-2">fintii</span>
@@ -120,16 +120,16 @@ useEffect(() => {
             <span className="text-3xl md:text-6xl byzantin ml-2">ilei</span>
           </h1>
 
-          <div className="flex flex-col space-y-2 mt-3 text-white text-lg sm:text-xl drop-shadow-md shadow-white">
+          <div className="flex flex-col space-y-2 text-white text-lg sm:text-xl drop-shadow-md">
             {sfinti.map((nume, i) => (
               <span key={i}>{nume}</span>
             ))}
           </div>
 
           {dezlegari && (
-            <div className="mt-2 flex flex-col sm:flex-row items-center gap-2 text-white/80 italic text-sm md:text-base">
+            <div className="flex flex-col sm:flex-row items-center gap-2 text-white/80 italic text-sm md:text-base">
               <span>{dezlegari.text}</span>
-              <div className="flex items-center gap-2">
+              <div className="flex gap-2">
                 {dezlegari.icons.map((src, idx) => (
                   <Image key={idx} src={src} alt="" width={20} height={20} />
                 ))}
@@ -137,19 +137,15 @@ useEffect(() => {
             </div>
           )}
 
-          <div className="mt-2">
-            <IconFrame bgColor="bg-[#3a2e10]" textColor="text-white/80">
-              <Link
-                href="/Calendar"
-                className="h-10 flex items-center p-4 justify-center"
-              >
-                Vezi calendarul lunii
-              </Link>
-            </IconFrame>
-          </div>
+          <IconFrame bgColor="bg-[#3a2e10]" textColor="text-white/80">
+            <Link className="h-10 flex items-center p-4" href="/Calendar">
+              Vezi calendarul lunii
+            </Link>
+          </IconFrame>
         </div>
       </section>
-      
+
+
     </div>
   );
 };

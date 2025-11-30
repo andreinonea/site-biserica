@@ -205,9 +205,9 @@ export default function Programliturgic() {
       className="relative min-h-screen bg-[#0A0004] text-white overflow-hidden"
 
     >
-      <div className="absolute mask-b-from-0 inset-0 w-full 
-        bg-[radial-gradient(circle_at_60%_20%,#ffd9a3_0%,#d79b5a_45%,#3a1a0f_100%)] 
-        opacity-25 md:opacity-40">
+<div className="absolute mask-b-from-0 inset-0 w-full
+    bg-gradient-to-r from-[rgba(185, 76, 48, 0.3)] to-[rgba(196,93,67,0.5)] z-0">
+
         <div className="relative w-full h-full">
 
           <Background />

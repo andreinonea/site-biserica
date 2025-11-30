@@ -100,6 +100,24 @@ body {
   -webkit-overflow-scrolling: none;
   background: #000000;
 }
+@keyframes candleColor {
+  0% {
+    color: rgba(255, 255, 255, 0.8);
+    text-shadow: 0 0 6px rgba(255, 255, 255, 0.25);
+  }
+  50% {
+    color: rgb(201, 93, 67); /* warm candle amber */
+    text-shadow: 0 0 12px rgba(255, 180, 80, 0.7);
+  }
+  100% {
+    color: rgba(255, 255, 255, 0.8);
+    text-shadow: 0 0 6px rgba(255, 255, 255, 0.25);
+  }
+}
+
+.animate-candleColor {
+  animation: candleColor 2.2s ease-in-out infinite;
+}
 
 
 @layer base {

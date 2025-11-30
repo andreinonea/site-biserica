@@ -169,8 +169,8 @@ export default function DonatePage({ opacity = 1, x = 0, y = 0 }) {
                 className="max-w-[60vw] text-base sm:text-lg text-white/90 z-13 "
               >
                 <p className="mb-8 text-shadow-xs text-shadow-black">
-                "Foișorul" Smarandei Doamna, numit și al Mavrocordaților, are atâta nevoie
-                de ajutorul tău, privitorule și omule drag, pentru a renaște din negura
+                „Foișorul” Smarandei Doamna, numit și al Mavrocordaților, are atâta nevoie
+                de ajutorul tău, privitorule și omule drag, pentru a renaște din negura vremii.
                   </p>
                   <motion.div
                     whileHover={{scale : 1.1}}
@@ -229,7 +229,11 @@ export default function DonatePage({ opacity = 1, x = 0, y = 0 }) {
 
 
             <p className="text-base leading-relaxed pt-2">
-              Pentru depunerile ce le efectuați, contul Bisericii Foișor este
+              Dacă ai dare
+                de suflet și dare de mână poți ajuta chiar acum, lăsând darul tău
+                <strong> aici </strong>.
+                <br />
+                Pentru depunerile ce le efectuați, contul Bisericii Foișor este
               <strong className="text-[#C59D30] animate-pulse"> RO77RNCB0069148541980001 </strong> deschis la BCR, CIF 13360648.
               <br /><br />
               Pentru sumele ce le depuneți vă rugăm să menționați la detalii:
