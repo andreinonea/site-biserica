@@ -5,7 +5,10 @@ on:
       - main
 jobs:
   deploy:
+    environment: staging_environment
     runs-on:
       labels: [self-hosted, foisor]
     steps:
+      - run: echo $(pwd)
       - run: echo "caca"
+      - run: node --version
