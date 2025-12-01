@@ -148,7 +148,7 @@ const Events = () => {
           </div>
         </div>
       ) : (
-        <p className="mt-[20%] md:mt-[10%] text-white/50 z-10 text-center text-md sm:text-base md:text-lg px-6 sm:px-8">
+        <p className="mt-[20%] md:mt-15 text-white/50 z-10 text-center text-md sm:text-base md:text-lg px-6 sm:px-8">
           Nu există evenimente anunțate în viitorul apropiat.
         </p>
 
