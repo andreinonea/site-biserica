@@ -15,7 +15,7 @@
       { "nume": "Sfințirea Apei celei Mici", "ora": "" }
     ]
   },
-  "marti": {
+  "marți": {
     "data": "2 decembrie",
     "activitati": [
       { "nume": "Ceasul I", "ora": "6:00" },
@@ -48,7 +48,7 @@
       { "nume": "Taina Spovedaniei", "ora": "18:00" }
     ]
   },
-  "sambata": {
+  "sâmbătă": {
     "data": "6 decembrie",
     "activitati": [
       { "nume": "Utrenia", "ora": "8:00" },
@@ -56,7 +56,7 @@
       { "nume": "Biserica este deschisă până la orele", "ora": "14:00" }
     ]
   },
-  "duminica": {
+  " Duminică": {
     "data": "7 decembrie",
     "activitati": [
       { "nume": "Utrenia", "ora": "8:00" },
