@@ -37,12 +37,21 @@ const CatehezaCard: React.FC<CatehezaCardProps> = ({
   onRequestPause,
 }) => {
   const waveformRef = useRef<HTMLDivElement | null>(null);
-  const wavesurferRef = useRef<any>(null); // WaveSurfer instance
+  const wavesurferRef = useRef<any>(null);
   const pendingPlayRef = useRef(false);
-  const [isReady, setIsReady] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
+
+  const [isReady, setIsReady] = useState(false); // visual "ready" used by UI
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
+
+  // real load progress reported by WaveSurfer (0-100)
+  const [realLoadProgress, setRealLoadProgress] = useState(0);
+  // visual progress shown to user (0-100) — this is "fake"/smoothed
+  const [visualProgress, setVisualProgress] = useState(0);
+  // set to true when WaveSurfer emits "ready"
+  const [audioIsReady, setAudioIsReady] = useState(false);
+
+  // a short flag to control "loading state" UI
   const [hasRequestedLoading, setHasRequestedLoading] = useState(false);
 
   useEffect(() => {
@@ -51,8 +60,50 @@ const CatehezaCard: React.FC<CatehezaCardProps> = ({
         wavesurferRef.current.destroy();
         wavesurferRef.current = null;
       }
+      setVisualProgress(0);
+      setRealLoadProgress(0);
+      setAudioIsReady(false);
+      setIsReady(false);
     };
   }, []);
+
+  // Animate visualProgress toward a target (realLoadProgress while loading,
+  // and 100 when audioIsReady). Uses requestAnimationFrame for smoothness.
+  useEffect(() => {
+    let raf = 0;
+    const easeFactor = 0.08; // lower = slower catch-up; tweak for natural feel
+    const tick = () => {
+      setVisualProgress((prev) => {
+        const target = audioIsReady ? 100 : realLoadProgress;
+        if (Math.abs(target - prev) < 0.5) {
+          return Math.min(100, Math.max(0, target));
+        }
+        const next = prev + (target - prev) * easeFactor;
+        return Math.min(100, Math.max(0, next));
+      });
+      raf = requestAnimationFrame(tick);
+    };
+
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [realLoadProgress, audioIsReady]);
+
+  // When visualProgress reaches 100 and audioIsReady true -> mark visual ready
+  useEffect(() => {
+    if (!isReady && audioIsReady && visualProgress >= 99.9) {
+      // small timeout to make the finalization feel natural (optional)
+      const t = setTimeout(() => {
+        setIsReady(true);
+        setHasRequestedLoading(false);
+        setVisualProgress(100);
+        if (pendingPlayRef.current && wavesurferRef.current) {
+          wavesurferRef.current.play();
+          pendingPlayRef.current = false;
+        }
+      }, 150); // tweak between 0..400ms as you like
+      return () => clearTimeout(t);
+    }
+  }, [visualProgress, audioIsReady, isReady]);
 
   const initializeWaveSurfer = useCallback(async () => {
     if (wavesurferRef.current || !waveformRef.current || typeof window === "undefined") {
@@ -61,9 +112,13 @@ const CatehezaCard: React.FC<CatehezaCardProps> = ({
 
     const WaveSurfer = (await import("wavesurfer.js")).default;
 
+    // reset states
     setIsReady(false);
     setDuration(0);
     setCurrentTime(0);
+    setRealLoadProgress(0);
+    setVisualProgress(0);
+    setAudioIsReady(false);
 
     const ws = WaveSurfer.create({
       container: waveformRef.current,
@@ -72,15 +127,16 @@ const CatehezaCard: React.FC<CatehezaCardProps> = ({
 
     wavesurferRef.current = ws;
 
-    ws.on("ready", () => {
-      setIsReady(true);
-      setDuration(ws.getDuration());
-      setHasRequestedLoading(false);
+    ws.on("loading", (percent: number) => {
+      // WaveSurfer reports 0..100; store it as real progress
+      setRealLoadProgress(Math.max(0, Math.min(100, percent)));
+    });
 
-      if (pendingPlayRef.current) {
-        ws.play();
-        pendingPlayRef.current = false;
-      }
+    ws.on("ready", () => {
+      // mark audio as ready so visual progress will animate to 100
+      setDuration(ws.getDuration());
+      setAudioIsReady(true);
+      // Do not call setIsReady(true) here — wait for visualProgress to hit 100
     });
 
     ws.on("audioprocess", () => {
@@ -92,16 +148,19 @@ const CatehezaCard: React.FC<CatehezaCardProps> = ({
     });
 
     ws.on("finish", () => {
-      setIsPlaying(false);
+      // reset playing UI but keep the waveform shown (since it is loaded)
+      setIsReady(true);
       onRequestPause(item.id);
       pendingPlayRef.current = false;
       ws.seekTo(0);
       setCurrentTime(0);
     });
 
-    ws.on("play", () => setIsPlaying(true));
+    ws.on("play", () => {
+      // keep isReady true once playing started
+    });
+
     ws.on("pause", () => {
-      setIsPlaying(false);
       pendingPlayRef.current = false;
     });
 
@@ -124,6 +183,8 @@ const CatehezaCard: React.FC<CatehezaCardProps> = ({
     const requestAutoplay = () => {
       pendingPlayRef.current = true;
       setHasRequestedLoading(true);
+      // reset visual progress so loading UI is visible from start
+      setVisualProgress((v) => (v > 0 ? v : 0));
       onRequestPlay(item.id);
     };
 
@@ -139,8 +200,9 @@ const CatehezaCard: React.FC<CatehezaCardProps> = ({
         return;
       }
       ws = instance;
-      if (!isReady) return;
-    } else if (!isReady) {
+      // do not require isReady here — we will play once ready+visual==100
+    } else if (!isReady && !audioIsReady) {
+      // wave is not initialized and audio not ready; show loading UI
       requestAutoplay();
       return;
     }
@@ -149,10 +211,19 @@ const CatehezaCard: React.FC<CatehezaCardProps> = ({
       ws.pause();
       onRequestPause(item.id);
     } else {
+      // If audio already loaded but visual not yet 100 we should still call onRequestPlay
       onRequestPlay(item.id);
-      ws.play();
+      // If audio already ready and visual reached 100, play instantly
+      if (audioIsReady && visualProgress >= 99.9) {
+        ws.play();
+        pendingPlayRef.current = false;
+      } else {
+        // otherwise, set the pending flag and wait for the visual progress to reach 100
+        pendingPlayRef.current = true;
+        setHasRequestedLoading(true);
+      }
     }
-  }, [initializeWaveSurfer, isReady, item.id, onRequestPause, onRequestPlay]);
+  }, [initializeWaveSurfer, isReady, audioIsReady, visualProgress, item.id, onRequestPause, onRequestPlay]);
 
   const formatTime = (value: number) => {
     if (!Number.isFinite(value) || value <= 0) return "0:00";
@@ -168,16 +239,16 @@ const CatehezaCard: React.FC<CatehezaCardProps> = ({
           <button
             type="button"
             onClick={togglePlayback}
-            aria-label={`${isPlaying ? "Pauza" : "Play"} ${item.title}`}
+            aria-label={`${isReady ? "Pauza" : "Play"} ${item.title}`}
             className={`flex items-center justify-center rounded-full 
               h-[60px] w-[60px] min-w-[60px] min-h-[60px]
               border border-white/20 bg-black/30 
               transition hover:scale-105
               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400
-              ${isPlaying ? "border-amber-400 bg-amber-400/20" : ""}`}
+              ${isReady && pendingPlayRef.current ? "border-amber-400 bg-amber-400/20" : ""}`}
           >
-
-            {isPlaying ? (
+            {/* Use isReady && audioIsReady && visualProgress >= 99.9 to decide play/pause icon */}
+            {wavesurferRef.current && wavesurferRef.current.isPlaying() ? (
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-amber-300" viewBox="0 0 24 24" fill="currentColor">
                 <rect x="6" y="5" width="4" height="14" rx="1" />
                 <rect x="14" y="5" width="4" height="14" rx="1" />
@@ -195,7 +266,7 @@ const CatehezaCard: React.FC<CatehezaCardProps> = ({
         </div>
 
         {isActive && isReady && (
-          <div className="text-right text-sm text-white/60 transition-opacity duration-300">
+          <div className="whitespace-nowrap -ml-7 text-right text-sm text-white/60 transition-opacity duration-300">
             <span className="text-white">{formatTime(currentTime)}</span>
             <span className="text-white/40"> / {formatTime(duration)}</span>
           </div>
@@ -211,9 +282,21 @@ const CatehezaCard: React.FC<CatehezaCardProps> = ({
         <div className="mt-6 h-20 w-full">
           <div ref={waveformRef} className="h-full w-full"></div>
         </div>
-        {hasRequestedLoading && !isReady && (
-          <p className="mt-3 text-xs text-white/70">Se încarcă cateheza...</p>
+
+        {hasRequestedLoading && (
+          <div className="mt-4">
+            <div className="w-full h-2 bg-white/10 rounded-xl overflow-hidden">
+              <div
+                className="h-full bg-[#C59D30]/80 transition-all duration-100"
+                style={{ width: `${visualProgress}%` }}
+              />
+            </div>
+            <p className="mt-2 text-xs text-white/70 text-center">
+              Se încarcă... {Math.min(100, Math.floor(visualProgress))}%
+            </p>
+          </div>
         )}
+
       </motion.div>
     </div>
   );

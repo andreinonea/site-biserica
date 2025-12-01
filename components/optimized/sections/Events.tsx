@@ -106,7 +106,7 @@ const Events = () => {
           </span>
         </h1> */}
         <h1 className="relative text-4xl lg:text-5xl -mt-10 leading-tight z-10 text-center inline-block byzantin text-white/70">
-            Evenimente Urmatoare
+          Evenimente Urmatoare
         </h1>
 
 
@@ -148,9 +148,11 @@ const Events = () => {
           </div>
         </div>
       ) : (
-        <p className="mt-6 text-white/50 z-10">
+        <p className="mt-[20%] md:mt-[10%] text-white/50 z-10 text-center text-md sm:text-base md:text-lg px-6 sm:px-8">
           Nu există evenimente anunțate în viitorul apropiat.
         </p>
+
+
       )}
 
       {/* Button */}
