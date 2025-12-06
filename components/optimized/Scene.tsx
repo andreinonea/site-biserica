@@ -678,14 +678,13 @@ export default function Scene() {
               >
                 <div
                   className="
-      absolute left-1/2 top-[45%] -translate-x-1/2 -translate-y-1/2
-      h-[55vh] w-[90vw] sm:w-[75vw] md:w-[60vw]
-      rounded-[50%]
-      bg-black/50
-      md:bg-black/30
-      blur-[55px]
-      opacity-80
-    "
+                          absolute left-1/2 top-[45%] -translate-x-1/2 -translate-y-1/2
+                          h-[55vh] w-[90vw] sm:w-[75vw] md:w-[60vw]
+                          rounded-[50%]
+                          bg-black/50
+                          md:bg-black/30
+                          blur-[55px]
+                          opacity-80"
                 />
                 <div className=" pointer-events-auto mx-auto max-w-3xl select-text px-4 text-center text-white/90 sm:max-w-2xl md:max-w-4xl md:px-6">
                   <p className="text-shadow-black/30 text-shadow-lg text-xl font-medium leading-snug sm:text-2xl md:text-3xl lg:text-4xl">
