@@ -11,8 +11,8 @@
     "activitati": [
       { "nume": "Ceasul I", "ora": "6:00" },
       { "nume": "Dumnezeiasca Liturghie", "ora": "" },
-      { "nume": "Paraclisul Mc. Trifon", "ora": "17:00" },
-      { "nume": "Rugăciuni pt. cei bolnavi", "ora": "" },
+      { "nume": "Paraclisul Sf. Mc. Trifon", "ora": "17:00" },
+      { "nume": "Rugăciuni pentru cei bolnavi", "ora": "" },
       { "nume": "Taina Mărturisirii", "ora": "18:00" }
     ]
   },
@@ -48,11 +48,10 @@
   "sâmbătă": {
     "data": "20 decembrie",
     "activitati": [
-      { "nume": "Utrenia", "ora": "8:30" },
-      { "nume": "Dumnezeiasca Liturghie", "ora": "" }
+      { "nume": "Dumnezeiasca Liturghie", "ora": "8:30" }
     ]
   },
-  "Duminică": {
+  "duminică": {
     "data": "21 decembrie",
     "activitati": [
       { "nume": "Utrenia", "ora": "8:00" },
