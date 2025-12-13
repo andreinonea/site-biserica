@@ -1,13 +1,13 @@
 {
   "duminică": {
-    "data": "7 decembrie",
+    "data": "14 decembrie",
     "activitati": [
       { "nume": "Utrenia", "ora": "8:00" },
       { "nume": "Dumnezeiasca Liturghie", "ora": "" }
     ]
   },
   "luni": {
-    "data": "8 decembrie",
+    "data": "15 decembrie",
     "activitati": [
       { "nume": "Ceasul I", "ora": "6:00" },
       { "nume": "Dumnezeiasca Liturghie", "ora": "" },
@@ -17,14 +17,14 @@
     ]
   },
   "marți": {
-    "data": "9 decembrie",
+    "data": "16 decembrie",
     "activitati": [
       { "nume": "Ceasul I", "ora": "6:00" },
       { "nume": "Dumnezeiasca Liturghie", "ora": "" }
     ]
   },
   "miercuri": {
-    "data": "10 decembrie",
+    "data": "17 decembrie",
     "activitati": [
       { "nume": "Ceasul I", "ora": "6:00" },
       { "nume": "Dumnezeiasca Liturghie", "ora": "" },
@@ -32,28 +32,28 @@
     ]
   },
   "joi": {
-    "data": "11 decembrie",
+    "data": "18 decembrie",
     "activitati": [
       { "nume": "Ceasul I", "ora": "6:00" },
       { "nume": "Dumnezeiasca Liturghie", "ora": "" }
     ]
   },
   "vineri": {
-    "data": "12 decembrie",
+    "data": "19 decembrie",
     "activitati": [
       { "nume": "Ceasul I", "ora": "6:00" },
       { "nume": "Dumnezeiasca Liturghie", "ora": "" }
     ]
   },
   "sâmbătă": {
-    "data": "13 decembrie",
+    "data": "20 decembrie",
     "activitati": [
-      { "nume": "Utrenia", "ora": "8:00" },
+      { "nume": "Utrenia", "ora": "8:30" },
       { "nume": "Dumnezeiasca Liturghie", "ora": "" }
     ]
   },
   "Duminică": {
-    "data": "14 decembrie",
+    "data": "21 decembrie",
     "activitati": [
       { "nume": "Utrenia", "ora": "8:00" },
       { "nume": "Dumnezeiasca Liturghie", "ora": "" }
