@@ -17,6 +17,26 @@ type Zi = {
 
 export default function Page() {
   const [program, setProgram] = useState<Zi[]>([]);
+  const [pdfLoading, setPdfLoading] = useState(false);
+
+  const descarcaPdf = async () => {
+    setPdfLoading(true);
+    try {
+      const res = await fetch("/api/program/pdf", { cache: "no-store" });
+      if (!res.ok) {
+        throw new Error("Nu s-a putut genera programul PDF.");
+      }
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      window.open(url, "_blank", "noopener,noreferrer");
+      // Eliberam obiectul dupa ce browserul a apucat sa il deschida.
+      setTimeout(() => URL.revokeObjectURL(url), 60_000);
+    } catch (err) {
+      console.error("Eroare la generarea PDF-ului:", err);
+    } finally {
+      setPdfLoading(false);
+    }
+  };
 
   useEffect(() => {
     fetch("/api/program", { cache: "no-store" })
@@ -71,6 +91,17 @@ export default function Page() {
         <h1 className="relative z-2 flex justify-center text-center text-white/90 text-4xl md:text-7xl mt-[100px] mb-15 underline decoration-2 underline-offset-8">
           Program liturgic
         </h1>
+
+        <div className="relative z-2 flex justify-center mb-12">
+          <button
+            type="button"
+            onClick={descarcaPdf}
+            disabled={pdfLoading}
+            className="rounded-full border border-[#C59D30]/60 px-6 py-2 text-[#C59D30] transition-colors hover:bg-[#C59D30]/10 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {pdfLoading ? "Se genereaza..." : "Descarca PDF"}
+          </button>
+        </div>
 
         <div className="relative z-1 max-w-4xl mx-auto space-y-10 mb-20">
           {program.map((zi, i) => (
