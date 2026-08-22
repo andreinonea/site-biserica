@@ -36,7 +36,7 @@ type ProgramDoc = {
 
 const PROGRAM_DOC_ID = "program-liturgic";
 const programJsonPath = path.join(process.cwd(), "public", "data", "program.json");
-const templatePath = path.join(process.cwd(), "templates", "program.typ");
+const templatesDir = path.join(process.cwd(), "templates");
 const typstBin = process.env.TYPST_BIN ?? "typst";
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
@@ -93,9 +93,11 @@ async function readProgram(): Promise<ProgramPayload> {
 function compileTypst(cwd: string): Promise<void> {
   return new Promise((resolve, reject) => {
     // Compile the template into program.pdf, resolving file access from cwd.
-    const child = spawn(typstBin, ["compile", "--root", cwd, "program.typ", "program.pdf"], {
-      cwd,
-    });
+    const child = spawn(
+      typstBin,
+      ["compile", "--root", cwd, "--font-path", "fonts", "program.typ", "program.pdf"],
+      { cwd },
+    );
 
     let stderr = "";
     child.stderr.on("data", (chunk) => {
@@ -114,17 +116,15 @@ export async function GET() {
   try {
     const program = await readProgram();
 
-    // Isolated working directory so Typst can only read the files we place here.
+    // Isolated working directory: copy the template, its assets and bundled
+    // fonts so Typst only ever reads from here, then drop in the fresh data.
     workDir = await fs.mkdtemp(path.join(os.tmpdir(), "program-typst-"));
-    const template = await fs.readFile(templatePath, "utf8");
-    await Promise.all([
-      fs.writeFile(path.join(workDir, "program.typ"), template, "utf8"),
-      fs.writeFile(
-        path.join(workDir, "data.json"),
-        JSON.stringify(program),
-        "utf8",
-      ),
-    ]);
+    await fs.cp(templatesDir, workDir, { recursive: true });
+    await fs.writeFile(
+      path.join(workDir, "data.json"),
+      JSON.stringify(program),
+      "utf8",
+    );
 
     await compileTypst(workDir);
 
